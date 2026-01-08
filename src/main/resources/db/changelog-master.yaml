@@ -1,0 +1,262 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: 001-create-estado-reserva
+      author: adrian
+      changes:
+        - createTable:
+            tableName: EstadoReserva
+            schemaName: dbo
+            columns:
+              - column:
+                  name: EstadoId
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: Estado
+                  type: VARCHAR(20)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 002-create-profesional
+      author: adrian
+      changes:
+        - createTable:
+            tableName: Profesional
+            schemaName: dbo
+            columns:
+              - column:
+                  name: Id
+                  type: UNIQUEIDENTIFIER
+                  defaultValueComputed: NEWID()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: Nombres
+                  type: NVARCHAR(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: Apellidos
+                  type: NVARCHAR(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: Especialidad
+                  type: NVARCHAR(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: EstadoActivo
+                  type: BIT
+                  defaultValueBoolean: true
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 003-create-cliente
+      author: adrian
+      changes:
+        - createTable:
+            tableName: Cliente
+            schemaName: dbo
+            columns:
+              - column:
+                  name: Id
+                  type: UNIQUEIDENTIFIER
+                  defaultValueComputed: NEWID()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: Nombres
+                  type: NVARCHAR(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: Apellidos
+                  type: NVARCHAR(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: Email
+                  type: NVARCHAR(256)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: Telefono
+                  type: NVARCHAR(30)
+              - column:
+                  name: EstadoActivo
+                  type: BIT
+                  defaultValueBoolean: true
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 004-create-horario-disponible
+      author: adrian
+      changes:
+        - createTable:
+            tableName: HorarioDisponible
+            schemaName: dbo
+            columns:
+              - column:
+                  name: Id
+                  type: UNIQUEIDENTIFIER
+                  defaultValueComputed: NEWID()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: ProfesionalId
+                  type: UNIQUEIDENTIFIER
+                  constraints:
+                    nullable: false
+              - column:
+                  name: Fecha
+                  type: DATE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: HoraInicio
+                  type: TIME(0)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: HoraFin
+                  type: TIME(0)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: Estado
+                  type: BIT
+                  defaultValueBoolean: true
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 005-create-reserva
+      author: adrian
+      changes:
+        - createTable:
+            tableName: Reserva
+            schemaName: dbo
+            columns:
+              - column:
+                  name: Id
+                  type: UNIQUEIDENTIFIER
+                  defaultValueComputed: NEWID()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: Fecha
+                  type: DATE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: HoraInicio
+                  type: TIME(0)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: HoraFin
+                  type: TIME(0)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: ClienteId
+                  type: UNIQUEIDENTIFIER
+                  constraints:
+                    nullable: false
+              - column:
+                  name: ProfesionalId
+                  type: UNIQUEIDENTIFIER
+                  constraints:
+                    nullable: false
+              - column:
+                  name: EstadoKd
+                  type: INT
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 006-add-fk-horario-profesional
+      author: adrian
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: HorarioDisponible
+            baseColumnNames: ProfesionalId
+            constraintName: FK_HorarioDisponible_Profesional
+            referencedTableName: Profesional
+            referencedColumnNames: Id
+            baseTableSchemaName: dbo
+            referencedTableSchemaName: dbo
+
+  - changeSet:
+      id: 007-add-fk-reserva-cliente
+      author: adrian
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: Reserva
+            baseColumnNames: ClienteId
+            constraintName: FK_Reserva_Cliente
+            referencedTableName: Cliente
+            referencedColumnNames: Id
+            baseTableSchemaName: dbo
+            referencedTableSchemaName: dbo
+
+  - changeSet:
+      id: 008-add-fk-reserva-profesional
+      author: adrian
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: Reserva
+            baseColumnNames: ProfesionalId
+            constraintName: FK_Reserva_Profesional
+            referencedTableName: Profesional
+            referencedColumnNames: Id
+            baseTableSchemaName: dbo
+            referencedTableSchemaName: dbo
+
+  - changeSet:
+      id: 009-add-fk-reserva-estado-reserva
+      author: adrian
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: Reserva
+            baseColumnNames: EstadoKd
+            constraintName: FK_Reserva_EstadoReserva
+            referencedTableName: EstadoReserva
+            referencedColumnNames: EstadoId
+            baseTableSchemaName: dbo
+            referencedTableSchemaName: dbo
+
+  - changeSet:
+      id: 010-insert-estado-reserva
+      author: adrian
+      changes:
+        - insert:
+            tableName: EstadoReserva
+            columns:
+              - column:
+                  name: Estado
+                  value: 'CREADA'
+        - insert:
+            tableName: EstadoReserva
+            columns:
+              - column:
+                  name: Estado
+                  value: 'CANCELADA'
+        - insert:
+            tableName: EstadoReserva
+            columns:
+              - column:
+                  name: Estado
+                  value: 'COMPLETADA'

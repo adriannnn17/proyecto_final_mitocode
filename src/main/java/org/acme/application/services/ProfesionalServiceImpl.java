@@ -1,0 +1,45 @@
+package org.acme.application.services;
+
+import io.smallrye.mutiny.Multi;
+import io.smallrye.mutiny.Uni;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import org.acme.domain.repository.ProfesionalRepository;
+import org.acme.domain.services.ProfesionalService;
+import org.acme.infraestructure.dtos.ProfesionalDto;
+import org.acme.infraestructure.mappers.ProfesionalMapper;
+
+import java.util.UUID;
+
+@ApplicationScoped
+public class ProfesionalServiceImpl implements ProfesionalService {
+
+    @Inject
+    ProfesionalRepository profesionalRepository;
+
+
+    @Override
+    public Multi<ProfesionalDto> listProfessionals() {
+        return profesionalRepository.findAllInactivos().map(ProfesionalMapper.INSTANCE::toDto);
+    }
+
+    @Override
+    public Uni<ProfesionalDto> findProfessional(UUID id) {
+        return profesionalRepository.findByIdAndInactivo(id).map(ProfesionalMapper.INSTANCE::toDto);
+    }
+
+    @Override
+    public Uni<Void> createProfessional(ProfesionalDto profesional) {
+        return profesionalRepository.saveProfesional(ProfesionalMapper.INSTANCE.toEntity(profesional));
+    }
+
+    @Override
+    public Uni<Void> updateProfessional(ProfesionalDto profesional, UUID id) {
+        return profesionalRepository.updateProfesional(ProfesionalMapper.INSTANCE.toEntity(profesional), id);
+    }
+
+    @Override
+    public Uni<Void> deleteProfessional(UUID id) {
+        return profesionalRepository.deleteProfesional(id);
+    }
+}
