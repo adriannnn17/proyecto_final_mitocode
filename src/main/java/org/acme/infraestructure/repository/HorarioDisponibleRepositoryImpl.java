@@ -2,6 +2,7 @@ package org.acme.infraestructure.repository;
 
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
+import io.smallrye.mutiny.infrastructure.Infrastructure;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -19,13 +20,16 @@ public class HorarioDisponibleRepositoryImpl implements HorarioDisponibleReposit
 
     @Override
     public Multi<HorarioDisponible> findAllInactivos() {
-        return Multi.createFrom()
-                .iterable(find("estadoActivo", EstadoActivoEnum.INACTIVO).list());
+        return Multi.createFrom().publisher(
+                Uni.createFrom().item(() -> find("estado", EstadoActivoEnum.INACTIVO).list())
+                        .runSubscriptionOn(Infrastructure.getDefaultWorkerPool())
+                        .onItem().transformToMulti(list -> Multi.createFrom().iterable(list))
+        );
     }
 
     @Override
     public Uni<HorarioDisponible> findByIdAndInactivo(UUID id) {
-        return Uni.createFrom().item(() -> find("id = ?1 and estadoActivo = ?2",
+        return Uni.createFrom().item(() -> find("id = ?1 and estado = ?2",
                 id,
                 EstadoActivoEnum.INACTIVO)
                 .firstResult());

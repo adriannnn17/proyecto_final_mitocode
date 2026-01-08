@@ -2,6 +2,7 @@ package org.acme.infraestructure.repository;
 
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
+import io.smallrye.mutiny.infrastructure.Infrastructure;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -19,8 +20,11 @@ public class ClienteRepositoryImpl implements ClienteRepository {
 
     @Override
     public Multi<Cliente> findAllInactivos() {
-        return Multi.createFrom()
-                .iterable(find("estadoActivo", EstadoActivoEnum.INACTIVO).list());
+        return Multi.createFrom().publisher(
+                Uni.createFrom().item(() -> find("estadoActivo", EstadoActivoEnum.INACTIVO).list())
+                        .runSubscriptionOn(Infrastructure.getDefaultWorkerPool())
+                        .onItem().transformToMulti(list -> Multi.createFrom().iterable(list))
+        );
     }
 
     @Override
