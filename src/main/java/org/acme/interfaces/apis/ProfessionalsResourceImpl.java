@@ -1,4 +1,4 @@
-package org.acme.interfaces.controllers;
+package org.acme.interfaces.apis;
 
 import jakarta.inject.Inject;
 import org.acme.domain.cases.ProfessionalsUseCase;
