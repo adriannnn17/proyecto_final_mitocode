@@ -1,6 +1,7 @@
 package org.acme.interfaces.apis;
 
 import jakarta.inject.Inject;
+import jakarta.validation.Valid;
 import org.acme.domain.cases.BookingsUseCase;
 import org.acme.reservas.api.BookingsResource;
 import org.acme.reservas.api.beans.RegistroReservaSchemaRequest;
@@ -21,7 +22,11 @@ public class BookingsResourceImpl implements BookingsResource {
     }
 
     @Override
-    public CompletionStage<List<RegistroReservaSchemaResponse>> listBookings(String idClient, String idProfessional, String maxDate, String minDate, String specialty) {
+    public CompletionStage<List<RegistroReservaSchemaResponse>> listBookings(@Valid String idClient,
+                                                                             @Valid String idProfessional,
+                                                                             @Valid String maxDate,
+                                                                             @Valid String minDate,
+                                                                             @Valid String specialty) {
         return bookingsUseCase.listBookings(idClient, idProfessional, maxDate, minDate, specialty)
                 .collect()
                 .asList()
@@ -29,22 +34,23 @@ public class BookingsResourceImpl implements BookingsResource {
     }
 
     @Override
-    public CompletionStage<Void> createBookings(RegistroReservaSchemaRequest data) {
+    public CompletionStage<Void> createBookings(@Valid RegistroReservaSchemaRequest data) {
         return bookingsUseCase.createBookings(data).subscribeAsCompletionStage();
     }
 
     @Override
-    public CompletionStage<RegistroReservaSchemaResponse> findBookings(String idBookings) {
+    public CompletionStage<RegistroReservaSchemaResponse> findBookings(@Valid String idBookings) {
         return bookingsUseCase.findBookings(idBookings).subscribeAsCompletionStage();
     }
 
     @Override
-    public CompletionStage<Void> updateBookings(String idBookings, RegistroReservaSchemaRequest data) {
+    public CompletionStage<Void> updateBookings(@Valid String idBookings,
+                                                @Valid RegistroReservaSchemaRequest data) {
         return bookingsUseCase.updateBookings(idBookings, data).subscribeAsCompletionStage();
     }
 
     @Override
-    public CompletionStage<Void> deleteBookings(String idBookings) {
+    public CompletionStage<Void> deleteBookings(@Valid String idBookings) {
         return bookingsUseCase.deleteBookings(idBookings).subscribeAsCompletionStage();
     }
 }

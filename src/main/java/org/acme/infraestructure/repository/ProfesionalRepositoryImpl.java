@@ -25,15 +25,16 @@ public class ProfesionalRepositoryImpl implements ProfesionalRepository {
 
     @Override
     public Uni<Profesional> findByIdAndInactivo(UUID id) {
-        return find("id = ?1 and estadoActivo = ?2",
+        return Uni.createFrom().item(() -> find("id = ?1 and estadoActivo = ?2",
                 id,
                 EstadoActivoEnum.INACTIVO)
-                .firstResult();
+                .firstResult());
     }
 
     @Override
     public Uni<Void> saveProfesional(Profesional profesional) {
         return Uni.createFrom().item(() -> {
+            profesional.setEstadoActivo(EstadoActivoEnum.ACTIVO);
             entityManager.persist(profesional);
             return null;
         });
@@ -53,7 +54,8 @@ public class ProfesionalRepositoryImpl implements ProfesionalRepository {
         return Uni.createFrom().item(() -> {
             Profesional managed = entityManager.find(Profesional.class, uuid);
             if (managed != null) {
-                entityManager.remove(managed);
+                managed.setEstadoActivo(EstadoActivoEnum.INACTIVO);
+                entityManager.merge(managed);
             }
             return null;
         });

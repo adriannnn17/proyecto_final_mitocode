@@ -17,7 +17,5 @@ public class ClienteDto {
     private String apellidos;
     private String email;
     private String telefono;
-    // estadoActivo as Boolean in DTO
-    private Boolean estadoActivo;
 }
 

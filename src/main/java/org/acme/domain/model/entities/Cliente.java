@@ -10,6 +10,8 @@ import org.acme.infraestructure.db.converters.EstadoActivoEnumConverter;
 
 import java.util.UUID;
 
+import static java.util.Objects.isNull;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -37,4 +39,11 @@ public class Cliente {
     @Convert(converter = EstadoActivoEnumConverter.class)
     @Column(name = "EstadoActivo", nullable = false)
     private EstadoActivoEnum estadoActivo;
+
+    @PrePersist
+    public void persist() {
+        if(isNull(id)) {
+            id = UUID.randomUUID();
+        }
+    }
 }

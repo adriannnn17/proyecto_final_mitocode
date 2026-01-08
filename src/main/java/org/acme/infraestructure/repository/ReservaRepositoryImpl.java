@@ -28,15 +28,16 @@ public class ReservaRepositoryImpl implements ReservaRepository {
     @Override
     public Uni<Reserva> findByEstado(UUID id) {
 
-        return find("id = ?1 and estado != ?2",
+        return Uni.createFrom().item(() -> find("id = ?1 and estado != ?2",
                 id,
                 EstadoReservaEnum.CANCELADA)
-                .firstResult();
+                .firstResult());
     }
 
     @Override
     public Uni<Void> saveReserva(Reserva reserva) {
         return Uni.createFrom().item(() -> {
+            reserva.setEstado(EstadoReservaEnum.CREADA);
             entityManager.persist(reserva);
             return null;
         });
@@ -56,7 +57,8 @@ public class ReservaRepositoryImpl implements ReservaRepository {
         return Uni.createFrom().item(() -> {
             Reserva managed = entityManager.find(Reserva.class, uuid);
             if (managed != null) {
-                entityManager.remove(managed);
+                managed.setEstado(EstadoReservaEnum.CANCELADA);
+                entityManager.merge(managed);
             }
             return null;
         });

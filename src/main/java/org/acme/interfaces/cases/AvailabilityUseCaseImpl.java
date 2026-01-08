@@ -19,30 +19,30 @@ public class AvailabilityUseCaseImpl implements AvailabilityUseCase {
     HorarioDisponibleService horarioService;
 
     @Override
-    public Multi<HorarioDisponibleSchemaResponse> listAvailableHours() {
-        return horarioService.listAvailableHours()
+    public Multi<HorarioDisponibleSchemaResponse> listAvailabilityHours() {
+        return horarioService.listAvailabilityHours()
                 .map(HorarioDisponibleMapper.INSTANCE::toResponse);
     }
 
     @Override
-    public Uni<Void> createAvailableHour(HorarioDisponibleSchemaRequest data) {
-        return horarioService.createAvailableHour(HorarioDisponibleMapper.INSTANCE.fromRequest(data));
+    public Uni<Void> createAvailabilityHour(HorarioDisponibleSchemaRequest data) {
+        return horarioService.createAvailabilityHour(HorarioDisponibleMapper.INSTANCE.fromRequest(data));
     }
 
     @Override
-    public Uni<HorarioDisponibleSchemaResponse> findAvailableHour(String availableHoursId) {
-        return horarioService.findAvailableHour(UUID.fromString(availableHoursId))
+    public Uni<HorarioDisponibleSchemaResponse> findAvailabilityHour(String availabilityHoursId) {
+        return horarioService.findAvailabilityHour(UUID.fromString(availabilityHoursId))
                 .map(HorarioDisponibleMapper.INSTANCE::toResponse);
     }
 
     @Override
-    public Uni<Void> updateAvailableHour(String availableHoursId, HorarioDisponibleSchemaRequest data) {
-        return horarioService.updateAvailableHour(HorarioDisponibleMapper.INSTANCE.fromRequest(data),
-                UUID.fromString(availableHoursId));
+    public Uni<Void> updateAvailabilityHour(String availabilityHoursId, HorarioDisponibleSchemaRequest data) {
+        return horarioService.updateAvailabilityHour(HorarioDisponibleMapper.INSTANCE.fromRequest(data),
+                UUID.fromString(availabilityHoursId));
     }
 
     @Override
-    public Uni<Void> deleteAvailableHour(String availableHoursId) {
-        return horarioService.deleteAvailableHour(UUID.fromString(availableHoursId));
+    public Uni<Void> deleteAvailabilityHour(String availabilityHoursId) {
+        return horarioService.deleteAvailabilityHour(UUID.fromString(availabilityHoursId));
     }
 }

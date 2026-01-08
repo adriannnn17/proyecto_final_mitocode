@@ -20,7 +20,6 @@ public class ReservaDto {
     private LocalTime horaFin;
     private UUID clienteId;
     private UUID profesionalId;
-    // estado as String in DTO
     private String estado;
 }
 

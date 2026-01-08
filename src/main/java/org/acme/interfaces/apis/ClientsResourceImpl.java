@@ -1,6 +1,7 @@
 package org.acme.interfaces.apis;
 
 import jakarta.inject.Inject;
+import jakarta.validation.Valid;
 import org.acme.domain.cases.ClientsUseCase;
 import org.acme.reservas.api.ClientsResource;
 import org.acme.reservas.api.beans.ClienteSchemaRequest;
@@ -23,22 +24,23 @@ public class ClientsResourceImpl implements ClientsResource {
     }
 
     @Override
-    public CompletionStage<Void> createClients(ClienteSchemaRequest data) {
+    public CompletionStage<Void> createClients(@Valid ClienteSchemaRequest data) {
         return clientsUseCase.createClient(data).subscribeAsCompletionStage();
     }
 
     @Override
-    public CompletionStage<ClienteSchemaResponse> findClients(String idClients) {
+    public CompletionStage<ClienteSchemaResponse> findClients(@Valid String idClients) {
         return clientsUseCase.findClient(idClients).subscribeAsCompletionStage();
     }
 
     @Override
-    public CompletionStage<Void> updateClients(String idClients, ClienteSchemaRequest data) {
+    public CompletionStage<Void> updateClients(@Valid String idClients,
+                                               @Valid ClienteSchemaRequest data) {
         return clientsUseCase.updateClient(idClients, data).subscribeAsCompletionStage();
     }
 
     @Override
-    public CompletionStage<Void> deleteClients(String idClients) {
+    public CompletionStage<Void> deleteClients(@Valid String idClients) {
         return clientsUseCase.deleteClient(idClients).subscribeAsCompletionStage();
     }
 }

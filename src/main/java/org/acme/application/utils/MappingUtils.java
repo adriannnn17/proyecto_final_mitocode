@@ -56,12 +56,6 @@ public class MappingUtils {
         return e.toString();
     }
 
-    @Named("stringToRegistroReservaRequestEstado")
-    public static org.acme.reservas.api.beans.RegistroReservaSchemaRequest.Estado stringToRegistroReservaRequestEstado(String s) {
-        if (s == null) return null;
-        return org.acme.reservas.api.beans.RegistroReservaSchemaRequest.Estado.fromValue(s);
-    }
-
     @Named("stringToRegistroReservaResponseEstado")
     public static org.acme.reservas.api.beans.RegistroReservaSchemaResponse.Estado stringToRegistroReservaResponseEstado(String s) {
         if (s == null) return null;

@@ -7,14 +7,14 @@ import org.acme.reservas.api.beans.HorarioDisponibleSchemaResponse;
 
 public interface AvailabilityUseCase {
 
-    Multi<HorarioDisponibleSchemaResponse> listAvailableHours();
+    Multi<HorarioDisponibleSchemaResponse> listAvailabilityHours();
 
-    Uni<Void> createAvailableHour(HorarioDisponibleSchemaRequest data);
+    Uni<Void> createAvailabilityHour(HorarioDisponibleSchemaRequest data);
 
-    Uni<HorarioDisponibleSchemaResponse> findAvailableHour(String availableHoursId);
+    Uni<HorarioDisponibleSchemaResponse> findAvailabilityHour(String availabilityHoursId);
 
-    Uni<Void> updateAvailableHour(String availableHoursId, HorarioDisponibleSchemaRequest data);
+    Uni<Void> updateAvailabilityHour(String availabilityHoursId, HorarioDisponibleSchemaRequest data);
 
-    Uni<Void> deleteAvailableHour(String availableHoursId);
+    Uni<Void> deleteAvailabilityHour(String availabilityHoursId);
 }
 

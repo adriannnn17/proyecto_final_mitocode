@@ -25,15 +25,16 @@ public class HorarioDisponibleRepositoryImpl implements HorarioDisponibleReposit
 
     @Override
     public Uni<HorarioDisponible> findByIdAndInactivo(UUID id) {
-        return find("id = ?1 and estadoActivo = ?2",
+        return Uni.createFrom().item(() -> find("id = ?1 and estadoActivo = ?2",
                 id,
                 EstadoActivoEnum.INACTIVO)
-                .firstResult();
+                .firstResult());
     }
 
     @Override
     public Uni<Void> saveHorarioDisponible(HorarioDisponible horario) {
         return Uni.createFrom().item(() -> {
+            horario.setEstado(EstadoActivoEnum.ACTIVO);
             entityManager.persist(horario);
             return null;
         });
@@ -53,7 +54,8 @@ public class HorarioDisponibleRepositoryImpl implements HorarioDisponibleReposit
         return Uni.createFrom().item(() -> {
             HorarioDisponible managed = entityManager.find(HorarioDisponible.class, uuid);
             if (managed != null) {
-                entityManager.remove(managed);
+                managed.setEstado(EstadoActivoEnum.INACTIVO);
+                entityManager.merge(managed);
             }
             return null;
         });

@@ -14,15 +14,4 @@ public interface ClienteMapper {
     ClienteDto toDto(Cliente entity);
 
     Cliente toEntity(ClienteDto dto);
-
-    // MapStruct will use these methods for conversion between EstadoActivoEnum and Boolean
-    default Boolean estadoActivoEnumToBoolean(EstadoActivoEnum e) {
-        if (e == null) return null;
-        return e == EstadoActivoEnum.ACTIVO;
-    }
-
-    default EstadoActivoEnum booleanToEstadoActivoEnum(Boolean b) {
-        if (b == null) return null;
-        return b ? EstadoActivoEnum.ACTIVO : EstadoActivoEnum.INACTIVO;
-    }
 }

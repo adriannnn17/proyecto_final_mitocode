@@ -19,7 +19,5 @@ public class HorarioDisponibleDto {
     private LocalDate fecha;
     private LocalTime horaInicio;
     private LocalTime horaFin;
-    // 'estado' as string in DTO (per your request)
-    private String estado;
 }
 

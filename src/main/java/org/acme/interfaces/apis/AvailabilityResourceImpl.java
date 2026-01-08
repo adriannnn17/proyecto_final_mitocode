@@ -1,44 +1,46 @@
 package org.acme.interfaces.apis;
 
 import jakarta.inject.Inject;
+import jakarta.validation.Valid;
 import org.acme.domain.cases.AvailabilityUseCase;
-import org.acme.reservas.api.AvailableResource;
+import org.acme.reservas.api.AvailabilityResource;
 import org.acme.reservas.api.beans.HorarioDisponibleSchemaRequest;
 import org.acme.reservas.api.beans.HorarioDisponibleSchemaResponse;
 
 import java.util.List;
 import java.util.concurrent.CompletionStage;
 
-public class AvailabilityResourceImpl implements AvailableResource {
+public class AvailabilityResourceImpl implements AvailabilityResource {
 
     @Inject
     AvailabilityUseCase availabilityUseCase;
 
     @Override
-    public CompletionStage<List<HorarioDisponibleSchemaResponse>> listAvailableHour() {
-        return availabilityUseCase.listAvailableHours()
+    public CompletionStage<List<HorarioDisponibleSchemaResponse>> listAvailabilityHour() {
+        return availabilityUseCase.listAvailabilityHours()
                 .collect()
                 .asList()
                 .subscribeAsCompletionStage();
     }
 
     @Override
-    public CompletionStage<Void> createAvailableHour(HorarioDisponibleSchemaRequest data) {
-        return availabilityUseCase.createAvailableHour(data).subscribeAsCompletionStage();
+    public CompletionStage<Void> createAvailabilityHour(@Valid HorarioDisponibleSchemaRequest data) {
+        return availabilityUseCase.createAvailabilityHour(data).subscribeAsCompletionStage();
     }
 
     @Override
-    public CompletionStage<HorarioDisponibleSchemaResponse> findAvailableHour(String availableHoursId) {
-        return availabilityUseCase.findAvailableHour(availableHoursId).subscribeAsCompletionStage();
+    public CompletionStage<HorarioDisponibleSchemaResponse> findAvailabilityHour(@Valid String availabilityHoursId) {
+        return availabilityUseCase.findAvailabilityHour(availabilityHoursId).subscribeAsCompletionStage();
     }
 
     @Override
-    public CompletionStage<Void> updateAvailableHour(String availableHoursId, HorarioDisponibleSchemaRequest data) {
-        return availabilityUseCase.updateAvailableHour(availableHoursId, data).subscribeAsCompletionStage();
+    public CompletionStage<Void> updateAvailabilityHour(@Valid String availabilityHoursId,
+                                                     @Valid HorarioDisponibleSchemaRequest data) {
+        return availabilityUseCase.updateAvailabilityHour(availabilityHoursId, data).subscribeAsCompletionStage();
     }
 
     @Override
-    public CompletionStage<Void> deleteAvailableHour(String availableHoursId) {
-        return availabilityUseCase.deleteAvailableHour(availableHoursId).subscribeAsCompletionStage();
+    public CompletionStage<Void> deleteAvailabilityHour(@Valid String availabilityHoursId) {
+        return availabilityUseCase.deleteAvailabilityHour(availabilityHoursId).subscribeAsCompletionStage();
     }
 }

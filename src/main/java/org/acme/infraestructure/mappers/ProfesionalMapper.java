@@ -14,14 +14,4 @@ public interface ProfesionalMapper {
     ProfesionalDto toDto(Profesional entity);
 
     Profesional toEntity(ProfesionalDto dto);
-
-    default Boolean estadoActivoEnumToBoolean(EstadoActivoEnum e) {
-        if (e == null) return null;
-        return e == EstadoActivoEnum.ACTIVO;
-    }
-
-    default EstadoActivoEnum booleanToEstadoActivoEnum(Boolean b) {
-        if (b == null) return null;
-        return b ? EstadoActivoEnum.ACTIVO : EstadoActivoEnum.INACTIVO;
-    }
 }

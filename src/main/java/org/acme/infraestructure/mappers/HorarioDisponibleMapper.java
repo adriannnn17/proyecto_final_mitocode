@@ -16,29 +16,19 @@ public interface HorarioDisponibleMapper {
     HorarioDisponibleMapper INSTANCE = Mappers.getMapper(HorarioDisponibleMapper.class);
 
     @Mapping(source = "profesional.id", target = "profesionalId")
-    @Mapping(source = "estado", target = "estado", qualifiedByName = "estadoToString")
     HorarioDisponibleDto toDto(HorarioDisponible entity);
 
     @Mapping(source = "profesionalId", target = "profesional", qualifiedByName = "idToProfesional")
-    @Mapping(source = "estado", target = "estado", qualifiedByName = "stringToEstado")
+    @Mapping(target = "estado", ignore = true)
     HorarioDisponible toEntity(HorarioDisponibleDto dto);
 
     @Named("idToProfesional")
     default Profesional idToProfesional(UUID id) {
         if (id == null) return null;
-        Profesional p = new Profesional();
-        p.setId(id);
-        return p;
+        return Profesional.builder()
+                .id(id)
+                .build();
     }
 
-    @Named("estadoToString")
-    default String estadoToString(org.acme.domain.model.enums.EstadoActivoEnum e) {
-        return e == null ? null : e.name();
-    }
-
-    @Named("stringToEstado")
-    default org.acme.domain.model.enums.EstadoActivoEnum stringToEstado(String s) {
-        return s == null ? null : org.acme.domain.model.enums.EstadoActivoEnum.valueOf(s);
-    }
 }
 

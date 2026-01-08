@@ -3,7 +3,7 @@ info:
   title: proyecto_final_mitocode
   description: ''
   version: 1.0.0
-tags: [ ]
+tags: []
 paths:
   /professionals:
     get:
@@ -11,8 +11,8 @@ paths:
       deprecated: false
       description: ''
       operationId: listProfessional
-      tags: [ ]
-      parameters: [ ]
+      tags: []
+      parameters: []
       responses:
         '200':
           description: ''
@@ -22,43 +22,43 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ProfesionalSchemaResponse'
-          headers: { }
+          headers: {}
         '500':
           $ref: '#/components/responses/Internal Error'
           description: ''
-      security: [ ]
+      security: []
     post:
       summary: Crear profesionales
       deprecated: false
       description: ''
       operationId: createProfessional
-      tags: [ ]
-      parameters: [ ]
+      tags: []
+      parameters: []
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/ProfesionalSchemaRequest'
-            examples: { }
+            examples: {}
         required: true
       responses:
         '201':
           description: ''
-          headers: { }
+          headers: {}
         '400':
           $ref: '#/components/responses/Bad Request'
           description: ''
         '500':
           $ref: '#/components/responses/Internal Error'
           description: ''
-      security: [ ]
+      security: []
   /professionals/{idProfessional}:
     get:
       summary: Buscar Profesionales
       deprecated: false
       description: ''
       operationId: findProfessional
-      tags: [ ]
+      tags: []
       parameters:
         - name: idProfessional
           in: path
@@ -74,20 +74,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProfesionalSchemaResponse'
-          headers: { }
+          headers: {}
         '404':
           $ref: '#/components/responses/Not Found'
           description: ''
         '500':
           $ref: '#/components/responses/Internal Error'
           description: ''
-      security: [ ]
+      security: []
     put:
       summary: Editar profesionales
       deprecated: false
       description: ''
       operationId: updateProfessional
-      tags: [ ]
+      tags: []
       parameters:
         - name: idProfessional
           in: path
@@ -101,12 +101,12 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/ProfesionalSchemaRequest'
-            examples: { }
+            examples: {}
         required: true
       responses:
         '204':
           description: ''
-          headers: { }
+          headers: {}
         '400':
           $ref: '#/components/responses/Bad Request'
           description: ''
@@ -116,13 +116,13 @@ paths:
         '500':
           $ref: '#/components/responses/Internal Error'
           description: ''
-      security: [ ]
+      security: []
     delete:
       summary: Borrar Profesionales
       deprecated: false
       description: ''
       operationId: deleteProfessional
-      tags: [ ]
+      tags: []
       parameters:
         - name: idProfessional
           in: path
@@ -134,22 +134,22 @@ paths:
       responses:
         '204':
           description: ''
-          headers: { }
+          headers: {}
         '404':
           $ref: '#/components/responses/Not Found'
           description: ''
         '500':
           $ref: '#/components/responses/Internal Error'
           description: ''
-      security: [ ]
+      security: []
   /clients:
     get:
       summary: Obtener Clientes
       deprecated: false
       description: ''
       operationId: listClients
-      tags: [ ]
-      parameters: [ ]
+      tags: []
+      parameters: []
       responses:
         '200':
           description: ''
@@ -159,43 +159,43 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ClienteSchemaResponse'
-          headers: { }
+          headers: {}
         '500':
           $ref: '#/components/responses/Internal Error'
           description: ''
-      security: [ ]
+      security: []
     post:
       summary: Crear clientes
       deprecated: false
       description: ''
       operationId: createClients
-      tags: [ ]
-      parameters: [ ]
+      tags: []
+      parameters: []
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/ClienteSchemaRequest'
-            examples: { }
+            examples: {}
         required: true
       responses:
         '201':
           description: ''
-          headers: { }
+          headers: {}
         '400':
           $ref: '#/components/responses/Bad Request'
           description: ''
         '500':
           $ref: '#/components/responses/Internal Error'
           description: ''
-      security: [ ]
+      security: []
   /clients/{idClients}:
     get:
       summary: Buscar Clientes
       deprecated: false
       description: ''
       operationId: findClients
-      tags: [ ]
+      tags: []
       parameters:
         - name: idClients
           in: path
@@ -211,20 +211,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ClienteSchemaResponse'
-          headers: { }
+          headers: {}
         '404':
           $ref: '#/components/responses/Not Found'
           description: ''
         '500':
           $ref: '#/components/responses/Internal Error'
           description: ''
-      security: [ ]
+      security: []
     put:
       summary: Editar clientes
       deprecated: false
       description: ''
       operationId: updateClients
-      tags: [ ]
+      tags: []
       parameters:
         - name: idClients
           in: path
@@ -238,12 +238,12 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/ClienteSchemaRequest'
-            examples: { }
+            examples: {}
         required: true
       responses:
         '204':
           description: ''
-          headers: { }
+          headers: {}
         '400':
           $ref: '#/components/responses/Bad Request'
           description: ''
@@ -253,13 +253,13 @@ paths:
         '500':
           $ref: '#/components/responses/Internal Error'
           description: ''
-      security: [ ]
+      security: []
     delete:
       summary: Borrar Clientes
       deprecated: false
       description: ''
       operationId: deleteClients
-      tags: [ ]
+      tags: []
       parameters:
         - name: idClients
           in: path
@@ -271,22 +271,22 @@ paths:
       responses:
         '204':
           description: ''
-          headers: { }
+          headers: {}
         '404':
           $ref: '#/components/responses/Not Found'
           description: ''
         '500':
           $ref: '#/components/responses/Internal Error'
           description: ''
-      security: [ ]
+      security: []
   /bookings/professional-query:
     get:
       summary: Consultas de profesionales
       deprecated: false
       description: ''
       operationId: listProfessionalQuery
-      tags: [ ]
-      parameters: [ ]
+      tags: []
+      parameters: []
       responses:
         '200':
           description: ''
@@ -294,18 +294,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ReservasSegunProfesionalSchemaResponse'
-          headers: { }
+          headers: {}
         '500':
           $ref: '#/components/responses/Internal Error'
           description: ''
-      security: [ ]
+      security: []
   /bookings:
     get:
       summary: Obtener Reservas
       deprecated: false
       description: ''
       operationId: listBookings
-      tags: [ ]
+      tags: []
       parameters:
         - name: idClient
           in: query
@@ -346,46 +346,46 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/RegistroReservaSchemaResponse'
-          headers: { }
+          headers: {}
         '400':
           $ref: '#/components/responses/Bad Request'
           description: ''
         '500':
           $ref: '#/components/responses/Internal Error'
           description: ''
-      security: [ ]
+      security: []
     post:
       summary: Crear Reservas
       deprecated: false
       description: ''
       operationId: createBookings
-      tags: [ ]
-      parameters: [ ]
+      tags: []
+      parameters: []
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/RegistroReservaSchemaRequest'
-            examples: { }
+            examples: {}
         required: true
       responses:
         '201':
           description: ''
-          headers: { }
+          headers: {}
         '400':
           $ref: '#/components/responses/Bad Request'
           description: ''
         '500':
           $ref: '#/components/responses/Internal Error'
           description: ''
-      security: [ ]
+      security: []
   /bookings/{idBookings}:
     get:
       summary: Buscar Reservas
       deprecated: false
       description: ''
       operationId: findBookings
-      tags: [ ]
+      tags: []
       parameters:
         - name: idBookings
           in: path
@@ -401,20 +401,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RegistroReservaSchemaResponse'
-          headers: { }
+          headers: {}
         '404':
           $ref: '#/components/responses/Not Found'
           description: ''
         '500':
           $ref: '#/components/responses/Internal Error'
           description: ''
-      security: [ ]
+      security: []
     put:
       summary: Editar Reservas
       deprecated: false
       description: ''
       operationId: updateBookings
-      tags: [ ]
+      tags: []
       parameters:
         - name: idBookings
           in: path
@@ -428,12 +428,12 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/RegistroReservaSchemaRequest'
-            examples: { }
+            examples: {}
         required: true
       responses:
         '204':
           description: ''
-          headers: { }
+          headers: {}
         '400':
           $ref: '#/components/responses/Bad Request'
           description: ''
@@ -443,13 +443,13 @@ paths:
         '500':
           $ref: '#/components/responses/Internal Error'
           description: ''
-      security: [ ]
+      security: []
     delete:
       summary: Borrar Reservas
       deprecated: false
       description: ''
       operationId: deleteBookings
-      tags: [ ]
+      tags: []
       parameters:
         - name: idBookings
           in: path
@@ -461,22 +461,22 @@ paths:
       responses:
         '204':
           description: ''
-          headers: { }
+          headers: {}
         '404':
           $ref: '#/components/responses/Not Found'
           description: ''
         '500':
           $ref: '#/components/responses/Internal Error'
           description: ''
-      security: [ ]
-  /available-hours:
+      security: []
+  /availability-hours:
     get:
       summary: Obtener Horarios de Disponibilidad
       deprecated: false
       description: ''
-      operationId: listAvailableHour
-      tags: [ ]
-      parameters: [ ]
+      operationId: listAvailabilityHour
+      tags: []
+      parameters: []
       responses:
         '200':
           description: ''
@@ -486,48 +486,48 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/HorarioDisponibleSchemaResponse'
-          headers: { }
+          headers: {}
         '400':
           $ref: '#/components/responses/Bad Request'
           description: ''
         '500':
           $ref: '#/components/responses/Internal Error'
           description: ''
-      security: [ ]
+      security: []
     post:
       summary: Crear Horarios de Disponibilidad
       deprecated: false
       description: ''
-      operationId: createAvailableHour
-      tags: [ ]
-      parameters: [ ]
+      operationId: createAvailabilityHour
+      tags: []
+      parameters: []
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/HorarioDisponibleSchemaRequest'
-            examples: { }
+            examples: {}
         required: true
       responses:
         '201':
           description: ''
-          headers: { }
+          headers: {}
         '400':
           $ref: '#/components/responses/Bad Request'
           description: ''
         '500':
           $ref: '#/components/responses/Internal Error'
           description: ''
-      security: [ ]
-  /available-hours/{availableHoursId}:
+      security: []
+  /availability-hours/{availabilityHoursId}:
     get:
       summary: Buscar Horarios de Disponibilidad
       deprecated: false
       description: ''
-      operationId: findAvailableHour
-      tags: [ ]
+      operationId: findAvailabilityHour
+      tags: []
       parameters:
-        - name: availableHoursId
+        - name: availabilityHoursId
           in: path
           description: ''
           required: true
@@ -541,39 +541,38 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HorarioDisponibleSchemaResponse'
-          headers: { }
+          headers: {}
         '404':
           $ref: '#/components/responses/Not Found'
           description: ''
         '500':
           $ref: '#/components/responses/Internal Error'
           description: ''
-      security: [ ]
+      security: []
     put:
       summary: Editar Horarios de Disponibilidad
       deprecated: false
       description: ''
-      operationId: updateAvailableHour
-      tags: [ ]
+      operationId: updateAvailabilityHour
+      tags: []
       parameters:
-        - name: availableHoursId
+        - name: availabilityHoursId
           in: path
           description: ''
           required: true
           schema:
             type: string
-            format: uuid
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/HorarioDisponibleSchemaRequest'
-            examples: { }
+            examples: {}
         required: true
       responses:
         '204':
           description: ''
-          headers: { }
+          headers: {}
         '400':
           $ref: '#/components/responses/Bad Request'
           description: ''
@@ -583,15 +582,15 @@ paths:
         '500':
           $ref: '#/components/responses/Internal Error'
           description: ''
-      security: [ ]
+      security: []
     delete:
       summary: Borrar Horarios de Disponibilidad
       deprecated: false
       description: ''
-      operationId: deleteAvailableHour
-      tags: [ ]
+      operationId: deleteAvailabilityHour
+      tags: []
       parameters:
-        - name: availableHoursId
+        - name: availabilityHoursId
           in: path
           description: ''
           required: true
@@ -601,15 +600,15 @@ paths:
       responses:
         '204':
           description: ''
-          headers: { }
+          headers: {}
         '404':
           $ref: '#/components/responses/Not Found'
           description: ''
         '500':
           $ref: '#/components/responses/Internal Error'
           description: ''
-      security: [ ]
-webhooks: { }
+      security: []
+webhooks: {}
 components:
   schemas:
     ProfesionalSchemaResponse:
@@ -624,14 +623,11 @@ components:
           type: string
         especialidad:
           type: string
-        estadoActivo:
-          type: boolean
       required:
         - id
         - nombres
         - apellidos
         - especialidad
-        - estadoActivo
     ProfesionalSchemaRequest:
       type: object
       properties:
@@ -641,13 +637,10 @@ components:
           type: string
         especialidad:
           type: string
-        estadoActivo:
-          type: boolean
       required:
-        - nombres
         - apellidos
         - especialidad
-        - estadoActivo
+        - nombres
     ClienteSchemaResponse:
       type: object
       properties:
@@ -662,15 +655,12 @@ components:
           type: string
         telefono:
           type: string
-        estadoActivo:
-          type: boolean
       required:
         - id
         - nombres
         - apellidos
         - email
         - telefono
-        - estadoActivo
     ClienteSchemaRequest:
       type: object
       properties:
@@ -682,14 +672,11 @@ components:
           type: string
         telefono:
           type: string
-        estadoActivo:
-          type: boolean
       required:
         - nombres
         - apellidos
         - email
         - telefono
-        - estadoActivo
     HorarioDisponibleSchemaResponse:
       type: object
       properties:
@@ -707,15 +694,12 @@ components:
         horaFin:
           type: string
           format: date-time
-        estado:
-          type: boolean
       required:
         - id
         - profesionalId
         - fecha
         - horaInicio
         - horaFin
-        - estado
     HorarioDisponibleSchemaRequest:
       type: object
       properties:
@@ -730,14 +714,11 @@ components:
         horaFin:
           type: string
           format: date-time
-        estado:
-          type: boolean
       required:
         - profesionalId
         - fecha
         - horaInicio
         - horaFin
-        - estado
     RegistroReservaSchemaResponse:
       type: object
       properties:
@@ -792,12 +773,6 @@ components:
         profesionalId:
           type: string
           format: uuid
-        estado:
-          type: string
-          enum:
-            - CREADA
-            - CANCELADA
-            - COMPLETADA
       required:
         - id
         - fecha
@@ -805,7 +780,6 @@ components:
         - horaFin
         - clienteId
         - profesionalId
-        - estado
     ReservaSegunProfesionalSchemaResponse:
       type: object
       properties:
@@ -818,7 +792,7 @@ components:
         - profesional
     ReservasSegunProfesionalSchemaResponse:
       type: object
-      properties: { }
+      properties: {}
       additionalProperties:
         $ref: '#/components/schemas/ReservaSegunProfesionalSchemaResponse'
   responses:
@@ -863,6 +837,25 @@ components:
             required:
               - description
               - errors
-  securitySchemes: { }
-servers: [ ]
-security: [ ]
+    TrackingData:
+      description: ''
+      content:
+        application/json:
+          schema:
+            title: ''
+            type: object
+            properties:
+              trackingId:
+                type: string
+                format: uuid
+              operationDate:
+                type: string
+                format: date-time
+              01KEDHHNC9KJT1CKZVHZV5Q66Y:
+                x-tmp-pending-properties: true
+            required:
+              - trackingId
+              - operationDate
+  securitySchemes: {}
+servers: []
+security: []

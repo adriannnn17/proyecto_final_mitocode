@@ -19,27 +19,27 @@ public class HorarioDisponibleServiceImpl implements HorarioDisponibleService {
 
 
     @Override
-    public Multi<HorarioDisponibleDto> listAvailableHours() {
+    public Multi<HorarioDisponibleDto> listAvailabilityHours() {
         return horarioDisponibleRepository.findAllInactivos().map(HorarioDisponibleMapper.INSTANCE::toDto);
     }
 
     @Override
-    public Uni<HorarioDisponibleDto> findAvailableHour(UUID id) {
+    public Uni<HorarioDisponibleDto> findAvailabilityHour(UUID id) {
         return horarioDisponibleRepository.findByIdAndInactivo(id).map(HorarioDisponibleMapper.INSTANCE::toDto);
     }
 
     @Override
-    public Uni<Void> createAvailableHour(HorarioDisponibleDto horario) {
+    public Uni<Void> createAvailabilityHour(HorarioDisponibleDto horario) {
         return horarioDisponibleRepository.saveHorarioDisponible(HorarioDisponibleMapper.INSTANCE.toEntity(horario));
     }
 
     @Override
-    public Uni<Void> updateAvailableHour(HorarioDisponibleDto horario, UUID id) {
+    public Uni<Void> updateAvailabilityHour(HorarioDisponibleDto horario, UUID id) {
         return horarioDisponibleRepository.updateHorarioDisponible(HorarioDisponibleMapper.INSTANCE.toEntity(horario), id);
     }
 
     @Override
-    public Uni<Void> deleteAvailableHour(UUID id) {
+    public Uni<Void> deleteAvailabilityHour(UUID id) {
         return horarioDisponibleRepository.deleteHorarioDisponible(id);
     }
 }

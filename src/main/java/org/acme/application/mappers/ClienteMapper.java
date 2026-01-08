@@ -12,10 +12,8 @@ public interface ClienteMapper {
 
     ClienteMapper INSTANCE = Mappers.getMapper(ClienteMapper.class);
 
-    // DTO -> SchemaResponse
     @Mapping(source = "id", target = "id")
     ClienteSchemaResponse toResponse(ClienteDto dto);
 
-    // SchemaRequest -> DTO
     ClienteDto fromRequest(ClienteSchemaRequest src);
 }

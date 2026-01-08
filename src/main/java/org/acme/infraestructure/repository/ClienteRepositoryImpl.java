@@ -25,15 +25,16 @@ public class ClienteRepositoryImpl implements ClienteRepository {
 
     @Override
     public Uni<Cliente> findByIdAndInactivo(UUID id) {
-        return find("id = ?1 and estadoActivo = ?2",
+        return Uni.createFrom().item(() -> find("id = ?1 and estadoActivo = ?2",
                 id,
                 EstadoActivoEnum.INACTIVO)
-                .firstResult();
+                .firstResult());
     }
 
     @Override
     public Uni<Void> saveClient(Cliente cliente) {
         return Uni.createFrom().item(() -> {
+            cliente.setEstadoActivo(EstadoActivoEnum.ACTIVO);
             entityManager.persist(cliente);
             return null;
         });
@@ -53,7 +54,8 @@ public class ClienteRepositoryImpl implements ClienteRepository {
         return Uni.createFrom().item(() -> {
             Cliente managed = entityManager.find(Cliente.class, uuid);
             if (managed != null) {
-                entityManager.remove(managed);
+                managed.setEstadoActivo(EstadoActivoEnum.INACTIVO);
+                entityManager.merge(managed);
             }
             return null;
         });

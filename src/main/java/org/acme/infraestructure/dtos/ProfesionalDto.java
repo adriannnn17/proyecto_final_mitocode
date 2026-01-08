@@ -16,6 +16,5 @@ public class ProfesionalDto {
     private String nombres;
     private String apellidos;
     private String especialidad;
-    private Boolean estadoActivo;
 }
 

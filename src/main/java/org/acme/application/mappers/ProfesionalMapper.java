@@ -12,11 +12,9 @@ public interface ProfesionalMapper {
 
     ProfesionalMapper INSTANCE = Mappers.getMapper(ProfesionalMapper.class);
 
-    // DTO -> SchemaResponse
     @Mapping(source = "id", target = "id")
     ProfesionalSchemaResponse toResponse(ProfesionalDto dto);
 
-    // SchemaRequest -> DTO
     ProfesionalDto fromRequest(ProfesionalSchemaRequest src);
 
 }

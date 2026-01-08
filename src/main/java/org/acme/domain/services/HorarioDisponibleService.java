@@ -8,13 +8,13 @@ import java.util.UUID;
 
 public interface HorarioDisponibleService {
 
-    Multi<HorarioDisponibleDto> listAvailableHours();
+    Multi<HorarioDisponibleDto> listAvailabilityHours();
 
-    Uni<HorarioDisponibleDto> findAvailableHour(UUID id);
+    Uni<HorarioDisponibleDto> findAvailabilityHour(UUID id);
 
-    Uni<Void> createAvailableHour(HorarioDisponibleDto horario);
+    Uni<Void> createAvailabilityHour(HorarioDisponibleDto horario);
 
-    Uni<Void> updateAvailableHour(HorarioDisponibleDto horario, UUID id);
+    Uni<Void> updateAvailabilityHour(HorarioDisponibleDto horario, UUID id);
 
-    Uni<Void> deleteAvailableHour(UUID id);
+    Uni<Void> deleteAvailabilityHour(UUID id);
 }

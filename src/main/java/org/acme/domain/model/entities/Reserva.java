@@ -12,6 +12,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.UUID;
 
+import static java.util.Objects.isNull;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -41,8 +43,14 @@ public class Reserva {
     @jakarta.persistence.JoinColumn(name = "ProfesionalId", referencedColumnName = "Id", nullable = false)
     private Profesional profesional;
 
-    // Ahora usamos un enum mapeado por su id en la columna EstadoKd
     @Convert(converter = EstadoReservaEnumConverter.class)
     @Column(name = "EstadoKd", nullable = false)
     private EstadoReservaEnum estado;
+
+    @PrePersist
+    public void persist() {
+        if(isNull(id)) {
+            id = UUID.randomUUID();
+        }
+    }
 }

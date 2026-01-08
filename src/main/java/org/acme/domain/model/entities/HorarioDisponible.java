@@ -12,6 +12,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.UUID;
 
+import static java.util.Objects.isNull;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -40,4 +42,11 @@ public class HorarioDisponible {
     @Convert(converter = EstadoActivoEnumConverter.class)
     @Column(name = "Estado", nullable = false)
     private EstadoActivoEnum estado;
+
+    @PrePersist
+    public void persist() {
+        if (isNull(id)) {
+            id = UUID.randomUUID();
+        }
+    }
 }

@@ -1,6 +1,7 @@
 package org.acme.interfaces.apis;
 
 import jakarta.inject.Inject;
+import jakarta.validation.Valid;
 import org.acme.domain.cases.ProfessionalsUseCase;
 import org.acme.reservas.api.ProfessionalsResource;
 import org.acme.reservas.api.beans.ProfesionalSchemaRequest;
@@ -23,22 +24,23 @@ public class ProfessionalsResourceImpl implements ProfessionalsResource {
     }
 
     @Override
-    public CompletionStage<Void> createProfessional(ProfesionalSchemaRequest data) {
+    public CompletionStage<Void> createProfessional(@Valid ProfesionalSchemaRequest data) {
         return professionalsUseCase.createProfessional(data).subscribeAsCompletionStage();
     }
 
     @Override
-    public CompletionStage<ProfesionalSchemaResponse> findProfessional(String idProfessional) {
+    public CompletionStage<ProfesionalSchemaResponse> findProfessional(@Valid String idProfessional) {
         return professionalsUseCase.findProfessional(idProfessional).subscribeAsCompletionStage();
     }
 
     @Override
-    public CompletionStage<Void> updateProfessional(String idProfessional, ProfesionalSchemaRequest data) {
+    public CompletionStage<Void> updateProfessional(@Valid String idProfessional,
+                                                    @Valid ProfesionalSchemaRequest data) {
         return professionalsUseCase.updateProfessional(idProfessional, data).subscribeAsCompletionStage();
     }
 
     @Override
-    public CompletionStage<Void> deleteProfessional(String idProfessional) {
+    public CompletionStage<Void> deleteProfessional(@Valid String idProfessional) {
         return professionalsUseCase.deleteProfessional(idProfessional).subscribeAsCompletionStage();
     }
 }
