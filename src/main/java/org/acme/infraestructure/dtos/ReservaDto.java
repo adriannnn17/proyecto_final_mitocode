@@ -21,5 +21,7 @@ public class ReservaDto {
     private UUID clienteId;
     private UUID profesionalId;
     private String estado;
+    private ClienteDto cliente;
+    private ProfesionalDto profesional;
 }
 

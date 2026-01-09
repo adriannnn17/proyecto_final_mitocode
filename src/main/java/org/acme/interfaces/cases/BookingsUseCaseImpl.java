@@ -7,9 +7,9 @@ import jakarta.inject.Inject;
 import org.acme.application.mappers.ReservaMapper;
 import org.acme.domain.cases.BookingsUseCase;
 import org.acme.domain.services.ReservaService;
-import org.acme.reservas.api.beans.RegistroReservaSchemaRequest;
-import org.acme.reservas.api.beans.RegistroReservaSchemaResponse;
-import org.acme.reservas.api.beans.ReservasSegunProfesionalSchemaResponse;
+import org.acme.interfaces.requests.RegistroReservaSchemaRequest;
+import org.acme.interfaces.responses.RegistroReservaSchemaResponse;
+import org.acme.interfaces.responses.ReservasSegunProfesionalSchemaResponse;
 
 import java.util.UUID;
 

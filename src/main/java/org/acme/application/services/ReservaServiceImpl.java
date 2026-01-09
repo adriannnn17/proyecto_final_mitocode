@@ -7,7 +7,7 @@ import jakarta.inject.Inject;
 import org.acme.domain.repository.ReservaRepository;
 import org.acme.domain.services.ReservaService;
 import org.acme.infraestructure.dtos.ReservaDto;
-import org.acme.infraestructure.mappers.ReservaMapper;
+import org.acme.infraestructure.mappers.ReservaEntityDtoMapper;
 
 import java.util.UUID;
 
@@ -19,22 +19,22 @@ public class ReservaServiceImpl implements ReservaService {
 
     @Override
     public Multi<ReservaDto> listBookings() {
-        return reservaRepository.findAllByEstado().map(ReservaMapper.INSTANCE::toDto);
+        return reservaRepository.findAllByEstado().map(ReservaEntityDtoMapper.INSTANCE::toDto);
     }
 
     @Override
     public Uni<ReservaDto> findBooking(UUID id) {
-        return reservaRepository.findByEstado(id).map(ReservaMapper.INSTANCE::toDto);
+        return reservaRepository.findByEstado(id).map(ReservaEntityDtoMapper.INSTANCE::toDto);
     }
 
     @Override
     public Uni<Void> createBooking(ReservaDto reserva) {
-        return reservaRepository.saveReserva(ReservaMapper.INSTANCE.toEntity(reserva));
+        return reservaRepository.saveReserva(ReservaEntityDtoMapper.INSTANCE.toEntity(reserva));
     }
 
     @Override
     public Uni<Void> updateBooking(ReservaDto reserva, UUID id) {
-        return reservaRepository.updateReserva(ReservaMapper.INSTANCE.toEntity(reserva), id);
+        return reservaRepository.updateReserva(ReservaEntityDtoMapper.INSTANCE.toEntity(reserva), id);
     }
 
     @Override

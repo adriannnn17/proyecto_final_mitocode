@@ -7,8 +7,8 @@ import jakarta.inject.Inject;
 import org.acme.application.mappers.ProfesionalMapper;
 import org.acme.domain.cases.ProfessionalsUseCase;
 import org.acme.domain.services.ProfesionalService;
-import org.acme.reservas.api.beans.ProfesionalSchemaRequest;
-import org.acme.reservas.api.beans.ProfesionalSchemaResponse;
+import org.acme.interfaces.requests.ProfesionalSchemaRequest;
+import org.acme.interfaces.responses.ProfesionalSchemaResponse;
 
 import java.util.UUID;
 

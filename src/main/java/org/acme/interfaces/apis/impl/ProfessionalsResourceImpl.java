@@ -1,11 +1,10 @@
-package org.acme.interfaces.apis;
+package org.acme.interfaces.apis.impl;
 
 import jakarta.inject.Inject;
-import jakarta.validation.Valid;
 import org.acme.domain.cases.ProfessionalsUseCase;
-import org.acme.reservas.api.ProfessionalsResource;
-import org.acme.reservas.api.beans.ProfesionalSchemaRequest;
-import org.acme.reservas.api.beans.ProfesionalSchemaResponse;
+import org.acme.interfaces.apis.ProfessionalsResource;
+import org.acme.interfaces.requests.ProfesionalSchemaRequest;
+import org.acme.interfaces.responses.ProfesionalSchemaResponse;
 
 import java.util.List;
 import java.util.concurrent.CompletionStage;
@@ -24,23 +23,23 @@ public class ProfessionalsResourceImpl implements ProfessionalsResource {
     }
 
     @Override
-    public CompletionStage<Void> createProfessional(@Valid ProfesionalSchemaRequest data) {
+    public CompletionStage<Void> createProfessional(ProfesionalSchemaRequest data) {
         return professionalsUseCase.createProfessional(data).subscribeAsCompletionStage();
     }
 
     @Override
-    public CompletionStage<ProfesionalSchemaResponse> findProfessional(@Valid String idProfessional) {
+    public CompletionStage<ProfesionalSchemaResponse> findProfessional(String idProfessional) {
         return professionalsUseCase.findProfessional(idProfessional).subscribeAsCompletionStage();
     }
 
     @Override
-    public CompletionStage<Void> updateProfessional(@Valid String idProfessional,
-                                                    @Valid ProfesionalSchemaRequest data) {
+    public CompletionStage<Void> updateProfessional(String idProfessional,
+                                                    ProfesionalSchemaRequest data) {
         return professionalsUseCase.updateProfessional(idProfessional, data).subscribeAsCompletionStage();
     }
 
     @Override
-    public CompletionStage<Void> deleteProfessional(@Valid String idProfessional) {
+    public CompletionStage<Void> deleteProfessional(String idProfessional) {
         return professionalsUseCase.deleteProfessional(idProfessional).subscribeAsCompletionStage();
     }
 }

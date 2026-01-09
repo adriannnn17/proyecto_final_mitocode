@@ -683,8 +683,8 @@ components:
         id:
           type: string
           format: uuid
-        profesionalId:
-          type: string
+        profesional:
+          $ref: '#/components/schemas/ProfesionalSchemaResponse'
         fecha:
           type: string
           format: date
@@ -696,7 +696,7 @@ components:
           format: date-time
       required:
         - id
-        - profesionalId
+        - profesional
         - fecha
         - horaInicio
         - horaFin

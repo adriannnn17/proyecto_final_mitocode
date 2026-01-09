@@ -7,7 +7,7 @@ import jakarta.inject.Inject;
 import org.acme.domain.repository.ProfesionalRepository;
 import org.acme.domain.services.ProfesionalService;
 import org.acme.infraestructure.dtos.ProfesionalDto;
-import org.acme.infraestructure.mappers.ProfesionalMapper;
+import org.acme.infraestructure.mappers.ProfesionalEntityDtoMapper;
 
 import java.util.UUID;
 
@@ -20,22 +20,22 @@ public class ProfesionalServiceImpl implements ProfesionalService {
 
     @Override
     public Multi<ProfesionalDto> listProfessionals() {
-        return profesionalRepository.findAllInactivos().map(ProfesionalMapper.INSTANCE::toDto);
+        return profesionalRepository.findAllInactivos().map(ProfesionalEntityDtoMapper.INSTANCE::toDto);
     }
 
     @Override
     public Uni<ProfesionalDto> findProfessional(UUID id) {
-        return profesionalRepository.findByIdAndInactivo(id).map(ProfesionalMapper.INSTANCE::toDto);
+        return profesionalRepository.findByIdAndInactivo(id).map(ProfesionalEntityDtoMapper.INSTANCE::toDto);
     }
 
     @Override
     public Uni<Void> createProfessional(ProfesionalDto profesional) {
-        return profesionalRepository.saveProfesional(ProfesionalMapper.INSTANCE.toEntity(profesional));
+        return profesionalRepository.saveProfesional(ProfesionalEntityDtoMapper.INSTANCE.toEntity(profesional));
     }
 
     @Override
     public Uni<Void> updateProfessional(ProfesionalDto profesional, UUID id) {
-        return profesionalRepository.updateProfesional(ProfesionalMapper.INSTANCE.toEntity(profesional), id);
+        return profesionalRepository.updateProfesional(ProfesionalEntityDtoMapper.INSTANCE.toEntity(profesional), id);
     }
 
     @Override

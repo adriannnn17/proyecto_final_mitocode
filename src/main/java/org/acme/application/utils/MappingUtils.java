@@ -1,6 +1,7 @@
 package org.acme.application.utils;
 
 import lombok.experimental.UtilityClass;
+import org.acme.interfaces.responses.RegistroReservaSchemaResponse;
 import org.mapstruct.Named;
 
 import java.time.Instant;
@@ -57,25 +58,8 @@ public class MappingUtils {
     }
 
     @Named("stringToRegistroReservaResponseEstado")
-    public static org.acme.reservas.api.beans.RegistroReservaSchemaResponse.Estado stringToRegistroReservaResponseEstado(String s) {
+    public static RegistroReservaSchemaResponse.Estado stringToRegistroReservaResponseEstado(String s) {
         if (s == null) return null;
-        return org.acme.reservas.api.beans.RegistroReservaSchemaResponse.Estado.fromValue(s);
+        return RegistroReservaSchemaResponse.Estado.fromValue(s);
     }
-
-    @Named("clienteIdToClienteSchemaResponse")
-    public static org.acme.reservas.api.beans.ClienteSchemaResponse clienteIdToClienteSchemaResponse(java.util.UUID id) {
-        if (id == null) return null;
-        org.acme.reservas.api.beans.ClienteSchemaResponse c = new org.acme.reservas.api.beans.ClienteSchemaResponse();
-        c.setId(id);
-        return c;
-    }
-
-    @Named("profesionalIdToProfesionalSchemaResponse")
-    public static org.acme.reservas.api.beans.ProfesionalSchemaResponse profesionalIdToProfesionalSchemaResponse(java.util.UUID id) {
-        if (id == null) return null;
-        org.acme.reservas.api.beans.ProfesionalSchemaResponse p = new org.acme.reservas.api.beans.ProfesionalSchemaResponse();
-        p.setId(id);
-        return p;
-    }
-
 }

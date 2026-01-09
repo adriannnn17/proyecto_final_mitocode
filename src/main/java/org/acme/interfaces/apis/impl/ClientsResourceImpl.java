@@ -1,11 +1,10 @@
-package org.acme.interfaces.apis;
+package org.acme.interfaces.apis.impl;
 
 import jakarta.inject.Inject;
-import jakarta.validation.Valid;
 import org.acme.domain.cases.ClientsUseCase;
-import org.acme.reservas.api.ClientsResource;
-import org.acme.reservas.api.beans.ClienteSchemaRequest;
-import org.acme.reservas.api.beans.ClienteSchemaResponse;
+import org.acme.interfaces.apis.ClientsResource;
+import org.acme.interfaces.requests.ClienteSchemaRequest;
+import org.acme.interfaces.responses.ClienteSchemaResponse;
 
 import java.util.List;
 import java.util.concurrent.CompletionStage;
@@ -24,23 +23,23 @@ public class ClientsResourceImpl implements ClientsResource {
     }
 
     @Override
-    public CompletionStage<Void> createClients(@Valid ClienteSchemaRequest data) {
+    public CompletionStage<Void> createClients(ClienteSchemaRequest data) {
         return clientsUseCase.createClient(data).subscribeAsCompletionStage();
     }
 
     @Override
-    public CompletionStage<ClienteSchemaResponse> findClients(@Valid String idClients) {
+    public CompletionStage<ClienteSchemaResponse> findClients(String idClients) {
         return clientsUseCase.findClient(idClients).subscribeAsCompletionStage();
     }
 
     @Override
-    public CompletionStage<Void> updateClients(@Valid String idClients,
-                                               @Valid ClienteSchemaRequest data) {
+    public CompletionStage<Void> updateClients(String idClients,
+                                               ClienteSchemaRequest data) {
         return clientsUseCase.updateClient(idClients, data).subscribeAsCompletionStage();
     }
 
     @Override
-    public CompletionStage<Void> deleteClients(@Valid String idClients) {
+    public CompletionStage<Void> deleteClients(String idClients) {
         return clientsUseCase.deleteClient(idClients).subscribeAsCompletionStage();
     }
 }

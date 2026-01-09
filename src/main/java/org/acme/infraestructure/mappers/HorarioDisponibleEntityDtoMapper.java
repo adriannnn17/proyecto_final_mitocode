@@ -10,10 +10,10 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.UUID;
 
-@Mapper(componentModel = "cdi")
-public interface HorarioDisponibleMapper {
+@Mapper(componentModel = "jakarta")
+public interface HorarioDisponibleEntityDtoMapper {
 
-    HorarioDisponibleMapper INSTANCE = Mappers.getMapper(HorarioDisponibleMapper.class);
+    HorarioDisponibleEntityDtoMapper INSTANCE = Mappers.getMapper(HorarioDisponibleEntityDtoMapper.class);
 
     @Mapping(source = "profesional.id", target = "profesionalId")
     HorarioDisponibleDto toDto(HorarioDisponible entity);

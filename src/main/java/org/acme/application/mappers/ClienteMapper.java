@@ -1,13 +1,13 @@
 package org.acme.application.mappers;
 
 import org.acme.infraestructure.dtos.ClienteDto;
-import org.acme.reservas.api.beans.ClienteSchemaRequest;
-import org.acme.reservas.api.beans.ClienteSchemaResponse;
+import org.acme.interfaces.requests.ClienteSchemaRequest;
+import org.acme.interfaces.responses.ClienteSchemaResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "cdi")
+@Mapper(componentModel = "jakarta")
 public interface ClienteMapper {
 
     ClienteMapper INSTANCE = Mappers.getMapper(ClienteMapper.class);

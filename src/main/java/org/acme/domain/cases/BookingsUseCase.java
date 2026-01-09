@@ -2,9 +2,9 @@ package org.acme.domain.cases;
 
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
-import org.acme.reservas.api.beans.RegistroReservaSchemaRequest;
-import org.acme.reservas.api.beans.RegistroReservaSchemaResponse;
-import org.acme.reservas.api.beans.ReservasSegunProfesionalSchemaResponse;
+import org.acme.interfaces.requests.RegistroReservaSchemaRequest;
+import org.acme.interfaces.responses.RegistroReservaSchemaResponse;
+import org.acme.interfaces.responses.ReservasSegunProfesionalSchemaResponse;
 
 public interface BookingsUseCase {
 

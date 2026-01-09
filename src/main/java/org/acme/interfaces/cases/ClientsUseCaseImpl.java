@@ -4,11 +4,13 @@ import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Validator;
 import org.acme.application.mappers.ClienteMapper;
 import org.acme.domain.cases.ClientsUseCase;
 import org.acme.domain.services.ClienteService;
-import org.acme.reservas.api.beans.ClienteSchemaRequest;
-import org.acme.reservas.api.beans.ClienteSchemaResponse;
+import org.acme.interfaces.requests.ClienteSchemaRequest;
+import org.acme.interfaces.responses.ClienteSchemaResponse;
 
 import java.util.UUID;
 
@@ -21,6 +23,9 @@ public class ClientsUseCaseImpl implements ClientsUseCase {
     @Inject
     ClienteMapper appMapper;
 
+    @Inject
+    Validator validator;
+
     @Override
     public Multi<ClienteSchemaResponse> listClients() {
         return clienteService.listClients()
@@ -29,6 +34,10 @@ public class ClientsUseCaseImpl implements ClientsUseCase {
 
     @Override
     public Uni<Void> createClient(ClienteSchemaRequest data) {
+        var violations = validator.validate(data);
+        if (!violations.isEmpty()) {
+            throw new ConstraintViolationException(violations);
+        }
         return clienteService.createClient(appMapper.fromRequest(data));
     }
 

@@ -2,19 +2,20 @@ package org.acme.application.mappers;
 
 import org.acme.application.utils.MappingUtils;
 import org.acme.infraestructure.dtos.ReservaDto;
-import org.acme.reservas.api.beans.RegistroReservaSchemaRequest;
-import org.acme.reservas.api.beans.RegistroReservaSchemaResponse;
+import org.acme.interfaces.requests.RegistroReservaSchemaRequest;
+import org.acme.interfaces.responses.RegistroReservaSchemaResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "cdi", uses = {MappingUtils.class, ClienteMapper.class, ProfesionalMapper.class})
+@Mapper(
+        componentModel = "jakarta",
+        uses = {MappingUtils.class, ClienteMapper.class, ProfesionalMapper.class})
+
 public interface ReservaMapper {
 
     ReservaMapper INSTANCE = Mappers.getMapper(ReservaMapper.class);
 
-    @Mapping(source = "clienteId", target = "cliente", qualifiedByName = "clienteIdToClienteSchemaResponse")
-    @Mapping(source = "profesionalId", target = "profesional", qualifiedByName = "profesionalIdToProfesionalSchemaResponse")
     @Mapping(source = "fecha", target = "fecha", qualifiedByName = "localDateToString")
     @Mapping(source = "horaInicio", target = "horaInicio", qualifiedByName = "localTimeToDate")
     @Mapping(source = "horaFin", target = "horaFin", qualifiedByName = "localTimeToDate")

@@ -1,11 +1,10 @@
-package org.acme.interfaces.apis;
+package org.acme.interfaces.apis.impl;
 
 import jakarta.inject.Inject;
-import jakarta.validation.Valid;
 import org.acme.domain.cases.AvailabilityUseCase;
-import org.acme.reservas.api.AvailabilityResource;
-import org.acme.reservas.api.beans.HorarioDisponibleSchemaRequest;
-import org.acme.reservas.api.beans.HorarioDisponibleSchemaResponse;
+import org.acme.interfaces.apis.AvailabilityResource;
+import org.acme.interfaces.requests.HorarioDisponibleSchemaRequest;
+import org.acme.interfaces.responses.HorarioDisponibleSchemaResponse;
 
 import java.util.List;
 import java.util.concurrent.CompletionStage;
@@ -24,23 +23,23 @@ public class AvailabilityResourceImpl implements AvailabilityResource {
     }
 
     @Override
-    public CompletionStage<Void> createAvailabilityHour(@Valid HorarioDisponibleSchemaRequest data) {
+    public CompletionStage<Void> createAvailabilityHour(HorarioDisponibleSchemaRequest data) {
         return availabilityUseCase.createAvailabilityHour(data).subscribeAsCompletionStage();
     }
 
     @Override
-    public CompletionStage<HorarioDisponibleSchemaResponse> findAvailabilityHour(@Valid String availabilityHoursId) {
+    public CompletionStage<HorarioDisponibleSchemaResponse> findAvailabilityHour(String availabilityHoursId) {
         return availabilityUseCase.findAvailabilityHour(availabilityHoursId).subscribeAsCompletionStage();
     }
 
     @Override
-    public CompletionStage<Void> updateAvailabilityHour(@Valid String availabilityHoursId,
-                                                     @Valid HorarioDisponibleSchemaRequest data) {
+    public CompletionStage<Void> updateAvailabilityHour(String availabilityHoursId,
+                                                     HorarioDisponibleSchemaRequest data) {
         return availabilityUseCase.updateAvailabilityHour(availabilityHoursId, data).subscribeAsCompletionStage();
     }
 
     @Override
-    public CompletionStage<Void> deleteAvailabilityHour(@Valid String availabilityHoursId) {
+    public CompletionStage<Void> deleteAvailabilityHour(String availabilityHoursId) {
         return availabilityUseCase.deleteAvailabilityHour(availabilityHoursId).subscribeAsCompletionStage();
     }
 }

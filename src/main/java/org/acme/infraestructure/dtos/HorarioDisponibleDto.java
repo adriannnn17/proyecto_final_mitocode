@@ -16,6 +16,7 @@ import java.util.UUID;
 public class HorarioDisponibleDto {
     private UUID id;
     private UUID profesionalId;
+    private ProfesionalDto profesional;
     private LocalDate fecha;
     private LocalTime horaInicio;
     private LocalTime horaFin;

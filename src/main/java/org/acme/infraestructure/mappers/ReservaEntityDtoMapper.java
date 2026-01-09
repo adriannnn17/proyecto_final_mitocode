@@ -12,10 +12,10 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.UUID;
 
-@Mapper(componentModel = "cdi")
-public interface ReservaMapper {
+@Mapper(componentModel = "jakarta")
+public interface ReservaEntityDtoMapper {
 
-    ReservaMapper INSTANCE = Mappers.getMapper(ReservaMapper.class);
+    ReservaEntityDtoMapper INSTANCE = Mappers.getMapper(ReservaEntityDtoMapper.class);
 
     @Mapping(source = "cliente.id", target = "clienteId")
     @Mapping(source = "profesional.id", target = "profesionalId")

@@ -7,8 +7,8 @@ import jakarta.inject.Inject;
 import org.acme.application.mappers.HorarioDisponibleMapper;
 import org.acme.domain.cases.AvailabilityUseCase;
 import org.acme.domain.services.HorarioDisponibleService;
-import org.acme.reservas.api.beans.HorarioDisponibleSchemaRequest;
-import org.acme.reservas.api.beans.HorarioDisponibleSchemaResponse;
+import org.acme.interfaces.requests.HorarioDisponibleSchemaRequest;
+import org.acme.interfaces.responses.HorarioDisponibleSchemaResponse;
 
 import java.util.UUID;
 

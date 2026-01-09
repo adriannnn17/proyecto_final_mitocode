@@ -6,10 +6,10 @@ import org.acme.infraestructure.dtos.ClienteDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "cdi")
-public interface ClienteMapper {
+@Mapper(componentModel = "jakarta")
+public interface ClienteEntityDtoMapper {
 
-    ClienteMapper INSTANCE = Mappers.getMapper(ClienteMapper.class);
+    ClienteEntityDtoMapper INSTANCE = Mappers.getMapper(ClienteEntityDtoMapper.class);
 
     ClienteDto toDto(Cliente entity);
 

@@ -2,8 +2,8 @@ package org.acme.domain.cases;
 
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
-import org.acme.reservas.api.beans.ProfesionalSchemaRequest;
-import org.acme.reservas.api.beans.ProfesionalSchemaResponse;
+import org.acme.interfaces.requests.ProfesionalSchemaRequest;
+import org.acme.interfaces.responses.ProfesionalSchemaResponse;
 
 public interface ProfessionalsUseCase {
 

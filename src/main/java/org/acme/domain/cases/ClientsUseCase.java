@@ -2,8 +2,8 @@ package org.acme.domain.cases;
 
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
-import org.acme.reservas.api.beans.ClienteSchemaRequest;
-import org.acme.reservas.api.beans.ClienteSchemaResponse;
+import org.acme.interfaces.requests.ClienteSchemaRequest;
+import org.acme.interfaces.responses.ClienteSchemaResponse;
 
 public interface ClientsUseCase {
 
