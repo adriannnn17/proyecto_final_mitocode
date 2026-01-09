@@ -3,9 +3,9 @@ package org.acme.interfaces.apis;
 import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.*;
 
-import org.acme.interfaces.requests.RegistroReservaSchemaRequest;
-import org.acme.interfaces.responses.RegistroReservaSchemaResponse;
-import org.acme.interfaces.responses.ReservasSegunProfesionalSchemaResponse;
+import org.acme.interfaces.resources.requests.RegistroReservaSchemaRequest;
+import org.acme.interfaces.resources.responses.RegistroReservaSchemaResponse;
+import org.acme.interfaces.resources.responses.ReservasSegunProfesionalSchemaResponse;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 
 import java.util.List;

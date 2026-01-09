@@ -9,8 +9,8 @@ import jakarta.validation.Validator;
 import org.acme.application.mappers.ClienteMapper;
 import org.acme.domain.cases.ClientsUseCase;
 import org.acme.domain.services.ClienteService;
-import org.acme.interfaces.requests.ClienteSchemaRequest;
-import org.acme.interfaces.responses.ClienteSchemaResponse;
+import org.acme.interfaces.resources.requests.ClienteSchemaRequest;
+import org.acme.interfaces.resources.responses.ClienteSchemaResponse;
 
 import java.util.UUID;
 

@@ -1,4 +1,4 @@
-package org.acme.interfaces.requests;
+package org.acme.interfaces.resources.requests;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -9,6 +9,7 @@ import javax.annotation.processing.Generated;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -124,6 +125,8 @@ public class ClienteSchemaRequest {
     @JsonProperty("telefono")
     @NotNull(message = "El campo 'telefono' no puede ser nulo")
     @NotBlank(message = "El campo 'telefono' no puede estar vacío o en blanco")
+    @Pattern(regexp = "^9\\d{8}$", message = "El campo 'telefono' debe iniciar con 9 y contener exactamente 9 dígitos")
+
     public String getTelefono() {
         return telefono;
     }

@@ -4,12 +4,13 @@ import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 import org.acme.domain.model.entities.Reserva;
+import org.acme.infraestructure.dtos.others.ReservaGet;
 
 import java.util.UUID;
 
 public interface ReservaRepository extends PanacheRepositoryBase<Reserva, UUID> {
 
-    Multi<Reserva> findAllByEstado();
+    Multi<Reserva> findAllByEstado(ReservaGet reservaGet);
 
     Uni<Reserva> findByEstado(UUID id);
 
@@ -18,4 +19,6 @@ public interface ReservaRepository extends PanacheRepositoryBase<Reserva, UUID> 
     Uni<Void> updateReserva(Reserva reserva, UUID uuid);
 
     Uni<Void> deleteReserva(UUID uuid);
+
+    Uni<Boolean> validateOtrasReservasProfesional(Reserva reserva);
 }

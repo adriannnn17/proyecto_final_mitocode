@@ -2,8 +2,8 @@ package org.acme.domain.cases;
 
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
-import org.acme.interfaces.requests.ProfesionalSchemaRequest;
-import org.acme.interfaces.responses.ProfesionalSchemaResponse;
+import org.acme.interfaces.resources.requests.ProfesionalSchemaRequest;
+import org.acme.interfaces.resources.responses.ProfesionalSchemaResponse;
 
 public interface ProfessionalsUseCase {
 

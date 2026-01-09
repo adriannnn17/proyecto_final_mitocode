@@ -1,8 +1,8 @@
 package org.acme.application.mappers;
 
 import org.acme.infraestructure.dtos.ProfesionalDto;
-import org.acme.interfaces.requests.ProfesionalSchemaRequest;
-import org.acme.interfaces.responses.ProfesionalSchemaResponse;
+import org.acme.interfaces.resources.requests.ProfesionalSchemaRequest;
+import org.acme.interfaces.resources.responses.ProfesionalSchemaResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;

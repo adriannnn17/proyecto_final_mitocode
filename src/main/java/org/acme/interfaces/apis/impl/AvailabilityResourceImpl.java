@@ -3,8 +3,8 @@ package org.acme.interfaces.apis.impl;
 import jakarta.inject.Inject;
 import org.acme.domain.cases.AvailabilityUseCase;
 import org.acme.interfaces.apis.AvailabilityResource;
-import org.acme.interfaces.requests.HorarioDisponibleSchemaRequest;
-import org.acme.interfaces.responses.HorarioDisponibleSchemaResponse;
+import org.acme.interfaces.resources.requests.HorarioDisponibleSchemaRequest;
+import org.acme.interfaces.resources.responses.HorarioDisponibleSchemaResponse;
 
 import java.util.List;
 import java.util.concurrent.CompletionStage;

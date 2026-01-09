@@ -7,11 +7,16 @@ import jakarta.inject.Inject;
 import org.acme.application.mappers.ReservaMapper;
 import org.acme.domain.cases.BookingsUseCase;
 import org.acme.domain.services.ReservaService;
-import org.acme.interfaces.requests.RegistroReservaSchemaRequest;
-import org.acme.interfaces.responses.RegistroReservaSchemaResponse;
-import org.acme.interfaces.responses.ReservasSegunProfesionalSchemaResponse;
+import org.acme.infraestructure.dtos.others.ReservaGet;
+import org.acme.interfaces.resources.requests.RegistroReservaSchemaRequest;
+import org.acme.interfaces.resources.responses.RegistroReservaSchemaResponse;
+import org.acme.interfaces.resources.responses.ReservasSegunProfesionalSchemaResponse;
 
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+
+import static org.acme.application.utils.MappingUtils.buildProfessionalsSummary;
 
 @ApplicationScoped
 public class BookingsUseCaseImpl implements BookingsUseCase {
@@ -21,12 +26,26 @@ public class BookingsUseCaseImpl implements BookingsUseCase {
 
     @Override
     public Uni<ReservasSegunProfesionalSchemaResponse> listProfessionalQuery() {
-        return Uni.createFrom().item(ReservasSegunProfesionalSchemaResponse::new);
+        return reservaService.listBookings(ReservaGet.builder()
+                .build()).collect().asList().map(reservaDtos -> {
+
+            List<Map<String, Object>> professionals = buildProfessionalsSummary(reservaDtos);
+
+            ReservasSegunProfesionalSchemaResponse resp = new ReservasSegunProfesionalSchemaResponse();
+            resp.setAdditionalProperty("professionals", professionals);
+            return resp;
+        });
     }
 
     @Override
     public Multi<RegistroReservaSchemaResponse> listBookings(String idClient, String idProfessional, String maxDate, String minDate, String specialty) {
-        return reservaService.listBookings()
+        return reservaService.listBookings(ReservaGet.builder()
+                        .idClient(idClient)
+                        .idProfessional(idProfessional)
+                        .maxDate(maxDate)
+                        .minDate(minDate)
+                        .specialty(specialty)
+                        .build())
                 .map(ReservaMapper.INSTANCE::toResponse);
     }
 

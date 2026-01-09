@@ -1,10 +1,9 @@
 package org.acme.interfaces.apis;
 
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.*;
-import org.acme.interfaces.requests.ClienteSchemaRequest;
-import org.acme.interfaces.responses.ClienteSchemaResponse;
+import org.acme.interfaces.resources.requests.ClienteSchemaRequest;
+import org.acme.interfaces.resources.responses.ClienteSchemaResponse;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 
 import java.util.List;

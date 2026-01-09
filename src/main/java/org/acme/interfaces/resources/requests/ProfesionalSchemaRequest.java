@@ -1,31 +1,23 @@
-
-package org.acme.interfaces.responses;
+package org.acme.interfaces.resources.requests;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import javax.annotation.processing.Generated;
-import java.util.UUID;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "id",
     "nombres",
     "apellidos",
-    "email",
-    "telefono"
+    "especialidad"
 })
 @Generated("jsonschema2pojo")
-public class ClienteSchemaResponse {
+public class ProfesionalSchemaRequest {
 
-    /**
-     * 
-     * (Required)
-     * 
-     */
-    @JsonProperty("id")
-    private UUID id;
     /**
      * 
      * (Required)
@@ -45,35 +37,8 @@ public class ClienteSchemaResponse {
      * (Required)
      * 
      */
-    @JsonProperty("email")
-    private String email;
-    /**
-     * 
-     * (Required)
-     * 
-     */
-    @JsonProperty("telefono")
-    private String telefono;
-
-    /**
-     * 
-     * (Required)
-     * 
-     */
-    @JsonProperty("id")
-    public UUID getId() {
-        return id;
-    }
-
-    /**
-     * 
-     * (Required)
-     * 
-     */
-    @JsonProperty("id")
-    public void setId(UUID id) {
-        this.id = id;
-    }
+    @JsonProperty("especialidad")
+    private String especialidad;
 
     /**
      * 
@@ -81,6 +46,8 @@ public class ClienteSchemaResponse {
      * 
      */
     @JsonProperty("nombres")
+    @NotNull(message = "El campo 'nombres' no puede ser nulo")
+    @NotBlank(message = "El campo 'nombres' no puede estar vacío o en blanco")
     public String getNombres() {
         return nombres;
     }
@@ -101,6 +68,8 @@ public class ClienteSchemaResponse {
      * 
      */
     @JsonProperty("apellidos")
+    @NotNull(message = "El campo 'apellidos' no puede ser nulo")
+    @NotBlank(message = "El campo 'apellidos' no puede estar vacío o en blanco")
     public String getApellidos() {
         return apellidos;
     }
@@ -120,9 +89,11 @@ public class ClienteSchemaResponse {
      * (Required)
      * 
      */
-    @JsonProperty("email")
-    public String getEmail() {
-        return email;
+    @JsonProperty("especialidad")
+    @NotNull(message = "El campo 'especialidad' no puede ser nulo")
+    @NotBlank(message = "El campo 'especialidad' no puede estar vacío o en blanco")
+    public String getEspecialidad() {
+        return especialidad;
     }
 
     /**
@@ -130,29 +101,9 @@ public class ClienteSchemaResponse {
      * (Required)
      * 
      */
-    @JsonProperty("email")
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    /**
-     * 
-     * (Required)
-     * 
-     */
-    @JsonProperty("telefono")
-    public String getTelefono() {
-        return telefono;
-    }
-
-    /**
-     * 
-     * (Required)
-     * 
-     */
-    @JsonProperty("telefono")
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
+    @JsonProperty("especialidad")
+    public void setEspecialidad(String especialidad) {
+        this.especialidad = especialidad;
     }
 
 }

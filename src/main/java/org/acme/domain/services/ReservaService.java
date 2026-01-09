@@ -3,12 +3,13 @@ package org.acme.domain.services;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 import org.acme.infraestructure.dtos.ReservaDto;
+import org.acme.infraestructure.dtos.others.ReservaGet;
 
 import java.util.UUID;
 
 public interface ReservaService {
 
-    Multi<ReservaDto> listBookings();
+    Multi<ReservaDto> listBookings(ReservaGet reservaGet);
 
     Uni<ReservaDto> findBooking(UUID id);
 

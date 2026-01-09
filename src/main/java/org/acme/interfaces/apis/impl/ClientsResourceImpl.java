@@ -3,8 +3,8 @@ package org.acme.interfaces.apis.impl;
 import jakarta.inject.Inject;
 import org.acme.domain.cases.ClientsUseCase;
 import org.acme.interfaces.apis.ClientsResource;
-import org.acme.interfaces.requests.ClienteSchemaRequest;
-import org.acme.interfaces.responses.ClienteSchemaResponse;
+import org.acme.interfaces.resources.requests.ClienteSchemaRequest;
+import org.acme.interfaces.resources.responses.ClienteSchemaResponse;
 
 import java.util.List;
 import java.util.concurrent.CompletionStage;

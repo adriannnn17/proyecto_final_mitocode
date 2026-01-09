@@ -1,5 +1,5 @@
 
-package org.acme.interfaces.responses;
+package org.acme.interfaces.resources.responses;
 
 import java.util.Date;
 import java.util.UUID;

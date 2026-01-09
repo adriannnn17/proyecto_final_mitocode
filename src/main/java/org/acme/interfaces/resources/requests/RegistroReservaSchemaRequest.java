@@ -1,4 +1,4 @@
-package org.acme.interfaces.requests;
+package org.acme.interfaces.resources.requests;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;

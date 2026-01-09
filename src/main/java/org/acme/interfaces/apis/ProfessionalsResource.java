@@ -2,8 +2,8 @@ package org.acme.interfaces.apis;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.*;
-import org.acme.interfaces.requests.ProfesionalSchemaRequest;
-import org.acme.interfaces.responses.ProfesionalSchemaResponse;
+import org.acme.interfaces.resources.requests.ProfesionalSchemaRequest;
+import org.acme.interfaces.resources.responses.ProfesionalSchemaResponse;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 
 import java.util.List;

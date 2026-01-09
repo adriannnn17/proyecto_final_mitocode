@@ -11,6 +11,7 @@ import org.acme.domain.model.entities.HorarioDisponible;
 import org.acme.domain.model.enums.EstadoActivoEnum;
 import org.acme.domain.repository.HorarioDisponibleRepository;
 
+import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -78,6 +79,29 @@ public class HorarioDisponibleRepositoryImpl implements HorarioDisponibleReposit
             deleteHorarioDisponibleBlocking(uuid);
             return null;
         }).replaceWithVoid().runSubscriptionOn(Infrastructure.getDefaultWorkerPool());
+    }
+
+    @Override
+    public Uni<Boolean> validateHorarioDisponibleHours(HorarioDisponible horarioDisponible) {
+
+        return Uni.createFrom().item(() -> validateHorarioDisponibleHoursBlocking(horarioDisponible))
+                .runSubscriptionOn(Infrastructure.getDefaultWorkerPool());
+    }
+
+    @Transactional
+    protected boolean validateHorarioDisponibleHoursBlocking(HorarioDisponible horarioDisponible) {
+
+        String jpql = "SELECT COUNT(h) FROM HorarioDisponible h WHERE (h.profesional.id = :profId OR h.profesionalId = :profId) "
+                + "AND h.estado = :estado AND (h.horaInicio < :horaFin AND h.horaFin > :horaInicio)";
+
+        Long count = entityManager.createQuery(jpql, Long.class)
+                .setParameter("profId", horarioDisponible.getProfesional().getId())
+                .setParameter("estado", EstadoActivoEnum.ACTIVO)
+                .setParameter("horaInicio", horarioDisponible.getHoraInicio())
+                .setParameter("horaFin", horarioDisponible.getHoraFin())
+                .getSingleResult();
+
+        return count != null && count > 0;
     }
 
     @Transactional

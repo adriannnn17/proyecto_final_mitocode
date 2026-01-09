@@ -5,8 +5,11 @@ import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.acme.domain.repository.HorarioDisponibleRepository;
+import org.acme.domain.repository.ProfesionalRepository;
 import org.acme.domain.services.HorarioDisponibleService;
 import org.acme.infraestructure.dtos.HorarioDisponibleDto;
+import org.acme.infraestructure.exceptions.BusinessErrorType;
+import org.acme.infraestructure.exceptions.BusinessException;
 import org.acme.infraestructure.mappers.HorarioDisponibleEntityDtoMapper;
 
 import java.util.UUID;
@@ -17,6 +20,8 @@ public class HorarioDisponibleServiceImpl implements HorarioDisponibleService {
     @Inject
     HorarioDisponibleRepository horarioDisponibleRepository;
 
+    @Inject
+    ProfesionalRepository profesionalRepository;
 
     @Override
     public Multi<HorarioDisponibleDto> listAvailabilityHours() {
@@ -30,16 +35,41 @@ public class HorarioDisponibleServiceImpl implements HorarioDisponibleService {
 
     @Override
     public Uni<Void> createAvailabilityHour(HorarioDisponibleDto horario) {
-        return horarioDisponibleRepository.saveHorarioDisponible(HorarioDisponibleEntityDtoMapper.INSTANCE.toEntity(horario));
+
+        return validateHorarioDisponible(horario,
+                horarioDisponibleRepository.saveHorarioDisponible(HorarioDisponibleEntityDtoMapper.INSTANCE.toEntity(horario)));
     }
 
     @Override
     public Uni<Void> updateAvailabilityHour(HorarioDisponibleDto horario, UUID id) {
-        return horarioDisponibleRepository.updateHorarioDisponible(HorarioDisponibleEntityDtoMapper.INSTANCE.toEntity(horario), id);
+
+        return validateHorarioDisponible(horario,
+                horarioDisponibleRepository.updateHorarioDisponible(HorarioDisponibleEntityDtoMapper.INSTANCE.toEntity(horario), id));
     }
 
     @Override
     public Uni<Void> deleteAvailabilityHour(UUID id) {
         return horarioDisponibleRepository.deleteHorarioDisponible(id);
+    }
+
+    public Uni<Void> validateHorarioDisponible(HorarioDisponibleDto horario, Uni<Void> voidUni) {
+        return profesionalRepository.findByIdAndInactivo(horario.getId()).flatMap(profesional -> {
+            if (profesional == null) {
+                return Uni.createFrom().failure(
+                        new BusinessException(BusinessErrorType.VALIDATION_ERROR, "El profesional no esta activo en el sistema")
+                );
+            }
+
+            return horarioDisponibleRepository.validateHorarioDisponibleHours(HorarioDisponibleEntityDtoMapper.INSTANCE.toEntity(horario))
+                    .flatMap(aBoolean -> {
+                        if (aBoolean) {
+                            return Uni.createFrom().failure(
+                                    new BusinessException(BusinessErrorType.VALIDATION_ERROR, "El horario disponible ya existe en el sistema")
+                            );
+                        } else {
+                            return voidUni;
+                        }
+                    });
+        });
     }
 }

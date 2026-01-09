@@ -1,8 +1,8 @@
 package org.acme.application.mappers;
 
 import org.acme.infraestructure.dtos.HorarioDisponibleDto;
-import org.acme.interfaces.requests.HorarioDisponibleSchemaRequest;
-import org.acme.interfaces.responses.HorarioDisponibleSchemaResponse;
+import org.acme.interfaces.resources.requests.HorarioDisponibleSchemaRequest;
+import org.acme.interfaces.resources.responses.HorarioDisponibleSchemaResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;

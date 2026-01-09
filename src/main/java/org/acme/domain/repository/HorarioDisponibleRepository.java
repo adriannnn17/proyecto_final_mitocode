@@ -18,4 +18,6 @@ public interface HorarioDisponibleRepository extends PanacheRepositoryBase<Horar
     Uni<Void> updateHorarioDisponible(HorarioDisponible horario, UUID uuid);
 
     Uni<Void> deleteHorarioDisponible(UUID uuid);
+
+    Uni<Boolean> validateHorarioDisponibleHours(HorarioDisponible horario);
 }

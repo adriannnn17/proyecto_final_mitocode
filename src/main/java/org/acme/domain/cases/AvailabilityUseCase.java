@@ -2,8 +2,8 @@ package org.acme.domain.cases;
 
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
-import org.acme.interfaces.requests.HorarioDisponibleSchemaRequest;
-import org.acme.interfaces.responses.HorarioDisponibleSchemaResponse;
+import org.acme.interfaces.resources.requests.HorarioDisponibleSchemaRequest;
+import org.acme.interfaces.resources.responses.HorarioDisponibleSchemaResponse;
 
 public interface AvailabilityUseCase {
 

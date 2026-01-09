@@ -2,8 +2,8 @@ package org.acme.application.mappers;
 
 import org.acme.application.utils.MappingUtils;
 import org.acme.infraestructure.dtos.ReservaDto;
-import org.acme.interfaces.requests.RegistroReservaSchemaRequest;
-import org.acme.interfaces.responses.RegistroReservaSchemaResponse;
+import org.acme.interfaces.resources.requests.RegistroReservaSchemaRequest;
+import org.acme.interfaces.resources.responses.RegistroReservaSchemaResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;

@@ -2,8 +2,8 @@ package org.acme.interfaces.apis;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.*;
-import org.acme.interfaces.requests.HorarioDisponibleSchemaRequest;
-import org.acme.interfaces.responses.HorarioDisponibleSchemaResponse;
+import org.acme.interfaces.resources.requests.HorarioDisponibleSchemaRequest;
+import org.acme.interfaces.resources.responses.HorarioDisponibleSchemaResponse;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 
 import java.util.List;

@@ -3,9 +3,9 @@ package org.acme.interfaces.apis.impl;
 import jakarta.inject.Inject;
 import org.acme.domain.cases.BookingsUseCase;
 import org.acme.interfaces.apis.BookingsResource;
-import org.acme.interfaces.requests.RegistroReservaSchemaRequest;
-import org.acme.interfaces.responses.RegistroReservaSchemaResponse;
-import org.acme.interfaces.responses.ReservasSegunProfesionalSchemaResponse;
+import org.acme.interfaces.resources.requests.RegistroReservaSchemaRequest;
+import org.acme.interfaces.resources.responses.RegistroReservaSchemaResponse;
+import org.acme.interfaces.resources.responses.ReservasSegunProfesionalSchemaResponse;
 
 import java.util.List;
 import java.util.concurrent.CompletionStage;
