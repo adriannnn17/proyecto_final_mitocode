@@ -4,6 +4,7 @@ import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.acme.domain.model.entities.Profesional;
 import org.acme.domain.repository.HorarioDisponibleRepository;
 import org.acme.domain.repository.ProfesionalRepository;
 import org.acme.domain.services.HorarioDisponibleService;
@@ -54,23 +55,40 @@ public class HorarioDisponibleServiceImpl implements HorarioDisponibleService {
     }
 
     public Uni<Void> validateHorarioDisponible(HorarioDisponibleDto horario, Uni<Void> voidUni) {
-        return profesionalRepository.findByIdAndInactivo(horario.getProfesionalId()).flatMap(profesional -> {
-            if (profesional == null) {
-                return Uni.createFrom().failure(
-                        new BusinessException(BusinessErrorType.VALIDATION_ERROR, "El profesional no esta activo en el sistema")
-                );
-            }
 
-            return horarioDisponibleRepository.validateHorarioDisponibleHours(HorarioDisponibleEntityDtoMapper.INSTANCE.toEntity(horario))
-                    .flatMap(aBoolean -> {
-                        if (aBoolean) {
-                            return Uni.createFrom().failure(
-                                    new BusinessException(BusinessErrorType.VALIDATION_ERROR, "El horario disponible ya existe en el sistema")
-                            );
-                        } else {
-                            return voidUni;
-                        }
-                    });
-        });
+        return Uni.combine()
+                .all()
+                .unis(
+                        Uni.createFrom().item(horario.getHoraInicio().isBefore(horario.getHoraFin())),
+                        profesionalRepository.findByIdAndInactivo(horario.getProfesionalId()),
+                        horarioDisponibleRepository.validateHorarioDisponibleHours(HorarioDisponibleEntityDtoMapper.INSTANCE.toEntity(horario))
+                ).asTuple().flatMap(objects -> {
+                    Boolean fechaValidacion = objects.getItem1();
+                    Profesional profesional = objects.getItem2();
+                    Boolean existsHorario = objects.getItem3();
+
+                    if(!fechaValidacion) {
+                        return Uni.createFrom().failure(
+                                new BusinessException(
+                                        BusinessErrorType.VALIDATION_ERROR,
+                                        "La hora de inicio debe ser anterior a la hora de fin"
+                                )
+                        );
+                    }
+
+                    if (profesional == null) {
+                        return Uni.createFrom().failure(
+                                new BusinessException(BusinessErrorType.VALIDATION_ERROR, "El profesional no esta activo en el sistema")
+                        );
+                    }
+
+                    if (existsHorario) {
+                        return Uni.createFrom().failure(
+                                new BusinessException(BusinessErrorType.VALIDATION_ERROR, "El horario disponible ya existe en el sistema")
+                        );
+                    }
+
+                    return voidUni;
+                });
     }
 }

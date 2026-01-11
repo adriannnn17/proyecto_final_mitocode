@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import static org.acme.application.utils.MappingUtils.localTimeToString;
 import static org.acme.application.utils.MappingUtils.stringToLocalDate;
 
 @ApplicationScoped
@@ -142,33 +143,24 @@ public class ReservaRepositoryImpl implements ReservaRepository {
     @Transactional
     protected boolean validateOtrasReservasProfesionalBlocking(Reserva reserva) {
 
-        StringBuilder jpql = new StringBuilder("SELECT COUNT(r) FROM Reserva r WHERE r.profesional.id = :profId ");
-        jpql.append("AND r.cliente.id = :clieId ");
-        jpql.append("AND r.estado = :estado ");
-        jpql.append("AND r.fecha = :fecha ");
-        jpql.append("AND r.horaInicio <= :horaInicio ");
-        jpql.append("AND r.horaFin >= :horaFin ");
-        if (reserva.getId() != null) {
-            jpql.append("AND r.id <> :id");
-        }
+        String sql = "SELECT COUNT_BIG(r.Id) FROM Reserva r " +
+                "WHERE r.ProfesionalId = :profId " +
+                "AND r.ClienteId = :clieId " +
+                "AND r.EstadoKd = :estado " +
+                "AND r.Fecha = :fecha " +
+                "AND r.HoraInicio <= :horaInicio " +
+                "AND r.HoraFin >= :horaFin " +
+                "AND ( :id IS NULL OR r.Id <> :id )";
 
-        TypedQuery<Long> query = entityManager.createQuery(jpql.toString(), Long.class);
-        query.setParameter("profId", reserva.getProfesional().getId());
-        query.setParameter("clieId", reserva.getCliente().getId());
-        query.setParameter("estado", EstadoReservaEnum.CREADA);
-        query.setParameter("fecha", reserva.getFecha());
-
-
-        LocalTime hi = reserva.getHoraInicio();
-        LocalTime hf = reserva.getHoraFin();
-        query.setParameter("horaInicio", hi);
-        query.setParameter("horaFin", hf);
-
-        if (reserva.getId() != null) {
-            query.setParameter("id", reserva.getId());
-        }
-
-        Long count = query.getSingleResult();
+        Long count = (Long) entityManager.createNativeQuery(sql)
+                .setParameter("profId", reserva.getProfesional().getId())
+                .setParameter("clieId", reserva.getCliente().getId())
+                .setParameter("estado", EstadoReservaEnum.CREADA.getId())
+                .setParameter("fecha", reserva.getFecha())
+                .setParameter("horaInicio", localTimeToString(reserva.getHoraInicio()))
+                .setParameter("horaFin", localTimeToString(reserva.getHoraFin()))
+                .setParameter("id", reserva.getId())
+                .getSingleResult();
 
         return count != null && count > 0;
     }

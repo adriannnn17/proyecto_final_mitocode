@@ -75,6 +75,7 @@ public class ReservaServiceImpl implements ReservaService {
                         Uni.combine()
                                 .all()
                                 .unis(
+                                        Uni.createFrom().item(reservaDto.getHoraInicio().isBefore(reservaDto.getHoraFin())),
                                         horarioDisponibleRepository.validateHorarioDisponibleHours(
                                                 HorarioDisponibleEntityDtoMapper.INSTANCE
                                                         .toEntity(mapReservaToHorarioDisponibleHours(reservaDto))
@@ -86,8 +87,18 @@ public class ReservaServiceImpl implements ReservaService {
                                 .asTuple()
                 )
                 .onItem().transformToUni(tuple -> {
-                    Boolean horarioDisponible = tuple.getItem1();
-                    Boolean otrasReservas = tuple.getItem2();
+                    Boolean fechaValidacion = tuple.getItem1();
+                    Boolean horarioDisponible = tuple.getItem2();
+                    Boolean otrasReservas = tuple.getItem3();
+
+                    if(!fechaValidacion) {
+                        return Uni.createFrom().failure(
+                                new BusinessException(
+                                        BusinessErrorType.VALIDATION_ERROR,
+                                        "La hora de inicio debe ser anterior a la hora de fin"
+                                )
+                        );
+                    }
 
                     if (!horarioDisponible) {
                         return Uni.createFrom().failure(

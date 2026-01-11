@@ -110,8 +110,6 @@ public class HorarioDisponibleRepositoryImpl implements HorarioDisponibleReposit
                 .setParameter("id", horarioDisponible.getId())
                 .getSingleResult();
 
-
-
         return count != null && count > 0;
     }
 
