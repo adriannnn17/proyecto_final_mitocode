@@ -4,6 +4,19 @@ Breve descripción: Proyecto backend basado en Quarkus que gestiona reservas (en
 
 ---
 
+Instrucciones para ejecutar
+
+
+- Una vez clonado el repositorio, para ejecutar la aplicación localmente:
+- Cree la base de datos y las tablas.
+- Debe ejecutar "mvn clean compile"
+- Luego ejecutar el proyecto con "mvn quarkus:dev", pero para que funcione la conexion (si se usa azure sql) puede que deba ejecutarse 2 veces por tema de latencia.
+- Si necesita informacion de los endpoints, acceder a http://localhost:8080/q/swagger-ui
+- Se probo ejecutar quarkus en linux
+
+
+---
+
 ✨ Características
 
 - API REST generada a partir de OpenAPI (configurado en `application.properties`).
