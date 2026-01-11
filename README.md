@@ -3,6 +3,7 @@
 Breve descripción: Proyecto backend basado en Quarkus que gestiona reservas (entidades como Cliente, Profesional, HorarioDisponible, Reserva), con generación de APIs desde OpenAPI y persistencia en base de datos relacional.
 
 Mayor info en la WIKI del proyecto en GitHub.
+
 ---
 
 Instrucciones para ejecutar
@@ -15,6 +16,17 @@ Instrucciones para ejecutar
 - Si necesita informacion de los endpoints, acceder a http://localhost:8080/q/swagger-ui
 - Se probo ejecutar quarkus en linux
 
+
+---
+
+Decisiones técnicas
+
+-- Se uso AzureSQL como base de datos relacional, no reactiva, es por ello que se uso Panache ORM y se trabajo de forma transaccionar para trabajar con una conexion bloqueante.
+-- Se utilizo contract first en el proyecto, generando el codigo de los schemas y los endpoints usando el generador de Quarkus y APIDog para la documentacion del yml openapi de input
+-- Se utilizo Liquibase para versionar la BD, trabaja con la conexion no reactiva de quarkus
+-- Se utilizo MapStruct para los mapeos entre DTOs y entidades
+-- Se utilizo Lombok para reducir codigo boilerplate en los modelos y constructores
+-- Se utilizo Mutiny para programacion reactiva en las capas de servicio y controladores
 
 ---
 
