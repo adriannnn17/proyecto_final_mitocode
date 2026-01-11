@@ -2,6 +2,7 @@
 
 Breve descripción: Proyecto backend basado en Quarkus que gestiona reservas (entidades como Cliente, Profesional, HorarioDisponible, Reserva), con generación de APIs desde OpenAPI y persistencia en base de datos relacional.
 
+Mayor info en la WIKI del proyecto en GitHub.
 ---
 
 Instrucciones para ejecutar
