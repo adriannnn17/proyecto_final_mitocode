@@ -36,8 +36,9 @@ public class HorarioDisponibleServiceImpl implements HorarioDisponibleService {
     @Override
     public Uni<Void> createAvailabilityHour(HorarioDisponibleDto horario) {
 
-        return validateHorarioDisponible(horario,
-                horarioDisponibleRepository.saveHorarioDisponible(HorarioDisponibleEntityDtoMapper.INSTANCE.toEntity(horario)));
+
+            return validateHorarioDisponible(horario,
+                    horarioDisponibleRepository.saveHorarioDisponible(HorarioDisponibleEntityDtoMapper.INSTANCE.toEntity(horario)));
     }
 
     @Override
@@ -53,7 +54,7 @@ public class HorarioDisponibleServiceImpl implements HorarioDisponibleService {
     }
 
     public Uni<Void> validateHorarioDisponible(HorarioDisponibleDto horario, Uni<Void> voidUni) {
-        return profesionalRepository.findByIdAndInactivo(horario.getId()).flatMap(profesional -> {
+        return profesionalRepository.findByIdAndInactivo(horario.getProfesionalId()).flatMap(profesional -> {
             if (profesional == null) {
                 return Uni.createFrom().failure(
                         new BusinessException(BusinessErrorType.VALIDATION_ERROR, "El profesional no esta activo en el sistema")

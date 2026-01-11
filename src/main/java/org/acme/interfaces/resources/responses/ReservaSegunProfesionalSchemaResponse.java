@@ -9,31 +9,64 @@ import javax.annotation.processing.Generated;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "cliente",
-    "profesional"
+        "numeroReserva",
+        "cliente",
+        "profesional"
 })
 @Generated("jsonschema2pojo")
 public class ReservaSegunProfesionalSchemaResponse {
 
     /**
-     * 
+     *
      * (Required)
-     * 
+     *
+     */
+    @JsonProperty("numeroReserva")
+    private String numeroReserva;
+    /**
+     *
+     * (Required)
+     *
+     */
+    /**
+     *
+     * (Required)
+     *
      */
     @JsonProperty("cliente")
     private String cliente;
     /**
-     * 
+     *
      * (Required)
-     * 
+     *
      */
     @JsonProperty("profesional")
     private String profesional;
 
     /**
-     * 
+     *
      * (Required)
-     * 
+     *
+     */
+    @JsonProperty("numeroReserva")
+    public String getNumeroReserva() {
+        return numeroReserva;
+    }
+
+    /**
+     *
+     * (Required)
+     *
+     */
+    @JsonProperty("numeroReserva")
+    public void setNumeroReserva(String numeroReserva) {
+        this.numeroReserva = numeroReserva;
+    }
+
+    /**
+     *
+     * (Required)
+     *
      */
     @JsonProperty("cliente")
     public String getCliente() {
@@ -41,9 +74,9 @@ public class ReservaSegunProfesionalSchemaResponse {
     }
 
     /**
-     * 
+     *
      * (Required)
-     * 
+     *
      */
     @JsonProperty("cliente")
     public void setCliente(String cliente) {
@@ -51,9 +84,9 @@ public class ReservaSegunProfesionalSchemaResponse {
     }
 
     /**
-     * 
+     *
      * (Required)
-     * 
+     *
      */
     @JsonProperty("profesional")
     public String getProfesional() {
@@ -61,9 +94,9 @@ public class ReservaSegunProfesionalSchemaResponse {
     }
 
     /**
-     * 
+     *
      * (Required)
-     * 
+     *
      */
     @JsonProperty("profesional")
     public void setProfesional(String profesional) {

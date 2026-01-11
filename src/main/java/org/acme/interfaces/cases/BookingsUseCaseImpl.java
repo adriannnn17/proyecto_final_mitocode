@@ -10,6 +10,7 @@ import org.acme.domain.services.ReservaService;
 import org.acme.infraestructure.dtos.others.ReservaGet;
 import org.acme.interfaces.resources.requests.RegistroReservaSchemaRequest;
 import org.acme.interfaces.resources.responses.RegistroReservaSchemaResponse;
+import org.acme.interfaces.resources.responses.ReservaSegunProfesionalSchemaResponse;
 import org.acme.interfaces.resources.responses.ReservasSegunProfesionalSchemaResponse;
 
 import java.util.List;
@@ -29,21 +30,20 @@ public class BookingsUseCaseImpl implements BookingsUseCase {
         return reservaService.listBookings(ReservaGet.builder()
                 .build()).collect().asList().map(reservaDtos -> {
 
-            List<Map<String, Object>> professionals = buildProfessionalsSummary(reservaDtos);
+            Map<String, List<ReservaSegunProfesionalSchemaResponse>> map = buildProfessionalsSummary(reservaDtos);
 
             ReservasSegunProfesionalSchemaResponse resp = new ReservasSegunProfesionalSchemaResponse();
-            resp.setAdditionalProperty("professionals", professionals);
+            resp.setAdditionalProperty(map);
             return resp;
         });
     }
 
     @Override
-    public Multi<RegistroReservaSchemaResponse> listBookings(String idClient, String idProfessional, String maxDate, String minDate, String specialty) {
+    public Multi<RegistroReservaSchemaResponse> listBookings(String idClient, String idProfessional, String date, String specialty) {
         return reservaService.listBookings(ReservaGet.builder()
                         .idClient(idClient)
                         .idProfessional(idProfessional)
-                        .maxDate(maxDate)
-                        .minDate(minDate)
+                        .date(date)
                         .specialty(specialty)
                         .build())
                 .map(ReservaMapper.INSTANCE::toResponse);

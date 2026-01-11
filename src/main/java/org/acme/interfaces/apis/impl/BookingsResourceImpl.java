@@ -23,10 +23,9 @@ public class BookingsResourceImpl implements BookingsResource {
     @Override
     public CompletionStage<List<RegistroReservaSchemaResponse>> listBookings(String idClient,
                                                                              String idProfessional,
-                                                                             String maxDate,
-                                                                             String minDate,
+                                                                             String date,
                                                                              String specialty) {
-        return bookingsUseCase.listBookings(idClient, idProfessional, maxDate, minDate, specialty)
+        return bookingsUseCase.listBookings(idClient, idProfessional, date, specialty)
                 .collect()
                 .asList()
                 .subscribeAsCompletionStage();

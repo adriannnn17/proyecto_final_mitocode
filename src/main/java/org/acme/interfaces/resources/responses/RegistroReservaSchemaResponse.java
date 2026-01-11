@@ -41,17 +41,15 @@ public class RegistroReservaSchemaResponse {
      * (Required)
      * 
      */
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "UTC")
     @JsonProperty("horaInicio")
-    private Date horaInicio;
+    private String horaInicio;
     /**
      * 
      * (Required)
      * 
      */
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "UTC")
     @JsonProperty("horaFin")
-    private Date horaFin;
+    private String horaFin;
     /**
      * 
      * (Required)
@@ -120,7 +118,7 @@ public class RegistroReservaSchemaResponse {
      * 
      */
     @JsonProperty("horaInicio")
-    public Date getHoraInicio() {
+    public String getHoraInicio() {
         return horaInicio;
     }
 
@@ -130,7 +128,7 @@ public class RegistroReservaSchemaResponse {
      * 
      */
     @JsonProperty("horaInicio")
-    public void setHoraInicio(Date horaInicio) {
+    public void setHoraInicio(String horaInicio) {
         this.horaInicio = horaInicio;
     }
 
@@ -140,7 +138,7 @@ public class RegistroReservaSchemaResponse {
      * 
      */
     @JsonProperty("horaFin")
-    public Date getHoraFin() {
+    public String getHoraFin() {
         return horaFin;
     }
 
@@ -150,7 +148,7 @@ public class RegistroReservaSchemaResponse {
      * 
      */
     @JsonProperty("horaFin")
-    public void setHoraFin(Date horaFin) {
+    public void setHoraFin(String horaFin) {
         this.horaFin = horaFin;
     }
 

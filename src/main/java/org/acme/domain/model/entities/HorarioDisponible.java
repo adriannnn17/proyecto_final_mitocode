@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.acme.domain.model.enums.EstadoActivoEnum;
 import org.acme.infraestructure.db.converters.EstadoActivoEnumConverter;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -34,9 +36,11 @@ public class HorarioDisponible {
     private LocalDate fecha;
 
     @Column(name = "HoraInicio", nullable = false)
+    @JdbcTypeCode(SqlTypes.TIME)
     private LocalTime horaInicio;
 
     @Column(name = "HoraFin", nullable = false)
+    @JdbcTypeCode(SqlTypes.TIME)
     private LocalTime horaFin;
 
     @Convert(converter = EstadoActivoEnumConverter.class)

@@ -1,14 +1,13 @@
 
 package org.acme.interfaces.resources.responses;
 
-import java.util.Date;
-import java.util.UUID;
-import javax.annotation.processing.Generated;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.acme.reservas.api.beans.ProfesionalSchemaResponse;
+
+import javax.annotation.processing.Generated;
+import java.util.UUID;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -34,7 +33,7 @@ public class HorarioDisponibleSchemaResponse {
      *
      */
     @JsonProperty("profesional")
-    private org.acme.reservas.api.beans.ProfesionalSchemaResponse profesional;
+    private ProfesionalSchemaResponse profesional;
     /**
      *
      * (Required)
@@ -47,17 +46,11 @@ public class HorarioDisponibleSchemaResponse {
      * (Required)
      *
      */
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "UTC")
     @JsonProperty("horaInicio")
-    private Date horaInicio;
-    /**
-     *
-     * (Required)
-     *
-     */
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "UTC")
+    private String horaInicio;
+
     @JsonProperty("horaFin")
-    private Date horaFin;
+    private String horaFin;
 
     /**
      *
@@ -85,7 +78,7 @@ public class HorarioDisponibleSchemaResponse {
      *
      */
     @JsonProperty("profesional")
-    public org.acme.reservas.api.beans.ProfesionalSchemaResponse getProfesional() {
+    public ProfesionalSchemaResponse getProfesional() {
         return profesional;
     }
 
@@ -125,7 +118,7 @@ public class HorarioDisponibleSchemaResponse {
      *
      */
     @JsonProperty("horaInicio")
-    public Date getHoraInicio() {
+    public String getHoraInicio() {
         return horaInicio;
     }
 
@@ -135,7 +128,7 @@ public class HorarioDisponibleSchemaResponse {
      *
      */
     @JsonProperty("horaInicio")
-    public void setHoraInicio(Date horaInicio) {
+    public void setHoraInicio(String horaInicio) {
         this.horaInicio = horaInicio;
     }
 
@@ -145,7 +138,7 @@ public class HorarioDisponibleSchemaResponse {
      *
      */
     @JsonProperty("horaFin")
-    public Date getHoraFin() {
+    public String getHoraFin() {
         return horaFin;
     }
 
@@ -155,7 +148,7 @@ public class HorarioDisponibleSchemaResponse {
      *
      */
     @JsonProperty("horaFin")
-    public void setHoraFin(Date horaFin) {
+    public void setHoraFin(String horaFin) {
         this.horaFin = horaFin;
     }
 

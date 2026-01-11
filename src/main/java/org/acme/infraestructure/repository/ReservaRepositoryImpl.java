@@ -6,14 +6,20 @@ import io.smallrye.mutiny.infrastructure.Infrastructure;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import org.acme.domain.model.entities.Reserva;
 import org.acme.domain.model.enums.EstadoReservaEnum;
 import org.acme.domain.repository.ReservaRepository;
 import org.acme.infraestructure.dtos.others.ReservaGet;
 
+import java.time.LocalTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+
+import static org.acme.application.utils.MappingUtils.stringToLocalDate;
 
 @ApplicationScoped
 public class ReservaRepositoryImpl implements ReservaRepository {
@@ -31,29 +37,20 @@ public class ReservaRepositoryImpl implements ReservaRepository {
     @Transactional
     protected List<Reserva> findAllByEstadoBlocking(ReservaGet reservaGet) {
 
-        StringBuilder jpql = new StringBuilder("SELECT r FROM Reserva r WHERE r.estado != :cancelada");
-        java.util.Map<String, Object> params = new java.util.HashMap<>();
+        StringBuilder jpql = new StringBuilder("SELECT r FROM Reserva r WHERE r.estado = :estado");
+        Map<String, Object> params = new HashMap<>();
 
         if (reservaGet != null) {
             if (reservaGet.getIdClient() != null && !reservaGet.getIdClient().isBlank()) {
-                try {
-                    java.util.UUID clientId = java.util.UUID.fromString(reservaGet.getIdClient());
-                    jpql.append(" AND r.cliente.id = :clientId");
-                    params.put("clientId", clientId);
-                } catch (IllegalArgumentException ignored) {
-                    // valor inválido, ignorar el filtro
-                }
+                UUID clientId = UUID.fromString(reservaGet.getIdClient());
+                jpql.append(" AND r.cliente.id = :clientId");
+                params.put("clientId", clientId);
             }
 
-            // idProfessional -> filtrar por r.profesional.id
             if (reservaGet.getIdProfessional() != null && !reservaGet.getIdProfessional().isBlank()) {
-                try {
-                    java.util.UUID profId = java.util.UUID.fromString(reservaGet.getIdProfessional());
-                    jpql.append(" AND r.profesional.id = :profId");
-                    params.put("profId", profId);
-                } catch (IllegalArgumentException ignored) {
-                    // valor inválido, ignorar
-                }
+                UUID profId = UUID.fromString(reservaGet.getIdProfessional());
+                jpql.append(" AND r.profesional.id = :profId");
+                params.put("profId", profId);
             }
 
             if (reservaGet.getSpecialty() != null && !reservaGet.getSpecialty().isBlank()) {
@@ -61,29 +58,16 @@ public class ReservaRepositoryImpl implements ReservaRepository {
                 params.put("specialty", reservaGet.getSpecialty().toLowerCase());
             }
 
-            if (reservaGet.getMinDate() != null && !reservaGet.getMinDate().isBlank()) {
-                try {
-                    java.time.LocalDate minDate = java.time.LocalDate.parse(reservaGet.getMinDate());
-                    jpql.append(" AND r.fecha >= :minDate");
-                    params.put("minDate", minDate);
-                } catch (Exception ignored) {
-                    // formato inválido, ignorar
-                }
-            }
-
-            if (reservaGet.getMaxDate() != null && !reservaGet.getMaxDate().isBlank()) {
-                try {
-                    java.time.LocalDate maxDate = java.time.LocalDate.parse(reservaGet.getMaxDate());
-                    jpql.append(" AND r.fecha <= :maxDate");
-                    params.put("maxDate", maxDate);
-                } catch (Exception ignored) {
-                    // formato inválido, ignorar
-                }
+            if (reservaGet.getDate() != null && !reservaGet.getDate().isBlank()) {
+                jpql.append(" AND r.fecha = :fecha");
+                params.put("fecha", stringToLocalDate(reservaGet.getDate()));
             }
         }
 
-        jakarta.persistence.TypedQuery<Reserva> query = entityManager.createQuery(jpql.toString(), Reserva.class);
-        query.setParameter("cancelada", EstadoReservaEnum.CANCELADA);
+        TypedQuery<Reserva> query = entityManager.createQuery(jpql.toString(), Reserva.class);
+
+        query.setParameter("estado", EstadoReservaEnum.CREADA);
+
         for (java.util.Map.Entry<String, Object> e : params.entrySet()) {
             query.setParameter(e.getKey(), e.getValue());
         }
@@ -157,15 +141,34 @@ public class ReservaRepositoryImpl implements ReservaRepository {
 
     @Transactional
     protected boolean validateOtrasReservasProfesionalBlocking(Reserva reserva) {
-        String jpql = "SELECT COUNT(r) FROM Reserva r WHERE (r.profesional.id = :profId OR r.profesionalId = :profId) "
-                + "AND r.estado = :estado AND (r.horaInicio < :horaFin AND r.horaFin > :horaInicio)";
 
-        Long count = entityManager.createQuery(jpql, Long.class)
-                .setParameter("profId", reserva.getProfesional().getId())
-                .setParameter("estado", EstadoReservaEnum.CREADA)
-                .setParameter("horaInicio", reserva.getHoraInicio())
-                .setParameter("horaFin", reserva.getHoraFin())
-                .getSingleResult();
+        StringBuilder jpql = new StringBuilder("SELECT COUNT(r) FROM Reserva r WHERE r.profesional.id = :profId ");
+        jpql.append("AND r.cliente.id = :clieId ");
+        jpql.append("AND r.estado = :estado ");
+        jpql.append("AND r.fecha = :fecha ");
+        jpql.append("AND r.horaInicio <= :horaInicio ");
+        jpql.append("AND r.horaFin >= :horaFin ");
+        if (reserva.getId() != null) {
+            jpql.append("AND r.id <> :id");
+        }
+
+        TypedQuery<Long> query = entityManager.createQuery(jpql.toString(), Long.class);
+        query.setParameter("profId", reserva.getProfesional().getId());
+        query.setParameter("clieId", reserva.getCliente().getId());
+        query.setParameter("estado", EstadoReservaEnum.CREADA);
+        query.setParameter("fecha", reserva.getFecha());
+
+
+        LocalTime hi = reserva.getHoraInicio();
+        LocalTime hf = reserva.getHoraFin();
+        query.setParameter("horaInicio", hi);
+        query.setParameter("horaFin", hf);
+
+        if (reserva.getId() != null) {
+            query.setParameter("id", reserva.getId());
+        }
+
+        Long count = query.getSingleResult();
 
         return count != null && count > 0;
     }

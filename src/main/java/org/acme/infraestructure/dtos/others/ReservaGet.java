@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 public class ReservaGet {
     String idClient;
     String idProfessional;
-    String maxDate;
-    String minDate;
+    String date;
     String specialty;
 }

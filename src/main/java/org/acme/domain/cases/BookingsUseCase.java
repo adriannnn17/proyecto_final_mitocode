@@ -10,7 +10,7 @@ public interface BookingsUseCase {
 
     Uni<ReservasSegunProfesionalSchemaResponse> listProfessionalQuery();
 
-    Multi<RegistroReservaSchemaResponse> listBookings(String idClient, String idProfessional, String maxDate, String minDate, String specialty);
+    Multi<RegistroReservaSchemaResponse> listBookings(String idClient, String idProfessional, String date, String specialty);
 
     Uni<Void> createBookings(RegistroReservaSchemaRequest data);
 

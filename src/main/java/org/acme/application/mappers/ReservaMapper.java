@@ -10,23 +10,23 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper(
         componentModel = "jakarta",
-        uses = {MappingUtils.class, ClienteMapper.class, ProfesionalMapper.class})
+        uses = {MappingUtils.class})
 
 public interface ReservaMapper {
 
     ReservaMapper INSTANCE = Mappers.getMapper(ReservaMapper.class);
 
     @Mapping(source = "fecha", target = "fecha", qualifiedByName = "localDateToString")
-    @Mapping(source = "horaInicio", target = "horaInicio", qualifiedByName = "localTimeToDate")
-    @Mapping(source = "horaFin", target = "horaFin", qualifiedByName = "localTimeToDate")
+    @Mapping(source = "horaInicio", target = "horaInicio", qualifiedByName = "localTimeToString")
+    @Mapping(source = "horaFin", target = "horaFin", qualifiedByName = "localTimeToString")
     @Mapping(source = "estado", target = "estado", qualifiedByName = "stringToRegistroReservaResponseEstado")
     RegistroReservaSchemaResponse toResponse(ReservaDto dto);
 
     @Mapping(source = "clienteId", target = "clienteId")
     @Mapping(source = "profesionalId", target = "profesionalId")
     @Mapping(source = "fecha", target = "fecha", qualifiedByName = "stringToLocalDate")
-    @Mapping(source = "horaInicio", target = "horaInicio", qualifiedByName = "dateToLocalTime")
-    @Mapping(source = "horaFin", target = "horaFin", qualifiedByName = "dateToLocalTime")
+    @Mapping(source = "horaInicio", target = "horaInicio", qualifiedByName = "stringToLocalTime")
+    @Mapping(source = "horaFin", target = "horaFin", qualifiedByName = "stringToLocalTime")
     ReservaDto fromRequest(RegistroReservaSchemaRequest src);
 
 }

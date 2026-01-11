@@ -57,6 +57,7 @@ public class ReservaServiceImpl implements ReservaService {
 
     @Override
     public Uni<Void> updateBooking(ReservaDto reserva, UUID id) {
+        reserva.setId(id);
         return validateConditional(reserva)
                 .onItem().ignore()
                 .andSwitchTo(reservaRepository.updateReserva(ReservaEntityDtoMapper.INSTANCE.toEntity(reserva), id));
@@ -97,7 +98,7 @@ public class ReservaServiceImpl implements ReservaService {
                         );
                     }
 
-                    if (!otrasReservas) {
+                    if (otrasReservas) {
                         return Uni.createFrom().failure(
                                 new BusinessException(
                                         BusinessErrorType.VALIDATION_ERROR,
@@ -112,6 +113,7 @@ public class ReservaServiceImpl implements ReservaService {
 
 
     public Uni<Void> validateProfesionalCliente(ReservaDto reservaDto) {
+
         return Uni.combine()
                 .all()
                 .unis(

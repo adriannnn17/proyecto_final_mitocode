@@ -11,9 +11,11 @@ import org.acme.domain.model.entities.HorarioDisponible;
 import org.acme.domain.model.enums.EstadoActivoEnum;
 import org.acme.domain.repository.HorarioDisponibleRepository;
 
-import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
+
+import static org.acme.application.utils.MappingUtils.EstadoActivoEnumToBoolean;
+import static org.acme.application.utils.MappingUtils.localTimeToString;
 
 @ApplicationScoped
 public class HorarioDisponibleRepositoryImpl implements HorarioDisponibleRepository {
@@ -41,7 +43,7 @@ public class HorarioDisponibleRepositoryImpl implements HorarioDisponibleReposit
 
     @Transactional
     protected HorarioDisponible findByIdAndInactivoBlocking(UUID id) {
-        return (HorarioDisponible) find("id = ?1 and estado = ?2", id, EstadoActivoEnum.ACTIVO).firstResult();
+        return find("id = ?1 and estado = ?2", id, EstadoActivoEnum.ACTIVO).firstResult();
     }
 
     @Override
@@ -91,15 +93,24 @@ public class HorarioDisponibleRepositoryImpl implements HorarioDisponibleReposit
     @Transactional
     protected boolean validateHorarioDisponibleHoursBlocking(HorarioDisponible horarioDisponible) {
 
-        String jpql = "SELECT COUNT(h) FROM HorarioDisponible h WHERE (h.profesional.id = :profId OR h.profesionalId = :profId) "
-                + "AND h.estado = :estado AND (h.horaInicio < :horaFin AND h.horaFin > :horaInicio)";
+        String sql = "SELECT COUNT_BIG(hd.Id) FROM HorarioDisponible hd " +
+                "WHERE hd.ProfesionalId = :profId " +
+                "AND hd.Estado = :estado " +
+                "AND hd.Fecha = :fecha " +
+                "AND hd.HoraInicio <= :horaInicio " +
+                "AND hd.HoraFin >= :horaFin " +
+                "AND ( :id IS NULL OR hd.Id <> :id )";
 
-        Long count = entityManager.createQuery(jpql, Long.class)
-                .setParameter("profId", horarioDisponible.getProfesional().getId())
-                .setParameter("estado", EstadoActivoEnum.ACTIVO)
-                .setParameter("horaInicio", horarioDisponible.getHoraInicio())
-                .setParameter("horaFin", horarioDisponible.getHoraFin())
+        Long count = (Long) entityManager.createNativeQuery(sql)
+                .setParameter("profId", horarioDisponible.getProfesional().getId().toString())
+                .setParameter("estado", EstadoActivoEnumToBoolean(EstadoActivoEnum.ACTIVO))
+                .setParameter("fecha", horarioDisponible.getFecha())
+                .setParameter("horaInicio", localTimeToString(horarioDisponible.getHoraInicio()))
+                .setParameter("horaFin", localTimeToString(horarioDisponible.getHoraFin()))
+                .setParameter("id", horarioDisponible.getId())
                 .getSingleResult();
+
+
 
         return count != null && count > 0;
     }

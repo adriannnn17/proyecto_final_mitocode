@@ -319,13 +319,7 @@ paths:
           required: false
           schema:
             type: string
-        - name: maxDate
-          in: query
-          description: ''
-          required: false
-          schema:
-            type: string
-        - name: minDate
+        - name: date
           in: query
           description: ''
           required: false
@@ -783,11 +777,14 @@ components:
     ReservaSegunProfesionalSchemaResponse:
       type: object
       properties:
+        numeroReserva:
+          type: string
         cliente:
           type: string
         profesional:
           type: string
       required:
+        - numeroReserva
         - cliente
         - profesional
     ReservasSegunProfesionalSchemaResponse:

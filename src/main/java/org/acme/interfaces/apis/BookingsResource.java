@@ -1,6 +1,7 @@
 package org.acme.interfaces.apis;
 
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.ws.rs.*;
 
 import org.acme.interfaces.resources.requests.RegistroReservaSchemaRequest;
@@ -10,6 +11,8 @@ import org.eclipse.microprofile.openapi.annotations.Operation;
 
 import java.util.List;
 import java.util.concurrent.CompletionStage;
+
+import static org.acme.infraestructure.constants.Constant.UUID_PATTERN;
 
 /**
  * A JAX-RS interface. An implementation of this interface must be provided.
@@ -32,8 +35,9 @@ public interface BookingsResource {
   @GET
   @Produces("application/json")
   CompletionStage<List<RegistroReservaSchemaResponse>> listBookings(@QueryParam("idClient") String idClient,
-                                                                    @QueryParam("idProfessional") String idProfessional, @QueryParam("maxDate") String maxDate,
-                                                                    @QueryParam("minDate") String minDate, @QueryParam("specialty") String specialty);
+                                                                    @QueryParam("idProfessional") String idProfessional,
+                                                                    @QueryParam("date") String date, 
+                                                                    @QueryParam("specialty") String specialty);
 
   /**
    * 
@@ -50,7 +54,9 @@ public interface BookingsResource {
   @Path("/{idBookings}")
   @GET
   @Produces("application/json")
-  CompletionStage<RegistroReservaSchemaResponse> findBookings(@PathParam("idBookings") String idBookings);
+  CompletionStage<RegistroReservaSchemaResponse> findBookings(@PathParam("idBookings")
+                                                              @Pattern(regexp = UUID_PATTERN, message = "El campo 'idBookings' debe ser un UUID válido")
+                                                              @NotNull String idBookings);
 
   /**
    * 
@@ -59,7 +65,9 @@ public interface BookingsResource {
   @Path("/{idBookings}")
   @PUT
   @Consumes("application/json")
-  CompletionStage<Void> updateBookings(@PathParam("idBookings") String idBookings,
+  CompletionStage<Void> updateBookings(@PathParam("idBookings")
+                                       @Pattern(regexp = UUID_PATTERN, message = "El campo 'idBookings' debe ser un UUID válido")
+                                       @NotNull String idBookings,
       @NotNull RegistroReservaSchemaRequest data);
 
   /**
@@ -68,5 +76,7 @@ public interface BookingsResource {
   @Operation(description = "", summary = "Borrar Reservas", operationId = "deleteBookings")
   @Path("/{idBookings}")
   @DELETE
-  CompletionStage<Void> deleteBookings(@PathParam("idBookings") String idBookings);
+  CompletionStage<Void> deleteBookings(@PathParam("idBookings")
+                                       @Pattern(regexp = UUID_PATTERN, message = "El campo 'idBookings' debe ser un UUID válido")
+                                       @NotNull String idBookings);
 }

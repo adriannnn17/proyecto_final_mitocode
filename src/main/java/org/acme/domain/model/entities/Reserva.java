@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.acme.domain.model.enums.EstadoReservaEnum;
 import org.acme.infraestructure.db.converters.EstadoReservaEnumConverter;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -30,9 +32,11 @@ public class Reserva {
     private LocalDate fecha;
 
     @Column(name = "HoraInicio", nullable = false)
+    @JdbcTypeCode(SqlTypes.TIME)
     private LocalTime horaInicio;
 
     @Column(name = "HoraFin", nullable = false)
+    @JdbcTypeCode(SqlTypes.TIME)
     private LocalTime horaFin;
 
     @jakarta.persistence.ManyToOne

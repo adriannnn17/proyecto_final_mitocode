@@ -37,7 +37,7 @@ public class ClienteRepositoryImpl implements ClienteRepository {
 
     @Transactional
     protected Cliente findByIdAndInactivoBlocking(UUID id) {
-        return (Cliente) find("id = ?1 and estadoActivo = ?2", id, EstadoActivoEnum.ACTIVO).firstResult();
+        return find("id = ?1 and estadoActivo = ?2", id, EstadoActivoEnum.ACTIVO).firstResult();
     }
 
     @Override

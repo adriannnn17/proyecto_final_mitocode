@@ -1,19 +1,17 @@
 package org.acme.application.utils;
 
 import lombok.experimental.UtilityClass;
+import org.acme.domain.model.enums.EstadoActivoEnum;
 import org.acme.infraestructure.dtos.HorarioDisponibleDto;
 import org.acme.infraestructure.dtos.ReservaDto;
 import org.acme.interfaces.resources.responses.RegistroReservaSchemaResponse;
+import org.acme.interfaces.resources.responses.ReservaSegunProfesionalSchemaResponse;
 import org.mapstruct.Named;
 
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.ZoneOffset;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @UtilityClass
@@ -31,17 +29,16 @@ public class MappingUtils {
         return d.toString();
     }
 
-    @Named("dateToLocalTime")
-    public static LocalTime dateToLocalTime(Date d) {
+    @Named("localTimeToString")
+    public static String localTimeToString(LocalTime d) {
         if (d == null) return null;
-        return Instant.ofEpochMilli(d.getTime()).atZone(ZoneOffset.UTC).toLocalTime();
+        return d.toString();
     }
 
-    @Named("localTimeToDate")
-    public static Date localTimeToDate(LocalTime t) {
-        if (t == null) return null;
-        Instant instant = t.atDate(LocalDate.of(1970, 1, 1)).atZone(ZoneOffset.UTC).toInstant();
-        return Date.from(instant);
+    @Named("stringToLocalTime")
+    public static LocalTime stringToLocalTime(String s) {
+        if (s == null) return null;
+        return LocalTime.parse(s);
     }
 
     @Named("stringToUuid")
@@ -77,45 +74,36 @@ public class MappingUtils {
                 .build();
     }
 
-    // Nuevo método: construye el resumen de profesionales a partir de la lista de reservas
-    public static List<Map<String, Object>> buildProfessionalsSummary(List<ReservaDto> reservaDtos) {
-        if (reservaDtos == null) return java.util.Collections.emptyList();
+    public static Boolean EstadoActivoEnumToBoolean(EstadoActivoEnum estado) {
+        if (estado == null) return null;
+        return estado == EstadoActivoEnum.ACTIVO;
+    }
 
-        // Filtrar reservas cuyo estado sea distinto de "CANCELADA"
-        List<ReservaDto> filtered = reservaDtos.stream()
-                .filter(r -> r.getEstado() == null || !"CANCELADA".equalsIgnoreCase(r.getEstado()))
-                .collect(Collectors.toList());
+    public static Map<String, List<ReservaSegunProfesionalSchemaResponse>> buildProfessionalsSummary(List<ReservaDto> reservaDtos) {
+        AtomicInteger counter = new AtomicInteger(1);
 
-        // Agrupar por profesional (nombre completo si está disponible, sino id)
-        Map<String, List<ReservaDto>> byProfessional = filtered.stream()
-                .collect(Collectors.groupingBy(r -> {
-                    if (r.getProfesional() != null && r.getProfesional().getNombres() != null) {
-                        return r.getProfesional().getNombres() + " " + r.getProfesional().getApellidos();
-                    }
-                    return r.getProfesionalId() != null ? r.getProfesionalId().toString() : "UNKNOWN";
-                }));
+        return reservaDtos.stream()
+                .sorted(Comparator.comparing(ReservaDto::getFecha, Comparator.nullsLast(Comparator.naturalOrder()))
+                        .thenComparing(ReservaDto::getHoraInicio, Comparator.nullsLast(Comparator.naturalOrder())))
+                .collect(Collectors.groupingBy(r -> r.getFecha().toString(),
+                        LinkedHashMap::new,
+                        Collectors.mapping(r -> {
+                            String nc = r.getCliente().getNombres();
+                            String ac = r.getCliente().getApellidos();
+                            String cl = (nc + " " + ac).trim();
 
-        // Construir lista ordenada de profesionales con conteo y mapa de fechas -> reservas
-        List<Map<String, Object>> professionals = byProfessional.entrySet().stream()
-                .map(entry -> {
-                    String prof = entry.getKey();
-                    List<ReservaDto> list = entry.getValue();
-                    long count = list.size();
+                            String np = r.getProfesional().getNombres() != null ? r.getProfesional().getNombres() : "";
+                            String ap = r.getProfesional().getApellidos() != null ? r.getProfesional().getApellidos() : "";
+                            String pr = (np + " " + ap).trim();
 
-                    // Map<LocalDate, List<String>> donde cada reserva se representa por su fecha (identificador solicitado)
-                    Map<LocalDate, List<String>> datesMap = list.stream()
-                            .collect(Collectors.groupingBy(ReservaDto::getFecha,
-                                    Collectors.mapping(r -> r.getFecha().toString(), Collectors.toList())));
+                            ReservaSegunProfesionalSchemaResponse reservaSegunProfesionalSchemaResponse = new ReservaSegunProfesionalSchemaResponse();
+                            reservaSegunProfesionalSchemaResponse.setNumeroReserva("Reserva " + counter.get());
+                            reservaSegunProfesionalSchemaResponse.setCliente(cl);
+                            reservaSegunProfesionalSchemaResponse.setProfesional(pr);
 
-                    Map<String, Object> profInfo = new java.util.LinkedHashMap<>();
-                    profInfo.put("professional", prof);
-                    profInfo.put("count", count);
-                    profInfo.put("dates", datesMap);
-                    return profInfo;
-                })
-                .sorted(java.util.Comparator.comparingLong((Map<String, Object> m) -> (Long) m.get("count")).reversed())
-                .collect(Collectors.toList());
+                            counter.getAndIncrement();
 
-        return professionals;
+                            return reservaSegunProfesionalSchemaResponse;
+                        }, Collectors.toList())));
     }
 }

@@ -1,6 +1,7 @@
 package org.acme.interfaces.apis;
 
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.ws.rs.*;
 import org.acme.interfaces.resources.requests.ClienteSchemaRequest;
 import org.acme.interfaces.resources.responses.ClienteSchemaResponse;
@@ -8,6 +9,8 @@ import org.eclipse.microprofile.openapi.annotations.Operation;
 
 import java.util.List;
 import java.util.concurrent.CompletionStage;
+
+import static org.acme.infraestructure.constants.Constant.UUID_PATTERN;
 
 /**
  * A JAX-RS interface. An implementation of this interface must be provided.
@@ -37,7 +40,9 @@ public interface ClientsResource {
   @Path("/{idClients}")
   @GET
   @Produces("application/json")
-  CompletionStage<ClienteSchemaResponse> findClients(@PathParam("idClients") String idClients);
+  CompletionStage<ClienteSchemaResponse> findClients(@PathParam("idClients")
+                                                     @Pattern(regexp = UUID_PATTERN, message = "El campo 'clienteId' debe ser un UUID válido")
+                                                     @NotNull String idClients);
 
   /**
    * 
@@ -46,7 +51,10 @@ public interface ClientsResource {
   @Path("/{idClients}")
   @PUT
   @Consumes("application/json")
-  CompletionStage<Void> updateClients(@PathParam("idClients") String idClients, @NotNull ClienteSchemaRequest data);
+  CompletionStage<Void> updateClients(@PathParam("idClients")
+                                      @Pattern(regexp = UUID_PATTERN, message = "El campo 'clienteId' debe ser un UUID válido")
+                                      @NotNull String idClients,
+                                      @NotNull ClienteSchemaRequest data);
 
   /**
    * 
@@ -54,5 +62,7 @@ public interface ClientsResource {
   @Operation(description = "", summary = "Borrar Clientes", operationId = "deleteClients")
   @Path("/{idClients}")
   @DELETE
-  CompletionStage<Void> deleteClients(@PathParam("idClients") String idClients);
+  CompletionStage<Void> deleteClients(@PathParam("idClients")
+                                      @Pattern(regexp = UUID_PATTERN, message = "El campo 'clienteId' debe ser un UUID válido")
+                                      @NotNull String idClients);
 }

@@ -1,6 +1,7 @@
 package org.acme.interfaces.apis;
 
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.ws.rs.*;
 import org.acme.interfaces.resources.requests.HorarioDisponibleSchemaRequest;
 import org.acme.interfaces.resources.responses.HorarioDisponibleSchemaResponse;
@@ -8,6 +9,8 @@ import org.eclipse.microprofile.openapi.annotations.Operation;
 
 import java.util.List;
 import java.util.concurrent.CompletionStage;
+
+import static org.acme.infraestructure.constants.Constant.UUID_PATTERN;
 
 /**
  * A JAX-RS interface. An implementation of this interface must be provided.
@@ -38,7 +41,9 @@ public interface AvailabilityResource {
   @GET
   @Produces("application/json")
   CompletionStage<HorarioDisponibleSchemaResponse> findAvailabilityHour(
-      @PathParam("availabilityHoursId") String availabilityHoursId);
+      @PathParam("availabilityHoursId")
+      @Pattern(regexp = UUID_PATTERN, message = "El campo 'availabilityHoursId' debe ser un UUID válido")
+      @NotNull String availabilityHoursId);
 
   /**
    * 
@@ -47,7 +52,9 @@ public interface AvailabilityResource {
   @Path("/{availabilityHoursId}")
   @PUT
   @Consumes("application/json")
-  CompletionStage<Void> updateAvailabilityHour(@PathParam("availabilityHoursId") String availabilityHoursId,
+  CompletionStage<Void> updateAvailabilityHour(@PathParam("availabilityHoursId")
+                                               @Pattern(regexp = UUID_PATTERN, message = "El campo 'availabilityHoursId' debe ser un UUID válido")
+                                               @NotNull String availabilityHoursId,
       @NotNull HorarioDisponibleSchemaRequest data);
 
   /**
@@ -56,5 +63,7 @@ public interface AvailabilityResource {
   @Operation(description = "", summary = "Borrar Horarios de Disponibilidad", operationId = "deleteAvailabilityHour")
   @Path("/{availabilityHoursId}")
   @DELETE
-  CompletionStage<Void> deleteAvailabilityHour(@PathParam("availabilityHoursId") String availabilityHoursId);
+  CompletionStage<Void> deleteAvailabilityHour(@PathParam("availabilityHoursId")
+                                               @Pattern(regexp = UUID_PATTERN, message = "El campo 'availabilityHoursId' debe ser un UUID válido")
+                                               @NotNull String availabilityHoursId);
 }
