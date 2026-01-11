@@ -11,7 +11,6 @@ import org.acme.domain.repository.HorarioDisponibleRepository;
 import org.acme.domain.repository.ProfesionalRepository;
 import org.acme.domain.repository.ReservaRepository;
 import org.acme.domain.services.ReservaService;
-import org.acme.infraestructure.dtos.HorarioDisponibleDto;
 import org.acme.infraestructure.dtos.ReservaDto;
 import org.acme.infraestructure.dtos.others.ReservaGet;
 import org.acme.infraestructure.exceptions.BusinessErrorType;
@@ -40,19 +39,39 @@ public class ReservaServiceImpl implements ReservaService {
 
     @Override
     public Multi<ReservaDto> listBookings(ReservaGet reservaGet) {
-        return reservaRepository.findAllByEstado(reservaGet).map(ReservaEntityDtoMapper.INSTANCE::toDto);
+        return reservaRepository.findAllByEstado(reservaGet).map(ReservaEntityDtoMapper.INSTANCE::toDto)
+                .onFailure()
+                .transform(throwable ->
+                        new BusinessException(
+                                BusinessErrorType.PERSISTENCE_ERROR,
+                                throwable.getMessage()
+                        )
+                );
     }
 
     @Override
     public Uni<ReservaDto> findBooking(UUID id) {
-        return reservaRepository.findByEstado(id).map(ReservaEntityDtoMapper.INSTANCE::toDto);
+        return reservaRepository.findByEstado(id).map(ReservaEntityDtoMapper.INSTANCE::toDto)
+                .onFailure()
+                .transform(throwable ->
+                        new BusinessException(
+                                BusinessErrorType.PERSISTENCE_ERROR,
+                                throwable.getMessage()
+                        )
+                );
     }
 
     @Override
     public Uni<Void> createBooking(ReservaDto reserva) {
         return validateConditional(reserva)
                 .onItem().ignore()
-                .andSwitchTo(reservaRepository.saveReserva(ReservaEntityDtoMapper.INSTANCE.toEntity(reserva)));
+                .andSwitchTo(reservaRepository.saveReserva(ReservaEntityDtoMapper.INSTANCE.toEntity(reserva)).onFailure()
+                        .transform(throwable ->
+                                new BusinessException(
+                                        BusinessErrorType.PERSISTENCE_ERROR,
+                                        throwable.getMessage()
+                                )
+                        ));
     }
 
     @Override
@@ -60,12 +79,26 @@ public class ReservaServiceImpl implements ReservaService {
         reserva.setId(id);
         return validateConditional(reserva)
                 .onItem().ignore()
-                .andSwitchTo(reservaRepository.updateReserva(ReservaEntityDtoMapper.INSTANCE.toEntity(reserva), id));
+                .andSwitchTo(reservaRepository.updateReserva(ReservaEntityDtoMapper.INSTANCE.toEntity(reserva), id)
+                        .onFailure()
+                        .transform(throwable ->
+                                new BusinessException(
+                                        BusinessErrorType.PERSISTENCE_ERROR,
+                                        throwable.getMessage()
+                                )
+                        ));
     }
 
     @Override
     public Uni<Void> deleteBooking(UUID id) {
-        return reservaRepository.deleteReserva(id);
+        return reservaRepository.deleteReserva(id)
+                .onFailure()
+                .transform(throwable ->
+                        new BusinessException(
+                                BusinessErrorType.PERSISTENCE_ERROR,
+                                throwable.getMessage()
+                        )
+                );
     }
 
     public Uni<Void> validateConditional(ReservaDto reservaDto) {
@@ -77,12 +110,26 @@ public class ReservaServiceImpl implements ReservaService {
                                 .unis(
                                         Uni.createFrom().item(reservaDto.getHoraInicio().isBefore(reservaDto.getHoraFin())),
                                         horarioDisponibleRepository.validateHorarioDisponibleHours(
-                                                HorarioDisponibleEntityDtoMapper.INSTANCE
-                                                        .toEntity(mapReservaToHorarioDisponibleHours(reservaDto))
-                                        ),
+                                                        HorarioDisponibleEntityDtoMapper.INSTANCE
+                                                                .toEntity(mapReservaToHorarioDisponibleHours(reservaDto))
+                                                )
+                                                .onFailure()
+                                                .transform(throwable ->
+                                                        new BusinessException(
+                                                                BusinessErrorType.PERSISTENCE_ERROR,
+                                                                throwable.getMessage()
+                                                        )
+                                                ),
                                         reservaRepository.validateOtrasReservasProfesional(
-                                                ReservaEntityDtoMapper.INSTANCE.toEntity(reservaDto)
-                                        )
+                                                        ReservaEntityDtoMapper.INSTANCE.toEntity(reservaDto)
+                                                )
+                                                .onFailure()
+                                                .transform(throwable ->
+                                                        new BusinessException(
+                                                                BusinessErrorType.PERSISTENCE_ERROR,
+                                                                throwable.getMessage()
+                                                        )
+                                                )
                                 )
                                 .asTuple()
                 )
@@ -91,7 +138,7 @@ public class ReservaServiceImpl implements ReservaService {
                     Boolean horarioDisponible = tuple.getItem2();
                     Boolean otrasReservas = tuple.getItem3();
 
-                    if(!fechaValidacion) {
+                    if (!fechaValidacion) {
                         return Uni.createFrom().failure(
                                 new BusinessException(
                                         BusinessErrorType.VALIDATION_ERROR,
@@ -128,8 +175,22 @@ public class ReservaServiceImpl implements ReservaService {
         return Uni.combine()
                 .all()
                 .unis(
-                        profesionalRepository.findByIdAndInactivo(reservaDto.getProfesionalId()),
+                        profesionalRepository.findByIdAndInactivo(reservaDto.getProfesionalId())
+                                .onFailure()
+                                .transform(throwable ->
+                                        new BusinessException(
+                                                BusinessErrorType.PERSISTENCE_ERROR,
+                                                throwable.getMessage()
+                                        )
+                                ),
                         clienteRepository.findByIdAndInactivo(reservaDto.getClienteId())
+                                .onFailure()
+                                .transform(throwable ->
+                                        new BusinessException(
+                                                BusinessErrorType.PERSISTENCE_ERROR,
+                                                throwable.getMessage()
+                                        )
+                                )
                 )
                 .asTuple()
                 .onItem().transformToUni(tuple -> {
