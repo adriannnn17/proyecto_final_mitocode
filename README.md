@@ -27,6 +27,7 @@ Decisiones técnicas
 -- Se utilizo MapStruct para los mapeos entre DTOs y entidades
 -- Se utilizo Lombok para reducir codigo boilerplate en los modelos y constructores
 -- Se utilizo Mutiny para programacion reactiva en las capas de servicio y controladores
+-- No se implementó JWT para no complicar la prueba y ejecucion del proyecto
 
 ---
 

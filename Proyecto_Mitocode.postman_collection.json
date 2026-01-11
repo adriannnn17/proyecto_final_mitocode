@@ -1,0 +1,403 @@
+{
+	"info": {
+		"_postman_id": "dd97ecd8-e5a7-4063-8066-0d8ff83ecb87",
+		"name": "Proyecto_Mitocode",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5787785"
+	},
+	"item": [
+		{
+			"name": "Clientes",
+			"item": [
+				{
+					"name": "listAllClients",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/clients",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"clients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findClient",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/clients/10b06f11-d871-40ee-87a0-d9ab0df53842",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"clients",
+								"10b06f11-d871-40ee-87a0-d9ab0df53842"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteClient",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/clients/10b06f11-d871-40ee-87a0-d9ab0df53842",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"clients",
+								"10b06f11-d871-40ee-87a0-d9ab0df53842"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createClient",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombres\" : \"jose\",\r\n    \"apellidos\" : \"jose\",\r\n    \"email\" : \"jose@gmail.com\",\r\n    \"telefono\" : \"999999999\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/clients",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"clients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "editClient",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombres\" : \"\",\r\n    \"apellidos\" : \"Melgarejo2\",\r\n    \"email\" : \"adrian2@gmail.com\",\r\n    \"telefono\" : \"929999999\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/clients/6197c2af-5ee6-498a-9edd-285f2e43f4f4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"clients",
+								"6197c2af-5ee6-498a-9edd-285f2e43f4f4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Profesional",
+			"item": [
+				{
+					"name": "listAllProfesional",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/professionals",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"professionals"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findProfessional",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/professionals/7c7f9ae5-0b06-4e71-9d2e-ef6d8176e669",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"professionals",
+								"7c7f9ae5-0b06-4e71-9d2e-ef6d8176e669"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteClient",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/clients/10b06f11-d871-40ee-87a0-d9ab0df53842",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"clients",
+								"10b06f11-d871-40ee-87a0-d9ab0df53842"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "editProfessional",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombres\" : \"jose3\",\r\n    \"apellidos\" : \"jose2\",\r\n    \"especialidad\" : \"matematica\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/professionals/0150dd6b-92a7-4c04-bd21-762f999571ee",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"professionals",
+								"0150dd6b-92a7-4c04-bd21-762f999571ee"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createProfessionals",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombres\" : \"jose2\",\r\n    \"apellidos\" : \"jose2\",\r\n    \"especialidad\" : \"matematica\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/professionals",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"professionals"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reserva",
+			"item": [
+				{
+					"name": "Listar reserva",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/bookings?specialty=matematica&idClient=05d01b69-1f55-4f0e-b630-706e0c746250&idProfessional=0150dd6b-92a7-4c04-bd21-762f999571ee&date=2026-01-10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"bookings"
+							],
+							"query": [
+								{
+									"key": "specialty",
+									"value": "matematica"
+								},
+								{
+									"key": "idClient",
+									"value": "05d01b69-1f55-4f0e-b630-706e0c746250"
+								},
+								{
+									"key": "idProfessional",
+									"value": "0150dd6b-92a7-4c04-bd21-762f999571ee"
+								},
+								{
+									"key": "date",
+									"value": "2026-01-10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Guardar reserva",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"clienteId\" : \"05d01b69-1f55-4f0e-b630-706e0c746250\",\r\n    \"profesionalId\" : \"0150dd6b-92a7-4c04-bd21-762f999571ee\",\r\n    \"fecha\" : \"2026-01-10\",\r\n    \"horaInicio\" : \"13:30:00\",\r\n    \"horaFin\" : \"13:35:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/bookings",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"bookings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Reserva",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/bookings/professional-query",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"bookings",
+								"professional-query"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Horario",
+			"item": [
+				{
+					"name": "Crear horarios",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"profesionalId\" : \"0150dd6b-92a7-4c04-bd21-762f999571ee\",\r\n    \"fecha\" : \"2026-01-10\",\r\n    \"horaInicio\" : \"13:00:00\",\r\n    \"horaFin\" : \"14:00:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/availability-hours",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"availability-hours"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Crear horarios",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"profesionalId\" : \"0150dd6b-92a7-4c04-bd21-762f999571ee\",\r\n    \"fecha\" : \"2026-01-10\",\r\n    \"horaInicio\" : \"13:00:00\",\r\n    \"horaFin\" : \"14:00:00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/availability-hours",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"availability-hours"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
