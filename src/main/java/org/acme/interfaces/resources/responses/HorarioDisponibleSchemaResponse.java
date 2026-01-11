@@ -4,7 +4,6 @@ package org.acme.interfaces.resources.responses;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import org.acme.reservas.api.beans.ProfesionalSchemaResponse;
 
 import javax.annotation.processing.Generated;
 import java.util.UUID;

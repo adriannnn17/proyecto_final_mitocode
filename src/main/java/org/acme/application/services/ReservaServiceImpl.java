@@ -4,6 +4,7 @@ import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import lombok.extern.slf4j.Slf4j;
 import org.acme.domain.model.entities.Cliente;
 import org.acme.domain.model.entities.Profesional;
 import org.acme.domain.repository.ClienteRepository;
@@ -22,6 +23,7 @@ import java.util.UUID;
 
 import static org.acme.application.utils.MappingUtils.mapReservaToHorarioDisponibleHours;
 
+@Slf4j
 @ApplicationScoped
 public class ReservaServiceImpl implements ReservaService {
 
@@ -41,24 +43,30 @@ public class ReservaServiceImpl implements ReservaService {
     public Multi<ReservaDto> listBookings(ReservaGet reservaGet) {
         return reservaRepository.findAllByEstado(reservaGet).map(ReservaEntityDtoMapper.INSTANCE::toDto)
                 .onFailure()
-                .transform(throwable ->
-                        new BusinessException(
-                                BusinessErrorType.PERSISTENCE_ERROR,
-                                throwable.getMessage()
-                        )
-                );
+                .transform(throwable -> {
+
+                    log.error(throwable.getMessage());
+
+                    return new BusinessException(
+                            BusinessErrorType.PERSISTENCE_ERROR,
+                            throwable.getMessage()
+                    );
+                });
     }
 
     @Override
     public Uni<ReservaDto> findBooking(UUID id) {
         return reservaRepository.findByEstado(id).map(ReservaEntityDtoMapper.INSTANCE::toDto)
                 .onFailure()
-                .transform(throwable ->
-                        new BusinessException(
-                                BusinessErrorType.PERSISTENCE_ERROR,
-                                throwable.getMessage()
-                        )
-                );
+                .transform(throwable -> {
+
+                    log.error(throwable.getMessage());
+
+                    return new BusinessException(
+                            BusinessErrorType.PERSISTENCE_ERROR,
+                            throwable.getMessage()
+                    );
+                });
     }
 
     @Override
@@ -66,12 +74,15 @@ public class ReservaServiceImpl implements ReservaService {
         return validateConditional(reserva)
                 .onItem().ignore()
                 .andSwitchTo(reservaRepository.saveReserva(ReservaEntityDtoMapper.INSTANCE.toEntity(reserva)).onFailure()
-                        .transform(throwable ->
-                                new BusinessException(
-                                        BusinessErrorType.PERSISTENCE_ERROR,
-                                        throwable.getMessage()
-                                )
-                        ));
+                        .transform(throwable -> {
+
+                            log.error(throwable.getMessage());
+
+                            return new BusinessException(
+                                    BusinessErrorType.PERSISTENCE_ERROR,
+                                    throwable.getMessage()
+                            );
+                        }));
     }
 
     @Override
@@ -81,24 +92,30 @@ public class ReservaServiceImpl implements ReservaService {
                 .onItem().ignore()
                 .andSwitchTo(reservaRepository.updateReserva(ReservaEntityDtoMapper.INSTANCE.toEntity(reserva), id)
                         .onFailure()
-                        .transform(throwable ->
-                                new BusinessException(
-                                        BusinessErrorType.PERSISTENCE_ERROR,
-                                        throwable.getMessage()
-                                )
-                        ));
+                        .transform(throwable -> {
+
+                            log.error(throwable.getMessage());
+
+                            return new BusinessException(
+                                    BusinessErrorType.PERSISTENCE_ERROR,
+                                    throwable.getMessage()
+                            );
+                        }));
     }
 
     @Override
     public Uni<Void> deleteBooking(UUID id) {
         return reservaRepository.deleteReserva(id)
                 .onFailure()
-                .transform(throwable ->
-                        new BusinessException(
-                                BusinessErrorType.PERSISTENCE_ERROR,
-                                throwable.getMessage()
-                        )
-                );
+                .transform(throwable -> {
+
+                    log.error(throwable.getMessage());
+
+                    return new BusinessException(
+                            BusinessErrorType.PERSISTENCE_ERROR,
+                            throwable.getMessage()
+                    );
+                });
     }
 
     public Uni<Void> validateConditional(ReservaDto reservaDto) {
@@ -114,22 +131,28 @@ public class ReservaServiceImpl implements ReservaService {
                                                                 .toEntity(mapReservaToHorarioDisponibleHours(reservaDto))
                                                 )
                                                 .onFailure()
-                                                .transform(throwable ->
-                                                        new BusinessException(
-                                                                BusinessErrorType.PERSISTENCE_ERROR,
-                                                                throwable.getMessage()
-                                                        )
-                                                ),
+                                                .transform(throwable -> {
+
+                                                    log.error(throwable.getMessage());
+
+                                                    return new BusinessException(
+                                                            BusinessErrorType.PERSISTENCE_ERROR,
+                                                            throwable.getMessage()
+                                                    );
+                                                }),
                                         reservaRepository.validateOtrasReservasProfesional(
                                                         ReservaEntityDtoMapper.INSTANCE.toEntity(reservaDto)
                                                 )
                                                 .onFailure()
-                                                .transform(throwable ->
-                                                        new BusinessException(
-                                                                BusinessErrorType.PERSISTENCE_ERROR,
-                                                                throwable.getMessage()
-                                                        )
-                                                )
+                                                .transform(throwable -> {
+
+                                                    log.error(throwable.getMessage());
+
+                                                    return new BusinessException(
+                                                            BusinessErrorType.PERSISTENCE_ERROR,
+                                                            throwable.getMessage()
+                                                    );
+                                                })
                                 )
                                 .asTuple()
                 )
