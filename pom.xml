@@ -116,6 +116,11 @@
             <artifactId>quarkus-test-vertx</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.eclipse</groupId>
+            <artifactId>yasson</artifactId>
+        </dependency>
+
 
     </dependencies>
 
