@@ -34,7 +34,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/clients/10b06f11-d871-40ee-87a0-d9ab0df53842",
+							"raw": "http://localhost:8080/clients/5e09efa9-4e7e-4e20-8f40-c8032a2f47db",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -42,7 +42,7 @@
 							"port": "8080",
 							"path": [
 								"clients",
-								"10b06f11-d871-40ee-87a0-d9ab0df53842"
+								"5e09efa9-4e7e-4e20-8f40-c8032a2f47db"
 							]
 						}
 					},
@@ -54,7 +54,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/clients/10b06f11-d871-40ee-87a0-d9ab0df53842",
+							"raw": "http://localhost:8080/clients/73a5ce83-e807-4722-8ce7-df666274565c",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -62,7 +62,7 @@
 							"port": "8080",
 							"path": [
 								"clients",
-								"10b06f11-d871-40ee-87a0-d9ab0df53842"
+								"73a5ce83-e807-4722-8ce7-df666274565c"
 							]
 						}
 					},
@@ -75,7 +75,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nombres\" : \"jose\",\r\n    \"apellidos\" : \"jose\",\r\n    \"email\" : \"jose@gmail.com\",\r\n    \"telefono\" : \"999999999\"\r\n}",
+							"raw": "{\r\n    \"nombres\" : \"adrian\",\r\n    \"apellidos\" : \"melgarejo\",\r\n    \"email\" : \"adrian@gmail.com\",\r\n    \"telefono\" : \"999999999\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -103,7 +103,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nombres\" : \"\",\r\n    \"apellidos\" : \"Melgarejo2\",\r\n    \"email\" : \"adrian2@gmail.com\",\r\n    \"telefono\" : \"929999999\"\r\n}",
+							"raw": "{\r\n    \"nombres\" : \"adrian\",\r\n    \"apellidos\" : \"melgarejos\",\r\n    \"email\" : \"adrian@gmail.com\",\r\n    \"telefono\" : \"999999999\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -111,7 +111,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/clients/6197c2af-5ee6-498a-9edd-285f2e43f4f4",
+							"raw": "http://localhost:8080/clients/73a5ce83-e807-4722-8ce7-df666274565c",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -119,7 +119,7 @@
 							"port": "8080",
 							"path": [
 								"clients",
-								"6197c2af-5ee6-498a-9edd-285f2e43f4f4"
+								"73a5ce83-e807-4722-8ce7-df666274565c"
 							]
 						}
 					},
@@ -155,7 +155,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/professionals/7c7f9ae5-0b06-4e71-9d2e-ef6d8176e669",
+							"raw": "http://localhost:8080/professionals/50c86be1-f11b-4d9d-83fd-990e09360a5e",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -163,27 +163,27 @@
 							"port": "8080",
 							"path": [
 								"professionals",
-								"7c7f9ae5-0b06-4e71-9d2e-ef6d8176e669"
+								"50c86be1-f11b-4d9d-83fd-990e09360a5e"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "deleteClient",
+					"name": "deleteProfessional",
 					"request": {
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/clients/10b06f11-d871-40ee-87a0-d9ab0df53842",
+							"raw": "http://localhost:8080/professionals/6eb4334a-4b5f-4094-9b42-89330c5d2c67",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"clients",
-								"10b06f11-d871-40ee-87a0-d9ab0df53842"
+								"professionals",
+								"6eb4334a-4b5f-4094-9b42-89330c5d2c67"
 							]
 						}
 					},
@@ -196,7 +196,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nombres\" : \"jose3\",\r\n    \"apellidos\" : \"jose2\",\r\n    \"especialidad\" : \"matematica\"\r\n}",
+							"raw": "{\r\n    \"nombres\": \"mariaa\",\r\n    \"apellidos\": \"hernandez\",\r\n    \"especialidad\": \"psicologia\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -204,7 +204,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/professionals/0150dd6b-92a7-4c04-bd21-762f999571ee",
+							"raw": "http://localhost:8080/professionals/6eb4334a-4b5f-4094-9b42-89330c5d2c67",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -212,7 +212,7 @@
 							"port": "8080",
 							"path": [
 								"professionals",
-								"0150dd6b-92a7-4c04-bd21-762f999571ee"
+								"6eb4334a-4b5f-4094-9b42-89330c5d2c67"
 							]
 						}
 					},
@@ -225,7 +225,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nombres\" : \"jose2\",\r\n    \"apellidos\" : \"jose2\",\r\n    \"especialidad\" : \"matematica\"\r\n}",
+							"raw": "{\r\n    \"nombres\" : \"maria\",\r\n    \"apellidos\" : \"hernandez\",\r\n    \"especialidad\" : \"psicologia\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -257,7 +257,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/bookings?specialty=matematica&idClient=05d01b69-1f55-4f0e-b630-706e0c746250&idProfessional=0150dd6b-92a7-4c04-bd21-762f999571ee&date=2026-01-10",
+							"raw": "http://localhost:8080/bookings",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -269,20 +269,64 @@
 							"query": [
 								{
 									"key": "specialty",
-									"value": "matematica"
+									"value": "matematica",
+									"disabled": true
 								},
 								{
 									"key": "idClient",
-									"value": "05d01b69-1f55-4f0e-b630-706e0c746250"
+									"value": "05d01b69-1f55-4f0e-b630-706e0c746250",
+									"disabled": true
 								},
 								{
 									"key": "idProfessional",
-									"value": "0150dd6b-92a7-4c04-bd21-762f999571ee"
+									"value": "0150dd6b-92a7-4c04-bd21-762f999571ee",
+									"disabled": true
 								},
 								{
 									"key": "date",
-									"value": "2026-01-10"
+									"value": "2026-01-10",
+									"disabled": true
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar reserva por profesional y cliente",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/bookings/bbfed4e8-9677-4632-968a-830a1cd81c89a",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"bookings",
+								"bbfed4e8-9677-4632-968a-830a1cd81c89a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar reserva",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/bookings/3ef62224-d16f-4118-94c8-341131007321",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"bookings",
+								"3ef62224-d16f-4118-94c8-341131007321"
 							]
 						}
 					},
@@ -295,7 +339,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"clienteId\" : \"05d01b69-1f55-4f0e-b630-706e0c746250\",\r\n    \"profesionalId\" : \"0150dd6b-92a7-4c04-bd21-762f999571ee\",\r\n    \"fecha\" : \"2026-01-10\",\r\n    \"horaInicio\" : \"13:30:00\",\r\n    \"horaFin\" : \"13:35:00\"\r\n}",
+							"raw": "{\r\n    \"clienteId\" : \"73a5ce83-e807-4722-8ce7-df666274565c\",\r\n    \"profesionalId\" : \"6eb4334a-4b5f-4094-9b42-89330c5d2c67\",\r\n    \"fecha\" : \"2026-01-12\",\r\n    \"horaInicio\" : \"14:30:00\",\r\n    \"horaFin\" : \"14:45:00\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -311,6 +355,35 @@
 							"port": "8080",
 							"path": [
 								"bookings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar reserva",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"clienteId\" : \"73a5ce83-e807-4722-8ce7-df666274565c\",\r\n    \"profesionalId\" : \"6eb4334a-4b5f-4094-9b42-89330c5d2c67\",\r\n    \"fecha\" : \"2026-01-12\",\r\n    \"horaInicio\" : \"14:30:00\",\r\n    \"horaFin\" : \"14:46:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/bookings/3ef62224-d16f-4118-94c8-341131007321",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"bookings",
+								"3ef62224-d16f-4118-94c8-341131007321"
 							]
 						}
 					},
@@ -348,7 +421,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"profesionalId\" : \"0150dd6b-92a7-4c04-bd21-762f999571ee\",\r\n    \"fecha\" : \"2026-01-10\",\r\n    \"horaInicio\" : \"13:00:00\",\r\n    \"horaFin\" : \"14:00:00\"\r\n}",
+							"raw": "{\r\n    \"profesionalId\" : \"6eb4334a-4b5f-4094-9b42-89330c5d2c67\",\r\n    \"fecha\" : \"2026-01-12\",\r\n    \"horaInicio\" : \"14:00:00\",\r\n    \"horaFin\" : \"16:00:00\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -368,36 +441,96 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Listar horarios",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/availability-hours",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"availability-hours"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener horarios",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/availability-hours/ea094663-2899-4689-be28-7bb628431b53",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"availability-hours",
+								"ea094663-2899-4689-be28-7bb628431b53"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar horarios",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/availability-hours/c61b37de-46e9-47c7-9635-fa8a71f7d628",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"availability-hours",
+								"c61b37de-46e9-47c7-9635-fa8a71f7d628"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar horarios",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"profesionalId\" : \"6eb4334a-4b5f-4094-9b42-89330c5d2c67\",\r\n    \"fecha\" : \"2026-01-12\",\r\n    \"horaInicio\" : \"14:00:00\",\r\n    \"horaFin\" : \"16:30:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/availability-hours/c61b37de-46e9-47c7-9635-fa8a71f7d628",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"availability-hours",
+								"c61b37de-46e9-47c7-9635-fa8a71f7d628"
+							]
+						}
+					},
+					"response": []
 				}
 			]
-		},
-		{
-			"name": "Crear horarios",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"profesionalId\" : \"0150dd6b-92a7-4c04-bd21-762f999571ee\",\r\n    \"fecha\" : \"2026-01-10\",\r\n    \"horaInicio\" : \"13:00:00\",\r\n    \"horaFin\" : \"14:00:00\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/availability-hours",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"availability-hours"
-					]
-				}
-			},
-			"response": []
 		}
 	]
 }

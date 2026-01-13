@@ -198,6 +198,9 @@ public class ReservaServiceImplTest {
         dto.setProfesionalId(UUID.randomUUID());
         dto.setClienteId(UUID.randomUUID());
 
+        // stub findByEstado used by findBooking() inside updateBooking
+        when(reservaRepository.findByEstado(Mockito.eq(id))).thenReturn(Uni.createFrom().item(Mockito.mock(Reserva.class)));
+
         when(profesionalRepository.findByIdAndInactivo(Mockito.any())).thenReturn(Uni.createFrom().item(Mockito.mock(Profesional.class)));
         when(clienteRepository.findByIdAndInactivo(Mockito.any())).thenReturn(Uni.createFrom().item(Mockito.mock(Cliente.class)));
         when(horarioRepository.validateHorarioDisponibleHours(Mockito.any())).thenReturn(Uni.createFrom().item(true));
@@ -217,6 +220,9 @@ public class ReservaServiceImplTest {
         dto.setProfesionalId(UUID.randomUUID());
         dto.setClienteId(UUID.randomUUID());
 
+        // stub findByEstado used by findBooking() inside updateBooking
+        when(reservaRepository.findByEstado(Mockito.eq(id))).thenReturn(Uni.createFrom().item(Mockito.mock(Reserva.class)));
+
         when(profesionalRepository.findByIdAndInactivo(Mockito.any())).thenReturn(Uni.createFrom().item(Mockito.mock(Profesional.class)));
         when(clienteRepository.findByIdAndInactivo(Mockito.any())).thenReturn(Uni.createFrom().item(Mockito.mock(Cliente.class)));
 
@@ -226,6 +232,8 @@ public class ReservaServiceImplTest {
     @Test
     public void testDeleteBooking_repositoryFailure_shouldTransformToBusinessException() {
         UUID id = UUID.randomUUID();
+        // stub findByEstado used by findBooking() inside deleteBooking
+        when(reservaRepository.findByEstado(Mockito.eq(id))).thenReturn(Uni.createFrom().item(Mockito.mock(Reserva.class)));
         when(reservaRepository.deleteReserva(Mockito.any())).thenReturn(Uni.createFrom().failure(new RuntimeException("db")));
 
         assertThrows(BusinessException.class, () -> service.deleteBooking(id).await().indefinitely());
@@ -234,6 +242,8 @@ public class ReservaServiceImplTest {
     @Test
     public void testDeleteBooking_success_shouldReturnWithoutException() {
         UUID id = UUID.randomUUID();
+        // stub findByEstado used by findBooking() inside deleteBooking
+        when(reservaRepository.findByEstado(Mockito.eq(id))).thenReturn(Uni.createFrom().item(Mockito.mock(Reserva.class)));
         when(reservaRepository.deleteReserva(Mockito.any())).thenReturn(Uni.createFrom().voidItem());
 
         assertDoesNotThrow(() -> service.deleteBooking(id).await().indefinitely());

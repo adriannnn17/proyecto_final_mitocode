@@ -90,6 +90,9 @@ public class ProfesionalServiceImplTest {
         dto.setId(UUID.randomUUID());
         UUID id = UUID.randomUUID();
 
+        // stub repository find used by findProfessional inside updateProfessional
+        when(profesionalRepository.findByIdAndInactivo(Mockito.eq(id))).thenReturn(Uni.createFrom().item(Mockito.mock(Profesional.class)));
+
         when(profesionalRepository.updateProfesional(Mockito.any(), Mockito.eq(id))).thenReturn(Uni.createFrom().voidItem());
 
         assertDoesNotThrow(() -> service.updateProfessional(dto, id).await().indefinitely());
@@ -101,6 +104,9 @@ public class ProfesionalServiceImplTest {
         dto.setId(UUID.randomUUID());
         UUID id = UUID.randomUUID();
 
+        // ensure findProfessional succeeds so updateProfessional reaches repository failure
+        when(profesionalRepository.findByIdAndInactivo(Mockito.eq(id))).thenReturn(Uni.createFrom().item(Mockito.mock(Profesional.class)));
+
         when(profesionalRepository.updateProfesional(Mockito.any(), Mockito.eq(id))).thenReturn(Uni.createFrom().failure(new RuntimeException("db")));
 
         assertThrows(BusinessException.class, () -> service.updateProfessional(dto, id).await().indefinitely());
@@ -109,6 +115,8 @@ public class ProfesionalServiceImplTest {
     @Test
     public void testDeleteProfessional_success() {
         UUID id = UUID.randomUUID();
+        // stub find to allow delete flow
+        when(profesionalRepository.findByIdAndInactivo(Mockito.eq(id))).thenReturn(Uni.createFrom().item(Mockito.mock(Profesional.class)));
         when(profesionalRepository.deleteProfesional(id)).thenReturn(Uni.createFrom().voidItem());
 
         assertDoesNotThrow(() -> service.deleteProfessional(id).await().indefinitely());
@@ -117,6 +125,7 @@ public class ProfesionalServiceImplTest {
     @Test
     public void testDeleteProfessional_repositoryFailure_shouldTransformToBusinessException() {
         UUID id = UUID.randomUUID();
+        when(profesionalRepository.findByIdAndInactivo(Mockito.eq(id))).thenReturn(Uni.createFrom().item(Mockito.mock(Profesional.class)));
         when(profesionalRepository.deleteProfesional(id)).thenReturn(Uni.createFrom().failure(new RuntimeException("db")));
 
         assertThrows(BusinessException.class, () -> service.deleteProfessional(id).await().indefinitely());

@@ -28,7 +28,7 @@ import static org.mockito.Mockito.when;
 public class HorarioDisponibleServiceImplTest {
 
     @Mock
-    private HorarioDisponibleRepository horarioRepository;
+    private HorarioDisponibleRepository horarioDisponibleRepository;
 
     @Mock
     private ProfesionalRepository profesionalRepository;
@@ -58,19 +58,12 @@ public class HorarioDisponibleServiceImplTest {
         return dto;
     }
 
-    private void setupValidProfesionalMock() {
-        // usar lenient para evitar que Mockito marque el stub como innecesario en tests concretos
-        Mockito.lenient()
-                .when(profesionalRepository.findByIdAndInactivo(Mockito.any()))
-                .thenReturn(Uni.createFrom().item(Mockito.mock(Profesional.class)));
-    }
-
     // LIST
     @Test
     public void testListAvailabilityHours_success() {
         // Mock repositorio para devolver al menos una entidad
         HorarioDisponible entidad = Mockito.mock(HorarioDisponible.class);
-        when(horarioRepository.findAllInactivos()).thenReturn(Multi.createFrom().items(entidad));
+        when(horarioDisponibleRepository.findAllInactivos()).thenReturn(Multi.createFrom().items(entidad));
 
         List<HorarioDisponibleDto> result = service.listAvailabilityHours().collect().asList().await().indefinitely();
         assertNotNull(result);
@@ -79,7 +72,7 @@ public class HorarioDisponibleServiceImplTest {
 
     @Test
     public void testListAvailabilityHours_repositoryFailure_shouldTransformToBusinessException() {
-        when(horarioRepository.findAllInactivos()).thenReturn(Multi.createFrom().failure(new RuntimeException("db error")));
+        when(horarioDisponibleRepository.findAllInactivos()).thenReturn(Multi.createFrom().failure(new RuntimeException("db error")));
 
         assertThrows(BusinessException.class, () -> service.listAvailabilityHours().collect().asList().await().indefinitely());
     }
@@ -89,7 +82,7 @@ public class HorarioDisponibleServiceImplTest {
     public void testFindAvailabilityHour_success() {
         UUID id = UUID.randomUUID();
         HorarioDisponible entidad = Mockito.mock(HorarioDisponible.class);
-        when(horarioRepository.findByIdAndInactivo(id)).thenReturn(Uni.createFrom().item(entidad));
+        when(horarioDisponibleRepository.findByIdAndInactivo(id)).thenReturn(Uni.createFrom().item(entidad));
 
         HorarioDisponibleDto dto = service.findAvailabilityHour(id).await().indefinitely();
         assertNotNull(dto);
@@ -98,7 +91,7 @@ public class HorarioDisponibleServiceImplTest {
     @Test
     public void testFindAvailabilityHour_repositoryFailure_shouldTransformToBusinessException() {
         UUID id = UUID.randomUUID();
-        when(horarioRepository.findByIdAndInactivo(id)).thenReturn(Uni.createFrom().failure(new RuntimeException("db")));
+        when(horarioDisponibleRepository.findByIdAndInactivo(id)).thenReturn(Uni.createFrom().failure(new RuntimeException("db")));
 
         assertThrows(BusinessException.class, () -> service.findAvailabilityHour(id).await().indefinitely());
     }
@@ -108,9 +101,9 @@ public class HorarioDisponibleServiceImplTest {
     public void testCreateAvailabilityHour_success() {
         HorarioDisponibleDto dto = createValidDto();
 
-        setupValidProfesionalMock();
-        when(horarioRepository.validateHorarioDisponibleHours(Mockito.any())).thenReturn(Uni.createFrom().item(false));
-        when(horarioRepository.saveHorarioDisponible(Mockito.any())).thenReturn(Uni.createFrom().voidItem());
+        when(profesionalRepository.findByIdAndInactivo(Mockito.any())).thenReturn(Uni.createFrom().item(Mockito.mock(Profesional.class)));
+        when(horarioDisponibleRepository.validateHorarioDisponibleHours(Mockito.any())).thenReturn(Uni.createFrom().item(false));
+        when(horarioDisponibleRepository.saveHorarioDisponible(Mockito.any())).thenReturn(Uni.createFrom().voidItem());
 
         assertDoesNotThrow(() -> service.createAvailabilityHour(dto).await().indefinitely());
     }
@@ -121,7 +114,7 @@ public class HorarioDisponibleServiceImplTest {
 
         when(profesionalRepository.findByIdAndInactivo(Mockito.any())).thenReturn(Uni.createFrom().item((Profesional) null));
         // evitar NPE en el combine() al no stubbear este método
-        when(horarioRepository.validateHorarioDisponibleHours(Mockito.any())).thenReturn(Uni.createFrom().item(false));
+        when(horarioDisponibleRepository.validateHorarioDisponibleHours(Mockito.any())).thenReturn(Uni.createFrom().item(false));
 
         assertThrows(BusinessException.class, () -> service.createAvailabilityHour(dto).await().indefinitely());
     }
@@ -130,9 +123,9 @@ public class HorarioDisponibleServiceImplTest {
     public void testCreateAvailabilityHour_startEqualsEnd_shouldThrowValidationError() {
         HorarioDisponibleDto dto = createDtoWithTimes(LocalTime.of(9, 0), LocalTime.of(9, 0));
 
-        setupValidProfesionalMock();
+        when(profesionalRepository.findByIdAndInactivo(Mockito.any())).thenReturn(Uni.createFrom().item(Mockito.mock(Profesional.class)));
         // asegurar que la comprobación de existencia de horario está stubbeada
-        when(horarioRepository.validateHorarioDisponibleHours(Mockito.any())).thenReturn(Uni.createFrom().item(false));
+        when(horarioDisponibleRepository.validateHorarioDisponibleHours(Mockito.any())).thenReturn(Uni.createFrom().item(false));
 
         assertThrows(BusinessException.class, () -> service.createAvailabilityHour(dto).await().indefinitely());
     }
@@ -141,8 +134,8 @@ public class HorarioDisponibleServiceImplTest {
     public void testCreateAvailabilityHour_startAfterEnd_shouldThrowValidationError() {
         HorarioDisponibleDto dto = createDtoWithTimes(LocalTime.of(11, 0), LocalTime.of(10, 0));
 
-        setupValidProfesionalMock();
-        when(horarioRepository.validateHorarioDisponibleHours(Mockito.any())).thenReturn(Uni.createFrom().item(false));
+        when(profesionalRepository.findByIdAndInactivo(Mockito.any())).thenReturn(Uni.createFrom().item(Mockito.mock(Profesional.class)));
+        when(horarioDisponibleRepository.validateHorarioDisponibleHours(Mockito.any())).thenReturn(Uni.createFrom().item(false));
 
         assertThrows(BusinessException.class, () -> service.createAvailabilityHour(dto).await().indefinitely());
     }
@@ -151,8 +144,8 @@ public class HorarioDisponibleServiceImplTest {
     public void testCreateAvailabilityHour_existingHorario_shouldThrowValidationError() {
         HorarioDisponibleDto dto = createValidDto();
 
-        setupValidProfesionalMock();
-        when(horarioRepository.validateHorarioDisponibleHours(Mockito.any())).thenReturn(Uni.createFrom().item(true));
+        when(profesionalRepository.findByIdAndInactivo(Mockito.any())).thenReturn(Uni.createFrom().item(Mockito.mock(Profesional.class)));
+        when(horarioDisponibleRepository.validateHorarioDisponibleHours(Mockito.any())).thenReturn(Uni.createFrom().item(true));
 
         assertThrows(BusinessException.class, () -> service.createAvailabilityHour(dto).await().indefinitely());
     }
@@ -161,9 +154,9 @@ public class HorarioDisponibleServiceImplTest {
     public void testCreateAvailabilityHour_repositoryFailure_shouldTransformToBusinessException() {
         HorarioDisponibleDto dto = createValidDto();
 
-        setupValidProfesionalMock();
-        when(horarioRepository.validateHorarioDisponibleHours(Mockito.any())).thenReturn(Uni.createFrom().item(false));
-        when(horarioRepository.saveHorarioDisponible(Mockito.any())).thenReturn(Uni.createFrom().failure(new RuntimeException("db error")));
+        when(profesionalRepository.findByIdAndInactivo(Mockito.any())).thenReturn(Uni.createFrom().item(Mockito.mock(Profesional.class)));
+        when(horarioDisponibleRepository.validateHorarioDisponibleHours(Mockito.any())).thenReturn(Uni.createFrom().item(false));
+        when(horarioDisponibleRepository.saveHorarioDisponible(Mockito.any())).thenReturn(Uni.createFrom().failure(new RuntimeException("db error")));
 
         assertThrows(BusinessException.class, () -> service.createAvailabilityHour(dto).await().indefinitely());
     }
@@ -174,8 +167,6 @@ public class HorarioDisponibleServiceImplTest {
         dto.setHoraInicio(null);
         dto.setHoraFin(null);
 
-        setupValidProfesionalMock();
-
         assertThrows(NullPointerException.class, () -> service.createAvailabilityHour(dto).await().indefinitely());
     }
 
@@ -185,9 +176,12 @@ public class HorarioDisponibleServiceImplTest {
         HorarioDisponibleDto dto = createValidDto();
         UUID id = UUID.randomUUID();
 
-        setupValidProfesionalMock();
-        when(horarioRepository.validateHorarioDisponibleHours(Mockito.any())).thenReturn(Uni.createFrom().item(false));
-        when(horarioRepository.updateHorarioDisponible(Mockito.any(), Mockito.eq(id))).thenReturn(Uni.createFrom().voidItem());
+        // stub repo findById to avoid NOT_FOUND
+        when(horarioDisponibleRepository.findByIdAndInactivo(Mockito.eq(id))).thenReturn(Uni.createFrom().item(Mockito.mock(HorarioDisponible.class)));
+
+        when(profesionalRepository.findByIdAndInactivo(Mockito.any())).thenReturn(Uni.createFrom().item(Mockito.mock(Profesional.class)));
+        when(horarioDisponibleRepository.validateHorarioDisponibleHours(Mockito.any())).thenReturn(Uni.createFrom().item(false));
+        when(horarioDisponibleRepository.updateHorarioDisponible(Mockito.any(), Mockito.eq(id))).thenReturn(Uni.createFrom().voidItem());
 
         assertDoesNotThrow(() -> service.updateAvailabilityHour(dto, id).await().indefinitely());
     }
@@ -197,9 +191,10 @@ public class HorarioDisponibleServiceImplTest {
         HorarioDisponibleDto dto = createDtoWithTimes(LocalTime.of(12, 0), LocalTime.of(11, 0));
         UUID id = UUID.randomUUID();
 
-        setupValidProfesionalMock();
+        when(horarioDisponibleRepository.findByIdAndInactivo(Mockito.eq(id))).thenReturn(Uni.createFrom().item(Mockito.mock(HorarioDisponible.class)));
+        when(profesionalRepository.findByIdAndInactivo(Mockito.any())).thenReturn(Uni.createFrom().item(Mockito.mock(Profesional.class)));
         // evitar NPE en combine
-        when(horarioRepository.validateHorarioDisponibleHours(Mockito.any())).thenReturn(Uni.createFrom().item(false));
+        when(horarioDisponibleRepository.validateHorarioDisponibleHours(Mockito.any())).thenReturn(Uni.createFrom().item(false));
 
         assertThrows(BusinessException.class, () -> service.updateAvailabilityHour(dto, id).await().indefinitely());
     }
@@ -209,9 +204,10 @@ public class HorarioDisponibleServiceImplTest {
         HorarioDisponibleDto dto = createValidDto();
         UUID id = UUID.randomUUID();
 
-        setupValidProfesionalMock();
-        when(horarioRepository.validateHorarioDisponibleHours(Mockito.any())).thenReturn(Uni.createFrom().item(false));
-        when(horarioRepository.updateHorarioDisponible(Mockito.any(), Mockito.eq(id))).thenReturn(Uni.createFrom().failure(new RuntimeException("db error")));
+        when(horarioDisponibleRepository.findByIdAndInactivo(Mockito.eq(id))).thenReturn(Uni.createFrom().item(Mockito.mock(HorarioDisponible.class)));
+        when(profesionalRepository.findByIdAndInactivo(Mockito.any())).thenReturn(Uni.createFrom().item(Mockito.mock(Profesional.class)));
+        when(horarioDisponibleRepository.validateHorarioDisponibleHours(Mockito.any())).thenReturn(Uni.createFrom().item(false));
+        when(horarioDisponibleRepository.updateHorarioDisponible(Mockito.any(), Mockito.eq(id))).thenReturn(Uni.createFrom().failure(new RuntimeException("db error")));
 
         assertThrows(BusinessException.class, () -> service.updateAvailabilityHour(dto, id).await().indefinitely());
     }
@@ -220,7 +216,8 @@ public class HorarioDisponibleServiceImplTest {
     @Test
     public void testDeleteAvailabilityHour_success_shouldReturnWithoutException() {
         UUID id = UUID.randomUUID();
-        when(horarioRepository.deleteHorarioDisponible(Mockito.any())).thenReturn(Uni.createFrom().voidItem());
+        when(horarioDisponibleRepository.findByIdAndInactivo(Mockito.eq(id))).thenReturn(Uni.createFrom().item(Mockito.mock(HorarioDisponible.class)));
+        when(horarioDisponibleRepository.deleteHorarioDisponible(Mockito.any())).thenReturn(Uni.createFrom().voidItem());
 
         assertDoesNotThrow(() -> service.deleteAvailabilityHour(id).await().indefinitely());
     }
@@ -228,7 +225,8 @@ public class HorarioDisponibleServiceImplTest {
     @Test
     public void testDeleteAvailabilityHour_repositoryFailure_shouldTransformToBusinessException() {
         UUID id = UUID.randomUUID();
-        when(horarioRepository.deleteHorarioDisponible(Mockito.any())).thenReturn(Uni.createFrom().failure(new RuntimeException("db error")));
+        when(horarioDisponibleRepository.findByIdAndInactivo(Mockito.eq(id))).thenReturn(Uni.createFrom().item(Mockito.mock(HorarioDisponible.class)));
+        when(horarioDisponibleRepository.deleteHorarioDisponible(Mockito.any())).thenReturn(Uni.createFrom().failure(new RuntimeException("db error")));
 
         assertThrows(BusinessException.class, () -> service.deleteAvailabilityHour(id).await().indefinitely());
     }
