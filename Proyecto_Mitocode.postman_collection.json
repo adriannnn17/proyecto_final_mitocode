@@ -75,7 +75,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nombres\" : \"adrian\",\r\n    \"apellidos\" : \"melgarejo\",\r\n    \"email\" : \"adrian@gmail.com\",\r\n    \"telefono\" : \"999999999\"\r\n}",
+							"raw": "{\r\n    \"nombres\" : \"paola\",\r\n    \"apellidos\" : \"pareja\",\r\n    \"email\" : \"paola@gmail.com\",\r\n    \"telefono\" : \"999999999\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -103,7 +103,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nombres\" : \"adrian\",\r\n    \"apellidos\" : \"melgarejos\",\r\n    \"email\" : \"adrian@gmail.com\",\r\n    \"telefono\" : \"999999999\"\r\n}",
+							"raw": "{\r\n    \"nombres\" : \"rocio\",\r\n    \"apellidos\" : \"pareja\",\r\n    \"email\" : \"paola@gmail.com\",\r\n    \"telefono\" : \"999999999\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -111,7 +111,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/clients/73a5ce83-e807-4722-8ce7-df666274565c",
+							"raw": "http://localhost:8080/clients/0bef575b-1bdb-4d0e-b658-2142f9a354a5",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -119,7 +119,7 @@
 							"port": "8080",
 							"path": [
 								"clients",
-								"73a5ce83-e807-4722-8ce7-df666274565c"
+								"0bef575b-1bdb-4d0e-b658-2142f9a354a5"
 							]
 						}
 					},
@@ -196,7 +196,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nombres\": \"mariaa\",\r\n    \"apellidos\": \"hernandez\",\r\n    \"especialidad\": \"psicologia\"\r\n}",
+							"raw": "{\r\n    \"nombres\" : \"juanita\",\r\n    \"apellidos\" : \"hernandez\",\r\n    \"especialidad\" : \"psicologia\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -204,7 +204,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/professionals/6eb4334a-4b5f-4094-9b42-89330c5d2c67",
+							"raw": "http://localhost:8080/professionals/e2b95cd2-6237-48fa-82d9-8af93fe08685",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -212,7 +212,7 @@
 							"port": "8080",
 							"path": [
 								"professionals",
-								"6eb4334a-4b5f-4094-9b42-89330c5d2c67"
+								"e2b95cd2-6237-48fa-82d9-8af93fe08685"
 							]
 						}
 					},
@@ -293,12 +293,12 @@
 					"response": []
 				},
 				{
-					"name": "Listar reserva por profesional y cliente",
+					"name": "Obtener reserva",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/bookings/bbfed4e8-9677-4632-968a-830a1cd81c89a",
+							"raw": "http://localhost:8080/bookings/6881ef62-808f-4643-85ea-ffeff7541c52",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -306,7 +306,7 @@
 							"port": "8080",
 							"path": [
 								"bookings",
-								"bbfed4e8-9677-4632-968a-830a1cd81c89a"
+								"6881ef62-808f-4643-85ea-ffeff7541c52"
 							]
 						}
 					},
@@ -339,7 +339,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"clienteId\" : \"73a5ce83-e807-4722-8ce7-df666274565c\",\r\n    \"profesionalId\" : \"6eb4334a-4b5f-4094-9b42-89330c5d2c67\",\r\n    \"fecha\" : \"2026-01-12\",\r\n    \"horaInicio\" : \"14:30:00\",\r\n    \"horaFin\" : \"14:45:00\"\r\n}",
+							"raw": "{\r\n    \"clienteId\" : \"0bef575b-1bdb-4d0e-b658-2142f9a354a5\",\r\n    \"profesionalId\" : \"e2b95cd2-6237-48fa-82d9-8af93fe08685\",\r\n    \"fecha\" : \"2026-01-12\",\r\n    \"horaInicio\" : \"14:30:00\",\r\n    \"horaFin\" : \"14:45:00\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -367,7 +367,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"clienteId\" : \"73a5ce83-e807-4722-8ce7-df666274565c\",\r\n    \"profesionalId\" : \"6eb4334a-4b5f-4094-9b42-89330c5d2c67\",\r\n    \"fecha\" : \"2026-01-12\",\r\n    \"horaInicio\" : \"14:30:00\",\r\n    \"horaFin\" : \"14:46:00\"\r\n}",
+							"raw": "{\r\n    \"clienteId\" : \"0bef575b-1bdb-4d0e-b658-2142f9a354a5\",\r\n    \"profesionalId\" : \"e2b95cd2-6237-48fa-82d9-8af93fe08685\",\r\n    \"fecha\" : \"2026-01-12\",\r\n    \"horaInicio\" : \"14:30:00\",\r\n    \"horaFin\" : \"14:55:00\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -375,7 +375,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/bookings/3ef62224-d16f-4118-94c8-341131007321",
+							"raw": "http://localhost:8080/bookings/6881ef62-808f-4643-85ea-ffeff7541c52",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -383,14 +383,14 @@
 							"port": "8080",
 							"path": [
 								"bookings",
-								"3ef62224-d16f-4118-94c8-341131007321"
+								"6881ef62-808f-4643-85ea-ffeff7541c52"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Obtener Reserva",
+					"name": "Filtrado de fechas profesional cliente",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -421,7 +421,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"profesionalId\" : \"6eb4334a-4b5f-4094-9b42-89330c5d2c67\",\r\n    \"fecha\" : \"2026-01-12\",\r\n    \"horaInicio\" : \"14:00:00\",\r\n    \"horaFin\" : \"16:00:00\"\r\n}",
+							"raw": "{\r\n    \"profesionalId\" : \"e2b95cd2-6237-48fa-82d9-8af93fe08685\",\r\n    \"fecha\" : \"2026-01-12\",\r\n    \"horaInicio\" : \"14:00:00\",\r\n    \"horaFin\" : \"16:00:00\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -508,7 +508,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"profesionalId\" : \"6eb4334a-4b5f-4094-9b42-89330c5d2c67\",\r\n    \"fecha\" : \"2026-01-12\",\r\n    \"horaInicio\" : \"14:00:00\",\r\n    \"horaFin\" : \"16:30:00\"\r\n}",
+							"raw": "{\r\n    \"profesionalId\" : \"e2b95cd2-6237-48fa-82d9-8af93fe08685\",\r\n    \"fecha\" : \"2026-01-12\",\r\n    \"horaInicio\" : \"14:00:00\",\r\n    \"horaFin\" : \"17:00:00\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -516,7 +516,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/availability-hours/c61b37de-46e9-47c7-9635-fa8a71f7d628",
+							"raw": "http://localhost:8080/availability-hours/8437b808-b0f9-41ef-8575-fcb0faf2359d",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -524,7 +524,7 @@
 							"port": "8080",
 							"path": [
 								"availability-hours",
-								"c61b37de-46e9-47c7-9635-fa8a71f7d628"
+								"8437b808-b0f9-41ef-8575-fcb0faf2359d"
 							]
 						}
 					},
