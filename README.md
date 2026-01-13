@@ -15,19 +15,20 @@ Instrucciones para ejecutar
 - Luego ejecutar el proyecto con "mvn quarkus:dev", pero para que funcione la conexion (si se usa azure sql) puede que deba ejecutarse 2 veces por tema de latencia.
 - Si necesita informacion de los endpoints, acceder a http://localhost:8080/q/swagger-ui
 - Se probo ejecutar quarkus en linux
+- Se adjunto un archivo postman para probar los endpoints "Proyecto_Mitocode.postman_collection.json"
 
 
 ---
 
 Decisiones técnicas
 
--- Se uso AzureSQL como base de datos relacional, no reactiva, es por ello que se uso Panache ORM y se trabajo de forma transaccionar para trabajar con una conexion bloqueante.
--- Se utilizo contract first en el proyecto, generando el codigo de los schemas y los endpoints usando el generador de Quarkus y APIDog para la documentacion del yml openapi de input
--- Se utilizo Liquibase para versionar la BD, trabaja con la conexion no reactiva de quarkus
--- Se utilizo MapStruct para los mapeos entre DTOs y entidades
--- Se utilizo Lombok para reducir codigo boilerplate en los modelos y constructores
--- Se utilizo Mutiny para programacion reactiva en las capas de servicio y controladores
--- No se implementó JWT para no complicar la prueba y ejecucion del proyecto
+- Se uso AzureSQL como base de datos relacional, no reactiva, es por ello que se uso Panache ORM y se trabajo de forma transaccionar para trabajar con una conexion bloqueante.
+- Se utilizo contract first en el proyecto, generando el codigo de los schemas y los endpoints usando el generador de Quarkus y APIDog para la documentacion del yml openapi de input
+- Se utilizo Liquibase para versionar la BD, trabaja con la conexion no reactiva de quarkus
+- Se utilizo MapStruct para los mapeos entre DTOs y entidades
+- Se utilizo Lombok para reducir codigo boilerplate en los modelos y constructores
+- Se utilizo Mutiny para programacion reactiva en las capas de servicio y controladores
+- No se implementó JWT para no complicar la prueba y ejecucion del proyecto
 
 ---
 
