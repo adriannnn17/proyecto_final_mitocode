@@ -67,9 +67,12 @@ public class ProfesionalRepositoryImpl implements ProfesionalRepository {
 
     @Transactional
     protected void updateProfesionalBlocking(Profesional profesional, UUID uuid) {
-        profesional.setEstadoActivo(EstadoActivoEnum.ACTIVO);
-        profesional.setId(uuid);
-        entityManager.merge(profesional);
+        Profesional managed = entityManager.find(Profesional.class, uuid);
+        if (managed != null) {
+            profesional.setEstadoActivo(EstadoActivoEnum.ACTIVO);
+            profesional.setId(uuid);
+            entityManager.merge(profesional);
+        }
     }
 
     @Override

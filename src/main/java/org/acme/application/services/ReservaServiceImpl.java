@@ -56,12 +56,23 @@ public class ReservaServiceImpl implements ReservaService {
 
     @Override
     public Uni<ReservaDto> findBooking(UUID id) {
-        return reservaRepository.findByEstado(id).map(ReservaEntityDtoMapper.INSTANCE::toDto)
-                .onFailure()
+        return reservaRepository.findByEstado(id)
+                .onItem()
+                .ifNull()
+                .failWith(() -> new BusinessException(
+                        BusinessErrorType.NOT_FOUND,
+                        "Cliente con id %s no encontrado".formatted(id)
+                ))
+                .onItem()
+                .ifNotNull()
+                .transform(ReservaEntityDtoMapper.INSTANCE::toDto)
+                .onFailure(t -> !(t instanceof BusinessException))
                 .transform(throwable -> {
 
+                    if (throwable instanceof BusinessException) {
+                        return throwable;
+                    }
                     log.error(throwable.getMessage());
-
                     return new BusinessException(
                             BusinessErrorType.PERSISTENCE_ERROR,
                             throwable.getMessage()
@@ -88,34 +99,38 @@ public class ReservaServiceImpl implements ReservaService {
     @Override
     public Uni<Void> updateBooking(ReservaDto reserva, UUID id) {
         reserva.setId(id);
-        return validateConditional(reserva)
-                .onItem().ignore()
-                .andSwitchTo(reservaRepository.updateReserva(ReservaEntityDtoMapper.INSTANCE.toEntity(reserva), id)
-                        .onFailure()
-                        .transform(throwable -> {
+        return findBooking(id)
+                .flatMap(reservaDto ->
+                        validateConditional(reserva)
+                                .onItem().ignore()
+                                .andSwitchTo(reservaRepository.updateReserva(ReservaEntityDtoMapper.INSTANCE.toEntity(reserva), id)
+                                        .onFailure()
+                                        .transform(throwable -> {
 
-                            log.error(throwable.getMessage());
+                                            log.error(throwable.getMessage());
 
-                            return new BusinessException(
-                                    BusinessErrorType.PERSISTENCE_ERROR,
-                                    throwable.getMessage()
-                            );
-                        }));
+                                            return new BusinessException(
+                                                    BusinessErrorType.PERSISTENCE_ERROR,
+                                                    throwable.getMessage()
+                                            );
+                                        })));
     }
 
     @Override
     public Uni<Void> deleteBooking(UUID id) {
-        return reservaRepository.deleteReserva(id)
-                .onFailure()
-                .transform(throwable -> {
+        return findBooking(id)
+                .flatMap(reservaDto ->
+                        reservaRepository.deleteReserva(id)
+                                .onFailure()
+                                .transform(throwable -> {
 
-                    log.error(throwable.getMessage());
+                                    log.error(throwable.getMessage());
 
-                    return new BusinessException(
-                            BusinessErrorType.PERSISTENCE_ERROR,
-                            throwable.getMessage()
-                    );
-                });
+                                    return new BusinessException(
+                                            BusinessErrorType.PERSISTENCE_ERROR,
+                                            throwable.getMessage()
+                                    );
+                                }));
     }
 
     public Uni<Void> validateConditional(ReservaDto reservaDto) {

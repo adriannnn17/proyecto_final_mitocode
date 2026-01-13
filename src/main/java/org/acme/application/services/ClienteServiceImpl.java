@@ -40,12 +40,22 @@ public class ClienteServiceImpl implements ClienteService {
     @Override
     public Uni<ClienteDto> findClient(UUID id) {
         return clienteRepository.findByIdAndInactivo(id)
-                .map(ClienteEntityDtoMapper.INSTANCE::toDto)
-                .onFailure()
+                .onItem()
+                .ifNull()
+                .failWith(() -> new BusinessException(
+                        BusinessErrorType.NOT_FOUND,
+                        "Cliente con id %s no encontrado".formatted(id)
+                ))
+                .onItem()
+                .ifNotNull()
+                .transform(ClienteEntityDtoMapper.INSTANCE::toDto)
+                .onFailure(t -> !(t instanceof BusinessException))
                 .transform(throwable -> {
 
+                    if (throwable instanceof BusinessException) {
+                        return throwable;
+                    }
                     log.error(throwable.getMessage());
-
                     return new BusinessException(
                             BusinessErrorType.PERSISTENCE_ERROR,
                             throwable.getMessage()
@@ -70,31 +80,33 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public Uni<Void> updateClient(ClienteDto cliente, UUID id) {
-        return clienteRepository.updateClient(ClienteEntityDtoMapper.INSTANCE.toEntity(cliente), id)
-                .onFailure()
-                .transform(throwable -> {
+        return findClient(id)
+                .flatMap(existingClient -> clienteRepository.updateClient(ClienteEntityDtoMapper.INSTANCE.toEntity(cliente), id)
+                        .onFailure()
+                        .transform(throwable -> {
 
-                    log.error(throwable.getMessage());
+                            log.error(throwable.getMessage());
 
-                    return new BusinessException(
-                            BusinessErrorType.PERSISTENCE_ERROR,
-                            throwable.getMessage()
-                    );
-                });
+                            return new BusinessException(
+                                    BusinessErrorType.PERSISTENCE_ERROR,
+                                    throwable.getMessage()
+                            );
+                        }));
     }
 
     @Override
     public Uni<Void> deleteClient(UUID id) {
-        return clienteRepository.deleteClient(id)
-                .onFailure()
-                .transform(throwable -> {
+        return findClient(id)
+                .flatMap(existingClient -> clienteRepository.deleteClient(id)
+                        .onFailure()
+                        .transform(throwable -> {
 
-                    log.error(throwable.getMessage());
+                            log.error(throwable.getMessage());
 
-                    return new BusinessException(
-                            BusinessErrorType.PERSISTENCE_ERROR,
-                            throwable.getMessage()
-                    );
-                });
+                            return new BusinessException(
+                                    BusinessErrorType.PERSISTENCE_ERROR,
+                                    throwable.getMessage()
+                            );
+                        }));
     }
 }

@@ -70,9 +70,12 @@ public class HorarioDisponibleRepositoryImpl implements HorarioDisponibleReposit
 
     @Transactional
     protected void updateHorarioDisponibleBlocking(HorarioDisponible horario, UUID uuid) {
-        horario.setEstado(EstadoActivoEnum.ACTIVO);
-        horario.setId(uuid);
-        entityManager.merge(horario);
+        HorarioDisponible managed = entityManager.find(HorarioDisponible.class, uuid);
+        if (managed != null) {
+            horario.setEstado(EstadoActivoEnum.ACTIVO);
+            horario.setId(uuid);
+            entityManager.merge(horario);
+        }
     }
 
     @Override

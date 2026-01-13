@@ -8,12 +8,12 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.acme.domain.model.entities.Reserva;
 import org.acme.domain.model.enums.EstadoReservaEnum;
 import org.acme.domain.repository.ReservaRepository;
 import org.acme.infraestructure.dtos.others.ReservaGet;
 
-import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +22,7 @@ import java.util.UUID;
 import static org.acme.application.utils.MappingUtils.localTimeToString;
 import static org.acme.application.utils.MappingUtils.stringToLocalDate;
 
+@Slf4j
 @ApplicationScoped
 public class ReservaRepositoryImpl implements ReservaRepository {
 
@@ -111,9 +112,12 @@ public class ReservaRepositoryImpl implements ReservaRepository {
 
     @Transactional
     protected void updateReservaBlocking(Reserva reserva, UUID uuid) {
-        reserva.setEstado(EstadoReservaEnum.CREADA);
-        reserva.setId(uuid);
-        entityManager.merge(reserva);
+        Reserva managed = entityManager.find(Reserva.class, uuid);
+        if (managed != null) {
+            reserva.setEstado(EstadoReservaEnum.CREADA);
+            reserva.setId(uuid);
+            entityManager.merge(reserva);
+        }
     }
 
     @Override

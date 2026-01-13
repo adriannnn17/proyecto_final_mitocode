@@ -43,12 +43,23 @@ public class HorarioDisponibleServiceImpl implements HorarioDisponibleService {
 
     @Override
     public Uni<HorarioDisponibleDto> findAvailabilityHour(UUID id) {
-        return horarioDisponibleRepository.findByIdAndInactivo(id).map(HorarioDisponibleEntityDtoMapper.INSTANCE::toDto)
-                .onFailure()
+        return horarioDisponibleRepository.findByIdAndInactivo(id)
+                .onItem()
+                .ifNull()
+                .failWith(() -> new BusinessException(
+                        BusinessErrorType.NOT_FOUND,
+                        "Horario con id %s no encontrado".formatted(id)
+                ))
+                .onItem()
+                .ifNotNull()
+                .transform(HorarioDisponibleEntityDtoMapper.INSTANCE::toDto)
+                .onFailure(t -> !(t instanceof BusinessException))
                 .transform(throwable -> {
 
+                    if (throwable instanceof BusinessException) {
+                        return throwable;
+                    }
                     log.error(throwable.getMessage());
-
                     return new BusinessException(
                             BusinessErrorType.PERSISTENCE_ERROR,
                             throwable.getMessage()
@@ -59,26 +70,8 @@ public class HorarioDisponibleServiceImpl implements HorarioDisponibleService {
     @Override
     public Uni<Void> createAvailabilityHour(HorarioDisponibleDto horario) {
 
-
-            return validateHorarioDisponible(horario,
-                    horarioDisponibleRepository.saveHorarioDisponible(HorarioDisponibleEntityDtoMapper.INSTANCE.toEntity(horario))
-                            .onFailure()
-                            .transform(throwable -> {
-
-                                log.error(throwable.getMessage());
-
-                                return new BusinessException(
-                                        BusinessErrorType.PERSISTENCE_ERROR,
-                                        throwable.getMessage()
-                                );
-                            }));
-    }
-
-    @Override
-    public Uni<Void> updateAvailabilityHour(HorarioDisponibleDto horario, UUID id) {
-
         return validateHorarioDisponible(horario,
-                horarioDisponibleRepository.updateHorarioDisponible(HorarioDisponibleEntityDtoMapper.INSTANCE.toEntity(horario), id)
+                horarioDisponibleRepository.saveHorarioDisponible(HorarioDisponibleEntityDtoMapper.INSTANCE.toEntity(horario))
                         .onFailure()
                         .transform(throwable -> {
 
@@ -92,18 +85,39 @@ public class HorarioDisponibleServiceImpl implements HorarioDisponibleService {
     }
 
     @Override
+    public Uni<Void> updateAvailabilityHour(HorarioDisponibleDto horario, UUID id) {
+
+        return findAvailabilityHour(id)
+                .flatMap(horarioDisponibleDto ->
+                        validateHorarioDisponible(horario,
+                                horarioDisponibleRepository.updateHorarioDisponible(HorarioDisponibleEntityDtoMapper.INSTANCE.toEntity(horario), id)
+                                        .onFailure()
+                                        .transform(throwable -> {
+
+                                            log.error(throwable.getMessage());
+
+                                            return new BusinessException(
+                                                    BusinessErrorType.PERSISTENCE_ERROR,
+                                                    throwable.getMessage()
+                                            );
+                                        })));
+    }
+
+    @Override
     public Uni<Void> deleteAvailabilityHour(UUID id) {
-        return horarioDisponibleRepository.deleteHorarioDisponible(id)
-                .onFailure()
-                .transform(throwable -> {
+        return findAvailabilityHour(id)
+                .flatMap(horarioDisponibleDto ->
+                        horarioDisponibleRepository.deleteHorarioDisponible(id)
+                                .onFailure()
+                                .transform(throwable -> {
 
-                    log.error(throwable.getMessage());
+                                    log.error(throwable.getMessage());
 
-                    return new BusinessException(
-                            BusinessErrorType.PERSISTENCE_ERROR,
-                            throwable.getMessage()
-                    );
-                });
+                                    return new BusinessException(
+                                            BusinessErrorType.PERSISTENCE_ERROR,
+                                            throwable.getMessage()
+                                    );
+                                }));
     }
 
     public Uni<Void> validateHorarioDisponible(HorarioDisponibleDto horario, Uni<Void> voidUni) {
@@ -139,7 +153,7 @@ public class HorarioDisponibleServiceImpl implements HorarioDisponibleService {
                     Profesional profesional = objects.getItem2();
                     Boolean existsHorario = objects.getItem3();
 
-                    if(!fechaValidacion) {
+                    if (!fechaValidacion) {
                         return Uni.createFrom().failure(
                                 new BusinessException(
                                         BusinessErrorType.VALIDATION_ERROR,

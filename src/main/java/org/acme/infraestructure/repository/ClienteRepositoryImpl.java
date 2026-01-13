@@ -64,9 +64,12 @@ public class ClienteRepositoryImpl implements ClienteRepository {
 
     @Transactional
     protected void updateClientBlocking(Cliente cliente, UUID uuid) {
-        cliente.setId(uuid);
-        cliente.setEstadoActivo(EstadoActivoEnum.ACTIVO);
-        entityManager.merge(cliente);
+        Cliente managed = entityManager.find(Cliente.class, uuid);
+        if (managed != null) {
+            cliente.setId(uuid);
+            cliente.setEstadoActivo(EstadoActivoEnum.ACTIVO);
+            entityManager.merge(cliente);
+        }
     }
 
     @Override
